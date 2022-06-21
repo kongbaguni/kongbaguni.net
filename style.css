@@ -1,6 +1,6 @@
 body {
-    background:#fff;
-    color:#000
+    background:#134;
+    color:#fff;
 }
 a {
     color:#963;
@@ -167,4 +167,27 @@ article.EULA > p.list:first-letter {
     background-color:#369;
     border-radius:10px;
     text-transform:uppercase;
+}
+
+ol.imageSlide {
+    display: block;
+    height: 305px;
+    overflow: auto;
+    overflow-y: hidden;
+    float: inherit;
+    border: 5px solid #f84;
+    white-space: nowrap;
+    padding: 0px;
+    background-color: #fff;
+}
+
+ol.imageSlide li {
+    /* float: left; */
+    display: inline-block;
+    list-style: none;
+    padding: 2px;
+    margin: 0px;
+}
+ol.imageSlide li > img {
+    height: 300px;
 }
