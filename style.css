@@ -212,4 +212,5 @@ ol.imageSlide li > img {
     max-width: 95%;
     max-height: 95%;
     padding: 5px;
+    transform: translate(50%, 0);
 }
