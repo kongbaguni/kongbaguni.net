@@ -66,8 +66,20 @@ function makeIndex() {
 
 $(document).ready(function(){
     makeIndex();
+    makeImagePreview();
 })
 
 function changeMode(name) {
     $("body").attr("class",name)
+}
+
+function makeImagePreview() {
+    $("ol.imageSlide > li > img").click(function() {
+        $("#preview").remove();        
+        let img = $("<div id=\"preview\"><img src='"+ this.src + "' alt=\"preview\" /></div>");
+        $("body").append(img);
+        img.click(function() {
+            this.remove();
+        });
+    })
 }
