@@ -209,7 +209,7 @@ ol.imageSlide li > img {
 }
 
 #preview > img {
-    position: relative;
+    position: fixed;
     max-width: 90%;
     max-height: 90%;
     padding: 0;
