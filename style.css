@@ -209,8 +209,11 @@ ol.imageSlide li > img {
 }
 
 #preview > img {
-    max-width: 95%;
-    max-height: 95%;
-    padding: 5px;
-    transform: translate(50%, 0);
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
