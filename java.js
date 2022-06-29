@@ -31,9 +31,12 @@ function makeIndex() {
     });
     
     if (titles.length > 0) {
+        var aside = document.createElement("aside")
+        aside.innerHTML = "<h2>index</h2>"        
         var nav = document.createElement("nav")
+        aside.appendChild(nav)
         $(nav).attr("id","navi")
-        $("article:first-of-type").before(nav);
+        $("article:first-of-type").before(aside);
         var ul = document.createElement("ol")
         $(nav).append(ul);
     }
