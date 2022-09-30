@@ -1,5 +1,9 @@
 {
-    "version":"1.0.1",
-    "moveurl":"https://kongbaguni.net",
-    "desc":"버그 수정\n디자인 수정"   
+    "appVerLatestInfo": {
+        "appVer":"1.0.1",
+        "chTxt":"버그 수정\n디자인 수정",
+        "fildNm":"hanaro_2.0.0.apk",
+        "regDtm":"2022.09.29",
+        "updateDtm":"2022.09.29"
+    }
 }
