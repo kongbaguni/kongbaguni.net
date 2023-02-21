@@ -31,7 +31,7 @@ article > p > a > img {
     width:200px;
 }
 
-article p, article h3, article ul, article ol {
+article p, article h3, article h4, article ul, article ol {
     margin:5px;
 }
 
@@ -48,10 +48,18 @@ article header {
     text-align:center;
 }
 
+article b {
+    color: yellowgreen;
+}
 
 h3 {
     color:#369;
     border-bottom:1px dashed #369;
+}
+
+h4 {
+    color:#555;
+    border-bottom: 1px dashed #555;
 }
 
 body.dark {
