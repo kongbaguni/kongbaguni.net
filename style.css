@@ -52,13 +52,21 @@ article b {
     color: yellowgreen;
 }
 
+article del {
+    color:#555
+}
+
+article sub, article sup {
+    color: #aaa;
+}
+
 h3 {
     color:#369;
-    border-bottom:1px dashed #369;
+    border-bottom:2px solid #369;
 }
 
 h4 {
-    color:#555;
+    color:#396;
     border-bottom: 1px dashed #555;
 }
 
@@ -239,5 +247,18 @@ body > footer {
 
 aside {
     margin: 10px;
-    /* float: right;
+    /* float: right; */
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #fff;
+    margin: 5px;
+}
+table thead {
+    background-color: #369;
+}
+table th, table td {
+    border: 1px solid #396;
+    padding:5px;
 }
