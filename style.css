@@ -262,3 +262,19 @@ table th, table td {
     border: 1px solid #396;
     padding:5px;
 }
+
+table.diagram, table.diagram th, table.diagram td {
+    padding: 0px;
+    border: none;
+}
+
+.diagram {
+    margin: 10px;
+}
+
+.diagram span{
+    padding: 5px;
+    border: 1px solid #fff;
+    background-color: #396;
+    color: #fff;
+ }
