@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+    <title>정보처리기사 실기 공부 1-1장</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta property="og:url" content="https://kongbaguni.net" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="kongbaguni.net" />
+    <meta property="og:description" content="정보처리기사 실기 대비 공부 1-1장" />
+    <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+
+    <link rel="stylesheet" type="text/css" href="../style.css"></link>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../java.js"></script>
+</head> 
+<body>
+    
+    <h1>정보처리기사 실기 1-2장</h1>
+    <article>
+        <header>
+            <h2>유스케이스 다이어그램</h2>
+        </header>
+        <p>사용자와 다른 외부 시스템들이 개발될 시스템을 이용해 <b>수행할 수 있는 기능</b>을 <b>사용자의 관점에서 표현한 것</b></p>
+        <h3>유스케이스 다이어그램의 구성요소</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>구성요소</th>
+                    <th>표현방법</th>
+                    <th>내용</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>시스템(System) /<br/>
+                        시스템 범위(System Scope)
+                    </td>
+                    <td><img src="./images/1-2/object.png" alt="상품주문"/></td>
+                    <td>시스탬 내부의 유스케이스들을 사각형으로 묶어 시스템의 범위를 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>액터(Actor)</td>
+                    <td>
+                        <ul>
+                            <li>주액터<br />
+                                <img src="./images/1-2/actor1.png" alt="주액터" />                                
+                            </li>
+                            <li>부액터<br />
+                                <img src="./images/1-2/actor2.png" alt="부액터" />                                
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>시스템과 상호작용을 하는 모든 외부요소</li>
+                            <li>주로 사람이나 외부 시스템을 의미함</li>
+                            <li>주액터 : 시스템을 사용함으로서 이득을 얻는 대상르로, 주로 사람이 해당</li>
+                            <li>부액터 : 주액터의 목적 달성을 위해 시스템에서 서비스를 제공하는 외부 시스템. 조직이나 기관 등이 될 수 있음.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>유스케이스(Use Case)</td>
+                    <td><img src="./images/1-2/useCase.png" alt="상품조회" /></td>
+                    <td>사용자가 보는 관점에서 시스템이 액터에게 제공하는 서비스나 기능을 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>관계(Relationship)</td>
+                    <td>
+                        <ul>
+                            <li>포함<br />
+                                <img src="./images/1-2/include.png" alt="include" />
+                            </li>
+                            <li>확장<br />
+                                <img src="./images/1-2/extends.png" alt="extends" />                                
+                            </li>
+                            <li>일반화<br />
+                                <img src="./images/1-2/generalization.png" alt="일반화" /></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>유스케이스 다이어그램에서 관계는 액터와 유스케이스와 유스케이스 사이에서 나타날 수 있음</li>
+                            <li>유스케이스에서 나타날 수 있느 관계 : 포함(<b>Include</b>)관계, 확장(<b>Extends</b>)관계, 일반화(<b>Generalization</b>)관계</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>유스케이스 다이어그램 예제</p>
+        <ol class = "imageSlide">
+            <li><img src="./images/1-2/useCaseDiagramExample.png" alt="useCaseDiagramExample" width="320" /></li>
+        </ol>
+        <h3>유스케이스에서 나타날 수 있는 관계</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <th>포함(Include) 관계</th>
+                    <td>두 개 이상의 유스케이스에 공통적으로 적용되는 <b>기능을 별도로 분리하여 새로운 유스케이스로 만든</b> 경우. 
+                                원래 유스케이스와 새롭게 분리된 유스케이스와의 관계
+                    </td>
+                </tr>
+                <tr>
+                    <th>확장(Extends) 관계</th>
+                    <td>유스케이스가 특정조건에 부합되어 유스케이스의 <b>기능이 확장</b>될 떄 원래의 유스케이스와 확장된 유스케이스의 관계</td>
+                </tr>                
+            </tbody>
+        </table>
+    </article>
+</body>
+
+</html>
