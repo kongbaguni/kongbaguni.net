@@ -274,8 +274,8 @@ table.diagram, table.diagram th, table.diagram td {
 
 .diagram span{
     padding: 5px;
-    border: 1px solid #fff;
-    background-color: #396;
+    border: 2px solid #369;
+    background-color: #237;
     color: #fff;
  }
 
@@ -285,11 +285,21 @@ table.diagram, table.diagram th, table.diagram td {
  }
 
  article > ol { counter-reset: item; }
- 
+
  article > ol > li { display: block; }
 
  article > ol > li::before {
     content: counter(item) ". ";
     counter-increment: item;
     color: yellow;
+}
+
+article blockquote {
+    border: 2px dashed #396;
+    margin: 5px;
+    padding: 5px;
+}
+
+blockquote > p, article blockquote ul li {
+    color: #48a;
 }
