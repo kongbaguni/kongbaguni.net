@@ -278,3 +278,18 @@ table.diagram, table.diagram th, table.diagram td {
     background-color: #396;
     color: #fff;
  }
+
+ article > ol ul > li , article > ul ul > li {
+    color:#aaa;
+
+ }
+
+ article > ol { counter-reset: item; }
+ 
+ article > ol > li { display: block; }
+
+ article > ol > li::before {
+    content: counter(item) ". ";
+    counter-increment: item;
+    color: yellow;
+}
