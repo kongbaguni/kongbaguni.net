@@ -303,3 +303,7 @@ article blockquote {
 blockquote > p, article blockquote ul li {
     color: #48a;
 }
+
+article table {
+    font-size: 13px;
+}

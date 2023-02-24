@@ -21,7 +21,7 @@
             <h2>유스케이스 다이어그램</h2>
         </header>
         <p>사용자와 다른 외부 시스템들이 개발될 시스템을 이용해 <b>수행할 수 있는 기능</b>을 <b>사용자의 관점에서 표현한 것</b></p>
-        <h3>유스케이스 다이어그램의 구성요소</h3>
+        <h3>구성요소</h3>
         <table>
             <thead>
                 <tr>
@@ -106,9 +106,13 @@
                 </tr>                
             </tbody>
         </table>
-        <h3>활동 다이어그램 (Activity Diagram)</h3>
+    </article>
+    <article>
+        <header>
+            <h2>활동 다이어그램 (Activity Diagram)</h2>
+        </header>
         <p>사용자 관점에서 시스템이 수행하는 기능을 처리흐름에 따라 순서대로 표현한 것</p>
-        <h4>구성요소</h4>
+        <h3>구성요소</h3>
         <table>
             <thead>
                 <tr>
@@ -188,7 +192,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>스윕레인(Swim Lane)</td>
+                    <td>스윔레인(Swim Lane)</td>
                     <td><img src="./images/1-2/activityDiagramSwimLane.png" alt="스윔레인" /></td>
                     <td>
                         <ul>
@@ -202,6 +206,133 @@
         <p>활동 다이어그램 예제</p>
         <ol class = "imageSlide">
             <li><img src="./images/1-2/activityDiagramExample.png" alt="액티비티 다이얼로그 예제" /></li>
+        </ol>
+        </article>
+        <article>
+            <header>
+                <h2>클래스 다이어그램 (Class Diagram)</h2>        
+            </header>
+        <p>클래스와 클래스가 가지는 속성, 클래스 사이의 관계를 표현한 것</p>
+
+        <h3>구성요소</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>구성 요소</th>
+                    <th>표현 방법</th>
+                    <th>내용</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>클래스 (Class)</td>
+                    <td><img src="./images/1-2/classDiagramClass.png" width = "80px" alt="class" /></td>
+                    <td>
+                        <ul>
+                            <li>각각의 객체들이 갖는 속성과 오퍼레이션(동작)을 표현한것</li>
+                            <li>일반적으로 3개의 구획(Compartment)으로 나눠 클래스의 이름, 속성, 오퍼레이션을 표기함</li>
+                            <li><b>속성(Attribute)</b> : 클래스의 상태나 정보를 표현함</li>
+                            <li><b>오퍼레이션(Operation)</b> : 클래스가 수행할 수 있는 동작으로, 함수(메소드, Method)라고도 함</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>제약조건</td>
+                    <td><img src="./images/1-2/classDiagramJeaYack.png" width="80px" alt="제약조건" /></td>
+                    <td>
+                        <ul>
+                            <li>속성에 입력될 값에 대한 제약조건이나 오퍼레이션 수행 전후에 지정해야 할 조건이 있다면 이를 적음</li>
+                            <li>클래스 안에 제약조건을 기술할 떄는 중괄호 {}를 이용함</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>관계 (Relationship)</td>
+                    <td></td>
+                    <td>
+                        <ul>
+                            <li>관계는 클래스와 클래스 사이의 연관성을 표현함</li>
+                            <li>클래스 다이어그램에 표현하는 관계에는 연관관계, 집합관계, 포함관계, 일반화 관계, 의존관계가 있음</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            <p>클래스 다이어그램 예제</p>
+            <ol class = "imageSlide">
+                <li><img src="./images/1-2/classDiagramExample.png" alt="클래스 다이어그램 예제" /></li>
+            </ol>
+    </article>    
+    <article>
+        <header>
+            <h2>연관 클래스</h2>
+        </header>
+        <ul>
+            <li>연관 관계에 있는 두 클래스에 <b>추가적으로 표현해야 할 속성이나 오퍼레이션</b>이 있는 경우 생성하는 클래스이다.</li>
+            <li>두 클래스의 연관 관계를 나타내는 선의 가운데로부터 점선을 연관클래스로 이어 표시한다.</li>
+            <li>연관 클래스의 이름은 연관 관계의 이름을 이용해 지정한다.</li>
+        </ul>
+    </article>
+    <article>
+        <header>
+            <h2>시퀀스 다이어그램</h2>            
+        </header>
+        <p>시스템이나 객체들이 메시지를 주고받으며 상호작용하는 과정을 그림으로 표현한 것</p>
+        <h3>구성요소</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>구성 요소</th>
+                    <th>표현 방법</th>
+                    <th>의미</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>액터(Actor)</td>
+                    <td><img src="./images/1-2/sequenceDiagramActor.png" width="50px" alt="Actor" /></td>
+                    <td>시스템으로부터 서비스를 요청하는 외부 요소로 사람이나 외부 시스템을 의미함</td>
+                </tr>
+                <tr>
+                    <td>객체(Object)</td>
+                    <td><img src="./images/1-2/sequenceDiagramObject.png" width="80px" alt="Object" /></td>
+                    <td>메시지를 주고 받는 주체</td>
+                </tr>
+                <tr>
+                    <td>생명선(Lifeline)</td>
+                    <td><img src="./images/1-2/sequenceDiagramLifeline.png" width="50px" alt="lifeline" /></td>
+                    <td>
+                        <ul>
+                            <li>객체가 메모리에 존재하는 기간으로, 객체 아래쪽에 점선을 그어 표현함</li>
+                            <li>객체 소멸(X)이 표시된 기간까지 존재함<  /li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>실행상자(Active Box, 활성상자)</td>
+                    <td><img src="./images/1-2/sequenceDiagramActiveBox.png" width="50px" alt="Active Box" /></td>
+                    <td>객체가 메시지를 주고 받으며 구동되고 있음을 표현함</td>
+                </tr>
+                <tr>
+                    <td>메시지(Message)</td>
+                    <td><img src="./images/1-2/sequenceDiagramMessage.png" width="80px" alt="Message" /></td>
+                    <td>객체가 상호 작용을 위해 주고받는 메시지</td>
+                </tr>
+                <tr>
+                    <td>객체 소멸</td>
+                    <td><img src="./images/1-2/sequenceDiagramDestruction.png" width="50px" alt="객체 소멸" /></td>
+                    <td>해당 객체가 더 이상 메모리에 존재하지 않음을 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>프레임(Frame)</td>
+                    <td><img src="./images/1-2/sequenceDiagramFrame.png" width="80px" alt="프레임" /></td>
+                    <td>다이어그램의 전체 또는 일부를 묶어 표현한 것</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>시퀀스 다이어그램 예제</p>
+        <ol class = "imageSlide">
+            <li><img src="./images/1-2/sequenceDiagramExample.png" alt="시퀀스 다이어그램 예제" /></li>
         </ol>
     </article>
 </body>
