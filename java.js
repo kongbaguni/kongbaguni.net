@@ -77,12 +77,12 @@ function changeMode(name) {
 }
 
 function makeImagePreview() {
-    $("ol.imageSlide > li > img").click(function() {
+    $("img").click(function() {
         $("#preview").remove();        
         let img = $("<div id=\"preview\"><img src='"+ this.src + "' alt=\"preview\" /></div>");
         $("body").append(img);
         img.click(function() {
             this.remove();
         });
-    })
+    })    
 }

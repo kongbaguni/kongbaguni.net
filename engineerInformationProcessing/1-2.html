@@ -32,10 +32,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>시스템(System) /<br/>
+                    <td>시스템(System),
                         시스템 범위(System Scope)
                     </td>
-                    <td><img src="./images/1-2/object.png" alt="상품주문"/></td>
+                    <td><img src="./images/1-2/object.png" width="80px" alt="상품주문"/></td>
                     <td>시스탬 내부의 유스케이스들을 사각형으로 묶어 시스템의 범위를 표현한 것</td>
                 </tr>
                 <tr>
@@ -43,10 +43,10 @@
                     <td>
                         <ul>
                             <li>주액터<br />
-                                <img src="./images/1-2/actor1.png" alt="주액터" />                                
+                                <img src="./images/1-2/actor1.png" width="50px" alt="주액터" />                                
                             </li>
                             <li>부액터<br />
-                                <img src="./images/1-2/actor2.png" alt="부액터" />                                
+                                <img src="./images/1-2/actor2.png" width="80px" alt="부액터" />                                
                             </li>
                         </ul>
                     </td>
@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <td>유스케이스(Use Case)</td>
-                    <td><img src="./images/1-2/useCase.png" alt="상품조회" /></td>
+                    <td><img src="./images/1-2/useCase.png" width="80px" alt="상품조회" /></td>
                     <td>사용자가 보는 관점에서 시스템이 액터에게 제공하는 서비스나 기능을 표현한 것</td>
                 </tr>
                 <tr>
@@ -69,13 +69,13 @@
                     <td>
                         <ul>
                             <li>포함<br />
-                                <img src="./images/1-2/include.png" alt="include" />
+                                <img src="./images/1-2/include.png" width="80px"  alt="include" />
                             </li>
                             <li>확장<br />
-                                <img src="./images/1-2/extends.png" alt="extends" />                                
+                                <img src="./images/1-2/extends.png" width="80px" alt="extends" />                                
                             </li>
                             <li>일반화<br />
-                                <img src="./images/1-2/generalization.png" alt="일반화" /></li>
+                                <img src="./images/1-2/generalization.png" width="80px" alt="일반화" /></li>
                         </ul>
                     </td>
                     <td>
@@ -89,7 +89,7 @@
         </table>
         <p>유스케이스 다이어그램 예제</p>
         <ol class = "imageSlide">
-            <li><img src="./images/1-2/useCaseDiagramExample.png" alt="useCaseDiagramExample" width="320" /></li>
+            <li><img src="./images/1-2/useCaseDiagramExample.png" alt="useCaseDiagramExample" /></li>
         </ol>
         <h3>유스케이스에서 나타날 수 있는 관계</h3>
         <table>
@@ -106,6 +106,103 @@
                 </tr>                
             </tbody>
         </table>
+        <h3>활동 다이어그램 (Activity Diagram)</h3>
+        <p>사용자 관점에서 시스템이 수행하는 기능을 처리흐름에 따라 순서대로 표현한 것</p>
+        <h4>구성요소</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>구성요소</th>
+                    <th>표현방법</th>
+                    <th>내용</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>액션(Action), 액티비티(Activity)</td>
+                    <td>
+                        <ul>
+                            <li>액션<br />
+                                <img src="./images/1-2/activityDiagramAction.png" width = "80px" alt="액션" />                                
+                            </li>
+                            <li>액티비티<br />
+                                <img src="./images/1-2/activityDiagramActivity.png" width = "80px" alt="액티비티" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>액션 : 더이상 분해할 수 없는 단일작업</li>
+                            <li>액티비티 : 몇개의 액션으로 분리될 수 있는 작업</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>시작 노드</td>
+                    <td><img src="./images/1-2/activityDiagramStart.png" alt="start" /></td>
+                    <td>액션이나 액티비티가 시작됨을 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>종료 노드</td>
+                    <td><img src="./images/1-2/activityDiagramEnd.png" alt="end" /></td>
+                    <td>액티비티 안의 모든 흐름이 종료됨을 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>조간(판단) 노드</td>
+                    <td><img src="./images/1-2/activityDiagramIf.png" width = "80px" alt="조건(판단)노드" /></td>
+                    <td>
+                        <ul>
+                            <li>조건에 따라 제어의 흐름이 분리됨을 표현한 것</li>
+                            <li>들어오는 제어흐름은 한개 나가는 제어흐름은 여러개</li>                        
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>병합 노드</td>
+                    <td><img src="./images/1-2/activityDiagramAbsorption.png" width = "80px" alt="병합 노드" /></td>
+                    <td>
+                        <ul>
+                            <li>여러 경로의 흐름이 하나로 합쳐짐을 표현한 것</li>
+                            <li>들어오는 제어 흐름은 여러 개 나가는 제어흐름은 한개</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>포크(Fork) 노드</td>
+                    <td><img src="./images/1-2/activityDiagramFork.png" width="80px" alt="포크 노드" /></td>
+                    <td>
+                        <ul>
+                            <li>액티비티의 흐름이 분리되어 수행됨을 표현한 것</li>
+                            <li>들어오는 액티비티의 흐름은 한개 나가는 액티비티의 흐름은 여러개</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>조인(Join) 노드</td>
+                    <td><img src="./images/1-2/activityDiagramJoin.png" width="80px" alt="조인 노드" /></td>
+                    <td>
+                        <ul>
+                            <li>분리되어 수행되던 액티비티의 흐름이 다시 합쳐짐을 표현한 것</li>
+                            <li>들어오는 액티비티의 흐름은 여러개 나가는 액티비티의 흐름은 한개</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>스윕레인(Swim Lane)</td>
+                    <td><img src="./images/1-2/activityDiagramSwimLane.png" alt="스윔레인" /></td>
+                    <td>
+                        <ul>
+                            <li>액티비티 수행을 담당하는 주체를 구분하는 선</li>
+                            <li>가로 또는 새로 실선을 그어 구분함</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>            
+        </table>
+        <p>활동 다이어그램 예제</p>
+        <ol class = "imageSlide">
+            <li><img src="./images/1-2/activityDiagramExample.png" alt="액티비티 다이얼로그 예제" /></li>
+        </ol>
     </article>
 </body>
 
