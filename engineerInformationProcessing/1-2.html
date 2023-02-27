@@ -213,7 +213,6 @@
                 <h2>클래스 다이어그램 (Class Diagram)</h2>        
             </header>
         <p>클래스와 클래스가 가지는 속성, 클래스 사이의 관계를 표현한 것</p>
-
         <h3>구성요소</h3>
         <table>
             <thead>
@@ -334,6 +333,117 @@
         <ol class = "imageSlide">
             <li><img src="./images/1-2/sequenceDiagramExample.png" alt="시퀀스 다이어그램 예제" /></li>
         </ol>
+    </article>
+
+    <article>
+        <header>
+            <h2>커뮤니케이션 다이어그램 (Communication Diagram)</h2>
+        </header>
+        <p>시스템이나 객체들이 메시지를 주고받으며 <b>상호작용하는 과정</b>과 <b>객체들 간의 연관</b>을 그림으로 표현한 것 </p>
+        <h3>구성요소</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>구성요소</th>
+                    <th>표현 방법</th>
+                    <th>의미</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>액터(Actor)</td>
+                    <td><img src="./images/1-2/communicationDiagramActor.png" width = "30px" alt="actor" /></td>
+                    <td>시스템으로부터 서비스를 요청하는 외부 요소로, 사람이나 외부 시스템을 의미함</td>                    
+                </tr>
+                <tr>
+                    <td>객체(Object)</td>
+                    <td><img src="./images/1-2/communicationDiagramObject.png" width="80px" alt="Object" /></td>
+                    <td>메시지를 주고받는 주체</td>
+                </tr>
+                <tr>
+                    <td>링크(Link)</td>
+                    <td><img src="./images/1-2/communicationDiagramLink.png" width="80px" alt="Link" /></td>
+                    <td>
+                        <ul>
+                            <li>객체들 간의 관계를 표현</li>
+                            <li>엑터와 객체, 객체와 객체간에 실선을 그어 표현함</li>                            
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>메시지(Message)</td>
+                    <td><img src="./images/1-2/communicationDiagramMessage.png" width="80px" alt="Message" /></td>
+                    <td>
+                        <ul>
+                            <li>객체가 상호 작용을 위해 주고받는 내용</li>
+                            <li>화살표의 방향은 메시지를 받는 쪽으로 향하게 표현함</li>
+                            <li>일정한 순서에 의해 처리되는 메시지의 경우 숫자로 순서를 표현함</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>            
+        </table>
+        <p>커뮤니케이션 다이어그램 예제</p>
+        <ol class = "imageSlide">
+            <li><img src="./images/1-2/communicationDiagramExample.svg" alt="커뮤니케이션 다이어그램 예제" /></li>
+        </ol>
+    </article>
+    <article>
+        <header>
+            <h2>상태 다이어그램</h2>
+        </header>
+        <p>객체들 사이에 발생하는 이벤트에 의한 객체들의 <b>상태변화</b>를 그림으로 표현한 것</p>
+        <h3>구성 요소</h3> 
+        <table>
+            <thead>
+                <tr>
+                    <th>구성 요소</th>
+                    <th>표현 방법</th>
+                    <th>의미</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>상태(State)</td>
+                    <td><img src="./images/1-2/stateDiagramState.svg" alt="State" width="80" /></td>
+                    <td>객케의 상태를 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>시작 상태</td>
+                    <td><img src="./images/1-2/stateDiagramStart.svg" alt="Start" width="80" /></td>
+                    <td>상태의 시작을 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>종료 상태</td>
+                    <td><img src="./images/1-2/stateDiagramEnd.svg" alt="End" width="80" /></td>
+                    <td>상태의 종료를 표현한 것</td>
+                </tr>
+                <tr>
+                    <td>상태 전환</td>
+                    <td><img src="./images/1-2/stateDiagramStateChange.svg" alt="End" width="80" /></td>
+                    <td>상태 사이의 흐름, 변화를 화살표로 표현한 것</td>
+                </tr>                
+                <tr>
+                    <td>이벤트(Event)</td>
+                    <td><img src="./images/1-2/stateDiagramEvent.svg" alt="End" width="80" /></td>
+                    <td>
+                        <ul>
+                            <li>상태에 변화르 주는 현상</li>
+                            <li>이벤트에는 조건, 외부 신호, 시간의 흐름 등이 있음</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>프레임(Frame)</td>
+                    <td><img src="./images/1-2/stateDiagramFrame.svg" alt="End" width="80" /></td>
+                    <td>상태 다이어그램의 범위를 표현한 것</td>
+                </tr>
+            </tbody>
+        </table>
+        <ol class = "imageSlide">
+            <li><img src="./images/1-2/stateDiagramExample.svg" alt="State Diagram Example" /></li>
+        </ol>
+        
     </article>
 </body>
 
