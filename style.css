@@ -310,7 +310,9 @@ blockquote > p, article blockquote ul li {
 article table {
     font-size: 13px;
 }
-
+article table tbody th {
+    background-color: #368;
+}
 article h5 {
     color: #48a;
     padding: 5px;
