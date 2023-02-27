@@ -269,7 +269,10 @@ table.diagram, table.diagram th, table.diagram td {
 }
 
 .diagram {
-    margin: 10px;
+    margin: 10px;    
+}
+p.diagram {
+    line-height: 50px;
 }
 
 .diagram span{
@@ -306,4 +309,15 @@ blockquote > p, article blockquote ul li {
 
 article table {
     font-size: 13px;
+}
+
+article h5 {
+    color: #48a;
+    padding: 5px;
+    margin: 2px;
+}
+article h6 {
+    color: #48f;
+    padding: 5px;
+    margin: 2px;
 }
