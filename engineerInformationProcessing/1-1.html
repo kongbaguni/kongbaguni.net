@@ -1,838 +1,839 @@
 <!DOCTYPE html>
-<head>
-    <title>정보처리기사 실기 공부 1-1장</title>
-    <meta charset="UTF-8"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-    <meta property="og:url" content="https://kongbaguni.net" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="kongbaguni.net" />
-    <meta property="og:description" content="정보처리기사 실기 대비 공부 1-1장" />
-    <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
-
-    <link rel="stylesheet" type="text/css" href="../style.css"></link>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="../java.js"></script>
-
-</head> 
-<body>
+<html>
+    <head>
+        <title>정보처리기사 실기 공부 1-1장</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="정보처리기사 실기 대비 공부 1-1장" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
     
-    <h1>정보처리기사 실기 1-1장</h1>
-    <article>
-        <header>
-            <h2>소프트웨어 공학 (SE : <b>Software Engineering</b>)</h2>
-        </header>
-        <p>소프트웨어 공학은 소프트웨어의 위기를 극복하기위한 방안으로 연구된 학문이다.
-            여러가지 <b>방법, 도구, 관리기법</b> 을 써서 <b>품질과 생산성 향상을 도모</b>한다.
-        </p>
-        <p>소프트웨어 공학의 3원칙</p>
-        <ol>
-            <li><b>현대적 프로그래밍 기술</b>을 <b>계속적</b>으로 적용한다.</li>
-            <li><b>지속적</b>으로 <b>검증</b>한다.</li>
-            <li>개발 관련 사항 및 결과를 <b>명확히 기록하여 유지</b>한다.</li>
-        </ol> 
-    </article>
-
-    <article>
-        <header>
-            <h2>소프트웨어 생명 주기 (<b>Software Life Cycle</b>)</h2>
-        </header>
-        <p>소프트웨어 생명주기란 <q><u>소프트웨어를 개발하기 위한</u> 설계,운용,유지보수 등의 <u>과정을 각 단계별로 나눈것</u></q>
-        나선형 모형, 폭포수 모형, 프로토타입 모형, 애자일 모형 등.</p>        
-        <h3>나선형 모델 (Spiral Model)</h3>
-        <p>나선따라 돌아가며 <b>점진적</b>으로 완벽한 소프트웨어를 만든다. 보햄(<b>Boehm</b>)이 제안함.</p>
-        <p>4가지 주요활동</p>         
-        <p><img src="./images/1-1/SpiralModel.svg" alt="Spiral Model" /></p>
-        <p><sup>고객평가에서 수정사항등이 발생하면 다시 계획수립부터 반복</sup></p>
-        <h3>폭포수 모델 (<b>Waterfall Model</b>)</h3>
-        <p>가장 오래된 생명주기 모델. 
-            <sub>폭포수가 한번 떨어지면 다시 올라가지 못하는 것 처럼, 
-                한번 단계를 넘거가뿔면 이전 단계로 갈 수 없음. 
-                <b>철저하게 검토하고. 승인과정을 거쳐</b>서 완벽하게 만든 다음 단계를 진행.</sub> </p>
-
-        <h3>프로토타입 모형 (<b>Prototype Model</b>)</h3>
-        <p>고객의 요구사항을 알기위해서 <b>견본품</b>을 미리 만들어보는것.</p>  
-        <h3>애자일 모형 (<b>Agile Model</b>)</h3>
-        <p><b>빠르고 낭비없는 고객과의 소통</b> 고객의 요구사항 변화에 유연하게 대응.
-            스크럼(Scrum) , 익스트림 프로그래밍 (XP, eXtreme Programming), 칸반(Kanban), Lean, 기능중심개발 (FDD:Features Driven Development) 
-            </p>            
-        <p>에자일의 핵심가치</p>
-        <ul>
-            <li>프로세스나 도구보다는 <b>개인과 상호작용</b></li>
-            <li>문서보다는 <b>실행되는 결과물(소프트웨어)</b></li>
-            <li>협상보다는 <b>협업</b></li>
-            <li>계획보다는 <b>변화에 반응</b></li>
-        </ul>
-            
-        <h4>스크럼 (Scrum)</h4>
-        <p>하나의 팀을 구성하여 개발 효율을 높임</p>
-        <p>스크럼의 구성원</p>
-        <ol>
-            <li>제품책임자 (PO : Product Owner)
-                <ul>
-                    <li>요구사항이 담긴 <b>Backlog</b>를 작성 </li>
-                    <li>제품에 대한 이해도 높고. 요구사항 책임지고. 의사 결정할 사람. </li>
-                </ul>
-            </li>
-            <li>스크럼마스터 (SM : Scrum Master) 
-                <ul>
-                    <li>스크럼 팀이 잘 수행할 수 있게 가이드역할.</li>
-                </ul>
-            </li>
-            <li>개발팀 (DT : Development Team) 
-                <ul>
-                    <li>스크럼 팀원</li>
-                </ul>
-            </li>
-        </ol>
-        <h4>스크럼 개발 순서</h4>
-        <p class="diagram">
-            <span>스트린트 계획 회의</span>→<span>스프린트</span>→<span>일일 스크럼 회의</span>→<span>스프린트 검토 회의</span>→<span>스프린트 회고</span>
-        </p>
-        <h4>익스트림 프로그래밍(XP : <b>eXtreme Programming</b>)</h4>
-        <p>수시로 발생하는 고객의 <b>요구사항</b>에 <b>유연하게 대응</b> 하기 위해 <b>고객의 참여</b>와 <b>개발과정의 반복</b> 을 극대화 하여 개발 생산성을 향상시키는 방법</p>
-        <ul>
-            <li>짧고 반복적인 개발주기</li>
-            <li>단순한 설계</li>
-            <li>고객의 적극적인 참여</li>
-        </ul>
-        <p>를 통해 소프트웨어를 빠르게 개발하는 것이 목적.</p>
-        <h4>XP의 주요 실천 방법(<b>Practice</b>)</h4>
-        <p><sub>익스트림 프로그래밍에는 몇가지 실천방법(Practice)가 있는디 다음과 같슈.</sub></p>
-        <ol>
-            <li><b>Pair Programming</b>(짝 프로그래밍)
-                <ul>
-                    <li>다른사람과 함께 개발 진행. 책임도 공동으로 나눔.</li>
-                </ul>
-            </li>
-            <li><b>Collective Onership</b>(공통 코드 소유)
-                <ul>
-                    <li>개발 코드에 대한 권한,책임을 공동으로 소유</li>
-                </ul>
-            </li>
-            <li><b>Test-Driven Development</b>(테스트 주도 개발)
-                <ul>
-                    <li>개발자는 코딩전에 테스트 케이스를 먼저 작성해서 개발 사항을 정확히 파악</li>
-                    <li>테스트가 지속적으로 진행될 수 있도록 자동화된 테스팅 도구를 사용</li>
-                </ul>
-            </li>
-            <li><b>Whole Team</b>(전체 팀)
-                <ul>
-                    <li>개발에 참여하는 모든 인원(고객 포함)은 각자 역할이 있고, 그 역할에 책임을 가져야 한다.</li>
-                </ul>
-            </li>
-            <li><b>Continous Intergration</b>(계속적인 통합)
-                <ul>
-                    <li>모듈단위로 개발된 코드는 작업 마무리 될 때마다 지속적으로 통합된다.</li>
-                </ul>
-            </li>
-            <li><b>Refactoring</b>(리팩토링)
-                <ul>
-                    <li>개발된 프로그램의 기능 변경없이 내부코드를 재구성</li>
-                    <li>목적 : 다른 개발자가 <b>코드를 쉽게 이해하고. 유지보수가 용이하게</b> 만들기 위함</li>
-                </ul>
-            </li>
-            <li><b>Small Release</b>(소규모 릴리즈)
-                <ul>
-                    <li>릴리즈 기간을 짧게 반복함으로서 고객의 요구에 신속히 대응할 수 있다.</li>
-                </ul>
-            </li>
-        </ol>             
-    </article>
-    <article>
-        <header>
-            <h2>데이터베이스 관리 시스템 (DBMS : <b>Database Management System</b></h2>
-        </header>
-        <p> 사용자와 데이터베이스 사이에서 사용자의 요구에 따라 정보를 생성해주고, 데이터베이스를 관리해주는 소프트웨어 </p>            
-        <p> DBMS 관련 요구사항 식별시 고려해야 할 사항
+        <link rel="stylesheet" type="text/css" href="../style.css"></link>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="../java.js"></script>
+    
+    </head> 
+    <body>
+        
+        <h1>정보처리기사 실기 1-1장</h1>
+        <article>
+            <header>
+                <h2>소프트웨어 공학 (SE : <b>Software Engineering</b>)</h2>
+            </header>
+            <p>소프트웨어 공학은 소프트웨어의 위기를 극복하기위한 방안으로 연구된 학문이다.
+                여러가지 <b>방법, 도구, 관리기법</b> 을 써서 <b>품질과 생산성 향상을 도모</b>한다.
+            </p>
+            <p>소프트웨어 공학의 3원칙</p>
+            <ol>
+                <li><b>현대적 프로그래밍 기술</b>을 <b>계속적</b>으로 적용한다.</li>
+                <li><b>지속적</b>으로 <b>검증</b>한다.</li>
+                <li>개발 관련 사항 및 결과를 <b>명확히 기록하여 유지</b>한다.</li>
+            </ol> 
+        </article>
+    
+        <article>
+            <header>
+                <h2>소프트웨어 생명 주기 (<b>Software Life Cycle</b>)</h2>
+            </header>
+            <p>소프트웨어 생명주기란 <q><u>소프트웨어를 개발하기 위한</u> 설계,운용,유지보수 등의 <u>과정을 각 단계별로 나눈것</u></q>
+            나선형 모형, 폭포수 모형, 프로토타입 모형, 애자일 모형 등.</p>        
+            <h3>나선형 모델 (Spiral Model)</h3>
+            <p>나선따라 돌아가며 <b>점진적</b>으로 완벽한 소프트웨어를 만든다. 보햄(<b>Boehm</b>)이 제안함.</p>
+            <p>4가지 주요활동</p>         
+            <p><img src="./images/1-1/SpiralModel.svg" alt="Spiral Model" /></p>
+            <p><sup>고객평가에서 수정사항등이 발생하면 다시 계획수립부터 반복</sup></p>
+            <h3>폭포수 모델 (<b>Waterfall Model</b>)</h3>
+            <p>가장 오래된 생명주기 모델. 
+                <sub>폭포수가 한번 떨어지면 다시 올라가지 못하는 것 처럼, 
+                    한번 단계를 넘거가뿔면 이전 단계로 갈 수 없음. 
+                    <b>철저하게 검토하고. 승인과정을 거쳐</b>서 완벽하게 만든 다음 단계를 진행.</sub> </p>
+    
+            <h3>프로토타입 모형 (<b>Prototype Model</b>)</h3>
+            <p>고객의 요구사항을 알기위해서 <b>견본품</b>을 미리 만들어보는것.</p>  
+            <h3>애자일 모형 (<b>Agile Model</b>)</h3>
+            <p><b>빠르고 낭비없는 고객과의 소통</b> 고객의 요구사항 변화에 유연하게 대응.
+                스크럼(Scrum) , 익스트림 프로그래밍 (XP, eXtreme Programming), 칸반(Kanban), Lean, 기능중심개발 (FDD:Features Driven Development) 
+                </p>            
+            <p>에자일의 핵심가치</p>
             <ul>
-                <li>가용성</li>
-                <li>성능</li>
-                <li>기술지원</li>
-                <li>상호 호환성</li>
-                <li>구축 비용</li>
+                <li>프로세스나 도구보다는 <b>개인과 상호작용</b></li>
+                <li>문서보다는 <b>실행되는 결과물(소프트웨어)</b></li>
+                <li>협상보다는 <b>협업</b></li>
+                <li>계획보다는 <b>변화에 반응</b></li>
             </ul>
-        </p>
-    </article>
-    <article>
-        <header>
-            <h2>웹 애플리케이션 서버 (WAS : <b>Web Application Server</b>)</h2>
-        </header>
-        <p>사용자의 요구에 따라 변화하는 <b>동적인 콘텐츠</b>를 처리하기 위해 사용하는 <b>미들웨어</b></p>
-        <p>요구사항 식별시 고려사항</p>
-        <ul>
-            <li>가용성</li>
-            <li>성능</li>
-            <li>기술 지원</li>
-            <li>구축 비용</li>
-        </ul>
-    </article>
-    <article>
-        <header>
-            <h2>오픈소스 (<b>Open Source</b>)</h2>            
-        </header>
-        <p> 아무나 제한없이 <b>사용할 수 있도록 소스코드가 공개된 소프트웨어</b></p>
-        <p> 요구사항 식별시 고려사항은 다음이유</p>
-        <ul>
-            <li>라이선스의 종류</li>
-            <li>사용자 수</li>
-            <li>기술의 지속 가능성</li>
-        </ul>
-    </article>    
-
-    <article>
-        <header>
-            <h2>요구사항</h2>
-        </header>
-        <ul>
-            <li>소프트웨어가 제공하는 서비스에 대한 설명</li>
-            <li>소프트웨어가 정상적으로 운영되는데 핋요한 제약조건</li>
-        </ul>
-
-        <h3>기능 요구사항(<b>Functional Requiremnts</b>)</h3>
-        <ol>
-            <li>시스템이 무었을 하는지 어떤 기능을 하는지</li>
-            <li>시스템의 입력이나 출력으로 무었이 포함되어야 하는지</li>
-            <li>시스템이 어떤 데이터를 저장하거나 연산을 수행하는지</li>
-            <li>시스템이 반드시 수행해야 하는 기능</li>
-            <li>사용자가 시스템을 통해 제공받기를 원하는 기능</li>
-        </ol>
-        <h3>비기능 요구사항(<b>Non-Functional Requiremnts</b>)</b></h3>
-        <p>품질이나 제약사항과 관련된 요구사항. 시스템의 장비구성, 성능, 인터페이스, 테스트, 보안 등의 요구사항.</p>
-        <ol>
-            <li>품질, 제약사항과 관련된 요구사항</li>
-            <li>시스템 장비 구성 요구사항</li>
-            <li>성능 요구사항</li>
-            <li>인터페이스 요구사항</li>
-            <li>데이터를 구축하기 위해 필요한 요구사항</li>
-            <li>테스트 요구사항</li>
-            <li>보안 요구사항</li>
-            <li><b>품질 요구사항</b> 가용성, 정합성, 상호호환성, 대응성, 이식성, 확장성, 보안성 등</li>
-            <li>제약사항</li>
-            <li>프로젝트 관리 요구사항</li>
-            <li>프로젝트 자원 요구사항</li>
-        </ol>
-        <h3>요구사항 개발 프로세스</h3>
-        <ol>
-            <li>도출 (Elicitation)</li>
-            <li>분석 (Analysis)</li>
-            <li>명세 (Specification)</li>
-            <li>확인 (Validation)</li>
-        </ol>
-        <h3>요구사항 명세</h3>
-        <ul>
-            <li>분석된 요구사항을 바탕으로 <b>모델</b>을 작성하고 <b>문서화</b>하는것</li>
-            <li>기능 요구사항은 빠짐없이</li>
-            <li>비기능 요구사항은 필요한 것만</li>            
-        </ul>
-        <h3>요구사항 명세 기법</h3>
-        <ul>
-            <li>수학적 원리와 표기법 : 정형 명세기법 </li>
-            <li>자연어 사용 : 비정형 명세기법</li>    
-        </ul>
-        <table>
-            <thead>
-                <tr>
-                    <th>구분</th>
-                    <th>정형 명세 기법</th>
-                    <th>비정형 명세 기법</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>기법</td>
-                    <td>수학적 원리기반, 모델 기반</td>
-                    <td>상태/기능/객체 중심</td>
-                </tr>
-                <tr>
-                    <td>작성방법</td>
-                    <td>수학적 기호, 정형화된 표기법</td>
-                    <td>일반명사,동사 등 자연어 기반 서술 또는 아이어그램</td>
-                </tr>
-                <tr>
-                    <td>특징</td>
-                    <td>
-                        <ul>
-                            <li>요구사항을 정확하고 간결하게 표현</li>
-                            <li>요구사항에 대한 결과가 작성자에 상관없이 <b>일관성</b>이 있으므로 완전성 검증 가능 </li>
-                            <li>표기업이 어려워 사용자가 이해하기 어려움</li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            <li>자연어 사용 : 요구사항에 대한 결과가 작성자에 따라 다를 수 있음 : 일관성 떨어짐. 해석이 달라질 수 있음</li>
-                            <li>내용 이해가 쉬워 의사소통 용이</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td>종류</td>
-                    <td>VDM, Z, Petri-net, CSP</td>
-                    <td>FSM, Decision Table, ER모델링, State Chart(SADT)</td>
-                </tr>
-            </tbody>
-        </table>        
-    </article>
-    <article>
-        <header>
-            <h2>요구사항 분석 (Requiremnts Analysis)</h2>
-        </header>
-        <ul>
-            <li>소프트웨어 개발의 실제적인 첫단계. 개발 대상에 대한 사용자의 요구사항을 이해하고 문서화하는 활동</li>
-            <li>사용자 요구의 타당성조사. 비용과 일정에 대한 제약 설정</li>
-            <li>사용자의 요구를 정확하게 추출하여 목표를 정한다.</li>
-        </ul>
-    </article>
-    <article>
-        <header>
-            <h2>자료 흐름도 (DFD : Data Flow Diagram)</h2>            
-        </header>
-        <ul>
-            <li>자료의 흐름 및 변환과정과 기능을 <b>도형 중심</b>으로 기술하는 방법 </li>
-            <li>자료 흐름 그래프, 버블차트라고도 함</li>
-        </ul>
-        <h3>자료 흐름도의 구성요소</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>기호</th>
-                    <th>의미</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>프로세스 (<b>Process</b>)</td>
-                    <td>자료를 변환시키는 시스템의 한 부분(처리과정)을 나타냄. 처리, 기능, 변환, 버블이라고도 함</td>
-                </tr>
-                <tr>
-                    <td>자료 흐름 (<b>Data Flow</b>)</td>
-                    <td>자료의 이동(흐름)이나 연관관계</td>
-                </tr>
-                <tr>
-                     <td>자료 저장소 (<b>Data Store</b>)</td>
-                     <td>자료저장소 (파일, 데이터베이스)</td>
-                </tr>
-                <tr>
-                    <td>단말 (<b>Terminator</b>)</td>
-                    <td>시스템과 교신하는 외부개체. 입력 데이터 만들어지고 출력데이터 받음.</td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>자료 사전 (DD : <b>Data Dictionary</b>)</h3>
-        <p>자료 흐름도에 있는 자료를 <b>더 자세히 정의하고 기록</b>한것</p>
-        <p>자료 사전에서 사용되는 표기기호</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>기호</th>
-                    <th>의미</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>=</td>
-                    <td><b>자료의 정의</b> : ~로 구성되어 있다 (is composed of)</td>
-                </tr>
-                <tr>
-                    <td>+</td>
-                    <td><b>자료의 연결</b> : 그리고 (and)</td>
-                </tr>
-                <tr>
-                    <td>()</td>
-                    <td><b>자료의 생략</b> : 생략 가능한 자료 (Optional)</td>
-                </tr>
-                <tr>
-                    <td>[]</td>
-                    <td><b>자료의 선택</b> : 또는 (or)</td>
-                </tr>
-                <tr>
-                    <td>{}</td>
-                    <td><b>자료의 반복</b> : Iteration of</td>
-                </tr>
-                <tr>
-                    <td>**</td>
-                    <td><b>자료의 설명</b> : 주석 (Comment) </td>
-                </tr>
-            </tbody>
-        </table>
-        <h3>요구사항 분석용 CASE (자동화 도구)</h3>
-        <p>요구사항을 <b>자동으로 분석</b>하고, 요구사항 <b>분석명세서를 기술</b>하도록 개발된 도구</p>
-        <ul>
-            <li>SADT</li>        
-            <li>SREM(=RSL/REVS)</li>            
-            <li>PSL/PSA</li>
-            <li>TAGS</li>
-        </ul>
-        <h3>SADT</h3>
-        <ul>
-            <li>시스템 정의, 소프트웨어 요구사항 분석, 시스템/소프트웨어 설계를 위한 도구</li>
-            <li><b>SoftTech</b> 에서 개발</li>
-            <li>구조적 요구 분석을 하기 위해 블록 다이어그램을 채택한 자동화도구</li>
-        </ul>
-        <h3>HIPO (Hierarch Input Process Output)</h3>
-        <ul>
-            <li>시스템의 분석 및 설계, 문서화에 사용되는 기법. 시스템의 실행과정인 <b>입력, 처리, 출력</b>의 기능을 표현</li>
-            <li><b>하향식 소프트웨어 개발</b>을 위한 문서화도구</li>
-            <li>시스템의 기능을 여러 개의 고유 모듈로 분할하여 이들간의 인터페이스를 계층구조로 표현함</li>
-        </ul>
-        <h3>UML (Unified Modeling Language)</h3>
-        <ul>
-            <li>시스템 분석, 설계, 구현등 <b>시스템 개발 과정</b>에서 개발자와 고객 또는 개발자 상호간의 <b>의사소통</b> 이 원활하게 이루어지도록 
-            표준화한 대표적인 <b>객체지향 모델링 언어</b></li>
-            <li>Rumbaugh(OMT), Booch, Jacobson 등의 객체지향 방법론의 장점을 통합</li>
-            <li>UML 의 구성요소 
-                <ul>
-                    <li>사물 (<b>Things</b>)</li>
-                    <li>관계 (<b>Relationships</b>)</li>
-                    <li>다이어그램 (<b>Diagram</b>)</li>
-                </ul>
-            </li>
-        </ul>
+                
+            <h4>스크럼 (Scrum)</h4>
+            <p>하나의 팀을 구성하여 개발 효율을 높임</p>
+            <p>스크럼의 구성원</p>
+            <ol>
+                <li>제품책임자 (PO : Product Owner)
+                    <ul>
+                        <li>요구사항이 담긴 <b>Backlog</b>를 작성 </li>
+                        <li>제품에 대한 이해도 높고. 요구사항 책임지고. 의사 결정할 사람. </li>
+                    </ul>
+                </li>
+                <li>스크럼마스터 (SM : Scrum Master) 
+                    <ul>
+                        <li>스크럼 팀이 잘 수행할 수 있게 가이드역할.</li>
+                    </ul>
+                </li>
+                <li>개발팀 (DT : Development Team) 
+                    <ul>
+                        <li>스크럼 팀원</li>
+                    </ul>
+                </li>
+            </ol>
+            <h4>스크럼 개발 순서</h4>
+            <p class="diagram">
+                <span>스트린트 계획 회의</span>→<span>스프린트</span>→<span>일일 스크럼 회의</span>→<span>스프린트 검토 회의</span>→<span>스프린트 회고</span>
+            </p>
+            <h4>익스트림 프로그래밍(XP : <b>eXtreme Programming</b>)</h4>
+            <p>수시로 발생하는 고객의 <b>요구사항</b>에 <b>유연하게 대응</b> 하기 위해 <b>고객의 참여</b>와 <b>개발과정의 반복</b> 을 극대화 하여 개발 생산성을 향상시키는 방법</p>
+            <ul>
+                <li>짧고 반복적인 개발주기</li>
+                <li>단순한 설계</li>
+                <li>고객의 적극적인 참여</li>
+            </ul>
+            <p>를 통해 소프트웨어를 빠르게 개발하는 것이 목적.</p>
+            <h4>XP의 주요 실천 방법(<b>Practice</b>)</h4>
+            <p><sub>익스트림 프로그래밍에는 몇가지 실천방법(Practice)가 있는디 다음과 같슈.</sub></p>
+            <ol>
+                <li><b>Pair Programming</b>(짝 프로그래밍)
+                    <ul>
+                        <li>다른사람과 함께 개발 진행. 책임도 공동으로 나눔.</li>
+                    </ul>
+                </li>
+                <li><b>Collective Onership</b>(공통 코드 소유)
+                    <ul>
+                        <li>개발 코드에 대한 권한,책임을 공동으로 소유</li>
+                    </ul>
+                </li>
+                <li><b>Test-Driven Development</b>(테스트 주도 개발)
+                    <ul>
+                        <li>개발자는 코딩전에 테스트 케이스를 먼저 작성해서 개발 사항을 정확히 파악</li>
+                        <li>테스트가 지속적으로 진행될 수 있도록 자동화된 테스팅 도구를 사용</li>
+                    </ul>
+                </li>
+                <li><b>Whole Team</b>(전체 팀)
+                    <ul>
+                        <li>개발에 참여하는 모든 인원(고객 포함)은 각자 역할이 있고, 그 역할에 책임을 가져야 한다.</li>
+                    </ul>
+                </li>
+                <li><b>Continous Intergration</b>(계속적인 통합)
+                    <ul>
+                        <li>모듈단위로 개발된 코드는 작업 마무리 될 때마다 지속적으로 통합된다.</li>
+                    </ul>
+                </li>
+                <li><b>Refactoring</b>(리팩토링)
+                    <ul>
+                        <li>개발된 프로그램의 기능 변경없이 내부코드를 재구성</li>
+                        <li>목적 : 다른 개발자가 <b>코드를 쉽게 이해하고. 유지보수가 용이하게</b> 만들기 위함</li>
+                    </ul>
+                </li>
+                <li><b>Small Release</b>(소규모 릴리즈)
+                    <ul>
+                        <li>릴리즈 기간을 짧게 반복함으로서 고객의 요구에 신속히 대응할 수 있다.</li>
+                    </ul>
+                </li>
+            </ol>             
         </article>
         <article>
             <header>
-                <h2>관계 (Relationship)</h2>
+                <h2>데이터베이스 관리 시스템 (DBMS : <b>Database Management System</b></h2>
             </header>
-            <p><b>사물과 사물 사이의 연관성</b>을 표현</p>
-            <p>관계의 종류</p>
-            <ul>
-                <li>연관 관계</li>
-                <li>집합 관계</li>
-                <li>포함 관계</li>
-                <li>일반화 관계</li>
-                <li>의존 관계</li>
-                <li>실체화 관계</li>
-            </ul>
-            <h3>연관 관계 (Association)</h3>
-            <ul>
-                <li><b>2개이상의 사물이 서로 관련되어 있는 관계</b></li>
-                <li>사물 사이를 실선으로 연결하여 표현</li>
-                <li>방향성은 화살표로 표현</li>
-                <li>다중도를 선 위에 표기</li>
-            </ul> 
-            <p class="diagram"><span>사람</span>⎯<sup>1</sup>⎯⎯⎯⎯<sup>1</sup>⎯><span>집</span>
-                <sup>사람은 집을 소유한다. 사람은 집에 대하 알고 있지만 집은 자신의 소유자를 모른다. 
-                    사람 쪽의 다중도 1이므로 집은 한사람의 집주인만 가질 수 있다. 
-                    집 쪽의 다중도가 1이므로 사람은 집을 하나만 가질 수 있다.
-                </sup>
+            <p> 사용자와 데이터베이스 사이에서 사용자의 요구에 따라 정보를 생성해주고, 데이터베이스를 관리해주는 소프트웨어 </p>            
+            <p> DBMS 관련 요구사항 식별시 고려해야 할 사항
+                <ul>
+                    <li>가용성</li>
+                    <li>성능</li>
+                    <li>기술지원</li>
+                    <li>상호 호환성</li>
+                    <li>구축 비용</li>
+                </ul>
             </p>
-            <h3>집합 관계 (Aggregation)</h3>
+        </article>
+        <article>
+            <header>
+                <h2>웹 애플리케이션 서버 (WAS : <b>Web Application Server</b>)</h2>
+            </header>
+            <p>사용자의 요구에 따라 변화하는 <b>동적인 콘텐츠</b>를 처리하기 위해 사용하는 <b>미들웨어</b></p>
+            <p>요구사항 식별시 고려사항</p>
             <ul>
-                <li><b>하나의 사물이 다른 사물에 포함되어 있는 관계</b></li>
-                <li>포함하는 쪽과 포함되는 쪽은 서로 독립적</li>
-                <li>포함하는 쪽으로 <b>마름모</b>를 연결하여 표현한다</li>            
+                <li>가용성</li>
+                <li>성능</li>
+                <li>기술 지원</li>
+                <li>구축 비용</li>
             </ul>
-            <p class="diagram"><span>컴퓨터</span>◇⎯⎯⎯⎯<span>프린터</span><sup>프린터는 컴퓨터에 연결 가능, 다른 컴퓨터 연결 가능.</sup></p>
-            <h3>포함 관계 (Composition)</h3>
+        </article>
+        <article>
+            <header>
+                <h2>오픈소스 (<b>Open Source</b>)</h2>            
+            </header>
+            <p> 아무나 제한없이 <b>사용할 수 있도록 소스코드가 공개된 소프트웨어</b></p>
+            <p> 요구사항 식별시 고려사항은 다음이유</p>
             <ul>
-                <li>집합 관계의 특수한 형태. <b>포함하는 사물의 변화가 사물에게 영향을 미치는 관계</b></li>
-                <li>포함하는 쪽과 포함되는 쪽은 서로 독립될 수 없고, 생명주기를 함께한다</li>
-                <li>속이 채워진 마름모를 연결하여 표현한다</li>
+                <li>라이선스의 종류</li>
+                <li>사용자 수</li>
+                <li>기술의 지속 가능성</li>
             </ul>
-            <p class="diagram"><span>문(Door)</span>◆⎯⎯⎯⎯<span>키(Key)</span><sup>문을 열 수 있는 키는 하나. 해당키로 다른 문 열수 없다. 문이 없어지면 키도 불필요.</sup></p>
-            <h3>일반화 관계 (Generalization)</h3>
+        </article>    
+    
+        <article>
+            <header>
+                <h2>요구사항</h2>
+            </header>
             <ul>
-                <li>하나의 사물이 다른 사물에 비해 더 일반적이거나 구체적인 관계</li>
-                <li>보다 일반적인 개념 : 상위(부모) 보다 구체적인 개념 : 하위(자식)</li>            
-                <li>자식에서 부모로 속이 빈 화살표 연결</li>
+                <li>소프트웨어가 제공하는 서비스에 대한 설명</li>
+                <li>소프트웨어가 정상적으로 운영되는데 핋요한 제약조건</li>
             </ul>
-            <table class="diagram">
-                <tr>
-                    <td rowspan="2"><span>커피</span></td>
-                    <td>◁⎯⎯<span>에스프레소</span></td>
-                </tr>
-                <tr>
-                    <td>◁⎯⎯⎯⎯⎯⎯⎯⎯<span>아메리카노</span></td>
-                </tr>
+    
+            <h3>기능 요구사항(<b>Functional Requiremnts</b>)</h3>
+            <ol>
+                <li>시스템이 무었을 하는지 어떤 기능을 하는지</li>
+                <li>시스템의 입력이나 출력으로 무었이 포함되어야 하는지</li>
+                <li>시스템이 어떤 데이터를 저장하거나 연산을 수행하는지</li>
+                <li>시스템이 반드시 수행해야 하는 기능</li>
+                <li>사용자가 시스템을 통해 제공받기를 원하는 기능</li>
+            </ol>
+            <h3>비기능 요구사항(<b>Non-Functional Requiremnts</b>)</b></h3>
+            <p>품질이나 제약사항과 관련된 요구사항. 시스템의 장비구성, 성능, 인터페이스, 테스트, 보안 등의 요구사항.</p>
+            <ol>
+                <li>품질, 제약사항과 관련된 요구사항</li>
+                <li>시스템 장비 구성 요구사항</li>
+                <li>성능 요구사항</li>
+                <li>인터페이스 요구사항</li>
+                <li>데이터를 구축하기 위해 필요한 요구사항</li>
+                <li>테스트 요구사항</li>
+                <li>보안 요구사항</li>
+                <li><b>품질 요구사항</b> 가용성, 정합성, 상호호환성, 대응성, 이식성, 확장성, 보안성 등</li>
+                <li>제약사항</li>
+                <li>프로젝트 관리 요구사항</li>
+                <li>프로젝트 자원 요구사항</li>
+            </ol>
+            <h3>요구사항 개발 프로세스</h3>
+            <ol>
+                <li>도출 (Elicitation)</li>
+                <li>분석 (Analysis)</li>
+                <li>명세 (Specification)</li>
+                <li>확인 (Validation)</li>
+            </ol>
+            <h3>요구사항 명세</h3>
+            <ul>
+                <li>분석된 요구사항을 바탕으로 <b>모델</b>을 작성하고 <b>문서화</b>하는것</li>
+                <li>기능 요구사항은 빠짐없이</li>
+                <li>비기능 요구사항은 필요한 것만</li>            
+            </ul>
+            <h3>요구사항 명세 기법</h3>
+            <ul>
+                <li>수학적 원리와 표기법 : 정형 명세기법 </li>
+                <li>자연어 사용 : 비정형 명세기법</li>    
+            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>정형 명세 기법</th>
+                        <th>비정형 명세 기법</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>기법</td>
+                        <td>수학적 원리기반, 모델 기반</td>
+                        <td>상태/기능/객체 중심</td>
+                    </tr>
+                    <tr>
+                        <td>작성방법</td>
+                        <td>수학적 기호, 정형화된 표기법</td>
+                        <td>일반명사,동사 등 자연어 기반 서술 또는 아이어그램</td>
+                    </tr>
+                    <tr>
+                        <td>특징</td>
+                        <td>
+                            <ul>
+                                <li>요구사항을 정확하고 간결하게 표현</li>
+                                <li>요구사항에 대한 결과가 작성자에 상관없이 <b>일관성</b>이 있으므로 완전성 검증 가능 </li>
+                                <li>표기업이 어려워 사용자가 이해하기 어려움</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>자연어 사용 : 요구사항에 대한 결과가 작성자에 따라 다를 수 있음 : 일관성 떨어짐. 해석이 달라질 수 있음</li>
+                                <li>내용 이해가 쉬워 의사소통 용이</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>종류</td>
+                        <td>VDM, Z, Petri-net, CSP</td>
+                        <td>FSM, Decision Table, ER모델링, State Chart(SADT)</td>
+                    </tr>
+                </tbody>
+            </table>        
+        </article>
+        <article>
+            <header>
+                <h2>요구사항 분석 (Requiremnts Analysis)</h2>
+            </header>
+            <ul>
+                <li>소프트웨어 개발의 실제적인 첫단계. 개발 대상에 대한 사용자의 요구사항을 이해하고 문서화하는 활동</li>
+                <li>사용자 요구의 타당성조사. 비용과 일정에 대한 제약 설정</li>
+                <li>사용자의 요구를 정확하게 추출하여 목표를 정한다.</li>
+            </ul>
+        </article>
+        <article>
+            <header>
+                <h2>자료 흐름도 (DFD : Data Flow Diagram)</h2>            
+            </header>
+            <ul>
+                <li>자료의 흐름 및 변환과정과 기능을 <b>도형 중심</b>으로 기술하는 방법 </li>
+                <li>자료 흐름 그래프, 버블차트라고도 함</li>
+            </ul>
+            <h3>자료 흐름도의 구성요소</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>기호</th>
+                        <th>의미</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>프로세스 (<b>Process</b>)</td>
+                        <td>자료를 변환시키는 시스템의 한 부분(처리과정)을 나타냄. 처리, 기능, 변환, 버블이라고도 함</td>
+                    </tr>
+                    <tr>
+                        <td>자료 흐름 (<b>Data Flow</b>)</td>
+                        <td>자료의 이동(흐름)이나 연관관계</td>
+                    </tr>
+                    <tr>
+                         <td>자료 저장소 (<b>Data Store</b>)</td>
+                         <td>자료저장소 (파일, 데이터베이스)</td>
+                    </tr>
+                    <tr>
+                        <td>단말 (<b>Terminator</b>)</td>
+                        <td>시스템과 교신하는 외부개체. 입력 데이터 만들어지고 출력데이터 받음.</td>
+                    </tr>
+                </tbody>
             </table>
-            </p>
-            <h3>의존관계 (Dependency)</h3>
-            <ul>
-                <li>필요에 의해 서로에게 영향을 주는 특정 시간동안만 연관을 유지하는 관계</li>            
-            </ul>
-            <p class="diagram"><span>등급</span>-------><span>할인율</span>
-                <sup>등급이 높으면 할인율 적용하고 낮으면 적용하지 않는다.</sup>
-            </p>
-            <h3>실체화 관계</h3>
-            <ul>
-                <li>사물이 할 수 있거나 해야 하는 기능으로, 서로를 그룹화 할 수 있는 관계</li>
-            </ul>
-            <table class="diagram">
-                <tr>
-                    <td rowspan="2"><span>날 수 있다</span></td>
-                    <td>◁--------<span>새</span></td>
-                </tr>
-                <tr>
-                    <td>◁----------------<span>비행기</span></td>                
-                </tr>
+            <h3>자료 사전 (DD : <b>Data Dictionary</b>)</h3>
+            <p>자료 흐름도에 있는 자료를 <b>더 자세히 정의하고 기록</b>한것</p>
+            <p>자료 사전에서 사용되는 표기기호</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>기호</th>
+                        <th>의미</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>=</td>
+                        <td><b>자료의 정의</b> : ~로 구성되어 있다 (is composed of)</td>
+                    </tr>
+                    <tr>
+                        <td>+</td>
+                        <td><b>자료의 연결</b> : 그리고 (and)</td>
+                    </tr>
+                    <tr>
+                        <td>()</td>
+                        <td><b>자료의 생략</b> : 생략 가능한 자료 (Optional)</td>
+                    </tr>
+                    <tr>
+                        <td>[]</td>
+                        <td><b>자료의 선택</b> : 또는 (or)</td>
+                    </tr>
+                    <tr>
+                        <td>{}</td>
+                        <td><b>자료의 반복</b> : Iteration of</td>
+                    </tr>
+                    <tr>
+                        <td>**</td>
+                        <td><b>자료의 설명</b> : 주석 (Comment) </td>
+                    </tr>
+                </tbody>
             </table>
-    </article>
-    <article>
-        <header>
-            <h2>다이어그램 (Diagram)</h2>
-        </header>
-        <p>사물과 관계를 도형으로 표현한 것</p>
-        <ul>
-            <li>정적 모델링 : 구조적 다이어그램</li>
-            <li>동적 모델링 : 행위 다이어그램</li>
-        </ul>
-        <h3>구조적 다이어그램</h3>
-        <ul>
-            <li>클래스 다이어그램 (Class Diagram)
-                <ul>
-                    <li>클래스, 클래스의 속성, 클래스 사이의 관계를 표현</li>
-                </ul>
-            </li>
-            <li>객체 다이어그램 (Object Diagram)
-                <ul>
-                    <li>클래스에 속한 객채(Instance)를 특정시점의 객체와 객체사이의 관계로 표현</li>
-                    <li>럼바우(Rumbaugh) 객체지향 분석 기법에서 객체 모델링에 활용</li>
-                </ul>
-            </li>
-            <li>컴포넌트 다이어그램 (Component Diagram)
-                <ul>
-                    <li>컴포넌트 간의 관계, 컴포넌트 간의 인터페이스를 표현</li>
-                    <li>구현 단계에서 사용됨</li>
-                </ul>
-            </li>
-            <li>배치 다이어그램 (Deployment Diagram)
-                <ul>
-                    <li>결과물, 프로세스, 컴포넌트 등 물리적 요소들의 위치를 표현</li>
-                    <li>구현 단계에서 사용됨</li>
-                </ul>
-            </li>
-            <li>복합체 구조 다이어그램
-                <ul>
-                    <li>클래스나 컴포넌트가 복합구조를 갖는 경우 그 내부 구조를 표현</li>
-                </ul>
-            </li>
-            <li>패키지 다이어그램 (Package Diagram)
-                <ul>
-                    <li>유스케이스나 클래스 등의 모델 요소들을 그룹화한 패키지들의 관계를 표현</li>
-                </ul>
-            </li>
-        </ul>        
-        <h3>행위 다이어그램</h3>
-        <ul>
-            <li>유스케이스 다이어그램 (Use Case Diagram)
-                <ul>
-                    <li>사용자의 요구를 분석하는 것</li>
-                    <li>기능 모델링 작업에 사용</li>
-                    <li>사용자(<b>Actor</b>)와 사용 사계(<b>>Use Case</b>)로 구성</li>
-                </ul>                
-            </li>
-            <li>시퀀스 다이어그램 (Sequence Diagram)
-                <ul>
-                    <li>상호작용하는 시스템이나 객체들이 주고받는 메시지를 표현</li>
-                </ul>
-            </li>
-            <li>상태 다이어그램 (State Diagram)
-                <ul>
-                    <li>하나의 객체가 자신이 속한 클래스의 상태변화 혹은 다른 객체와의 상호작용에 따라 상채가 어떻게 변화하는지를 표현</li>                    
-                    <li><b>럼바우(Rumbaugh)</b> 객체지향 분석 기법에서 동적 모델링에 활용</li>
-                </ul>                
-            </li>
-            <li>활동 다이어그램 (Activity Diagram)
-                <ul>
-                    <li>시스템이 어떤 기능을 수행하는지 객체의 처리 로직이나 조건에 따른 처리의 흐름을 순서에 따라 표현</li>
-                </ul>
-            </li>
-            <li>상호작용 개요 다이어그램 (Interation Overview Diagram) 
-                <ul>
-                    <li>상호작용 다이어그램 간의 제어흐름을 표현</li>
-                </ul>
-            </li>
-            <li>타이밍 다이어그램 (Timing Diagram)
-                <ul>
-                    <li>객체 상태 변화와 시간 제약을 명시적으로 표현</li>
-                </ul>
-            </li>
-        </ul>
-    </article>
-
-    <article>
-        <header>
-            <h2>스테레오 타입</h2>
-        </header>
-        <ul>
-            <li>UML에서 표현하는 기본기능 외에 <b>추가적인 기능</b>을 표현하는 것</li>
-            <li>길러멧(Guilemet)이라고 부르는 겹화살표(<b>&#171;&#187;</b>)사이에 표현할 형태를 기숧한다.</li>
-        </ul>
-    </article>
-
-    <article>
-        <header>
-            <h2>예상문제</h2>
-        </header>
-        <ol>
-            <li>소프트웨어 개발 방법론 중 나선형모형(Spiral Model)에 대해 간략히 서술하시오<br />
-                답
-                <ul>
-                    <li>여러번의 개발 과정을 거쳐 점진적으로 완벽한 최종 소프트웨어를 만드는 모형이다.</li>
-                </ul>
-            </li>
-            <li>다음이 설명하는 소프트웨어 개발과 관련된 용어를 쓰시오
-                <blockquote>
+            <h3>요구사항 분석용 CASE (자동화 도구)</h3>
+            <p>요구사항을 <b>자동으로 분석</b>하고, 요구사항 <b>분석명세서를 기술</b>하도록 개발된 도구</p>
+            <ul>
+                <li>SADT</li>        
+                <li>SREM(=RSL/REVS)</li>            
+                <li>PSL/PSA</li>
+                <li>TAGS</li>
+            </ul>
+            <h3>SADT</h3>
+            <ul>
+                <li>시스템 정의, 소프트웨어 요구사항 분석, 시스템/소프트웨어 설계를 위한 도구</li>
+                <li><b>SoftTech</b> 에서 개발</li>
+                <li>구조적 요구 분석을 하기 위해 블록 다이어그램을 채택한 자동화도구</li>
+            </ul>
+            <h3>HIPO (Hierarch Input Process Output)</h3>
+            <ul>
+                <li>시스템의 분석 및 설계, 문서화에 사용되는 기법. 시스템의 실행과정인 <b>입력, 처리, 출력</b>의 기능을 표현</li>
+                <li><b>하향식 소프트웨어 개발</b>을 위한 문서화도구</li>
+                <li>시스템의 기능을 여러 개의 고유 모듈로 분할하여 이들간의 인터페이스를 계층구조로 표현함</li>
+            </ul>
+            <h3>UML (Unified Modeling Language)</h3>
+            <ul>
+                <li>시스템 분석, 설계, 구현등 <b>시스템 개발 과정</b>에서 개발자와 고객 또는 개발자 상호간의 <b>의사소통</b> 이 원활하게 이루어지도록 
+                표준화한 대표적인 <b>객체지향 모델링 언어</b></li>
+                <li>Rumbaugh(OMT), Booch, Jacobson 등의 객체지향 방법론의 장점을 통합</li>
+                <li>UML 의 구성요소 
                     <ul>
-                        <li>소프트웨어 개발 방법론의 바탕이 되는것으로, 소프트웨어를 개발하기 위한 설계, 운용, 유지보수 등의 과정을 각 단계별로 나눈 것이다.</li>
-                        <li>소프트웨어 개발 단계와 각 단계와 각 단계별 주요활동, 그리고 활동의 결과에 대한 산출물로 표현한다.</li>
-                        <li>이것의 대표적인 모형에는 폭포수 모형, 프로토타입 모형, 나선형 모형, 애자일 모형 등이 있다.</li>
+                        <li>사물 (<b>Things</b>)</li>
+                        <li>관계 (<b>Relationships</b>)</li>
+                        <li>다이어그램 (<b>Diagram</b>)</li>
                     </ul>
-                </blockquote>
-                답
+                </li>
+            </ul>
+            </article>
+            <article>
+                <header>
+                    <h2>관계 (Relationship)</h2>
+                </header>
+                <p><b>사물과 사물 사이의 연관성</b>을 표현</p>
+                <p>관계의 종류</p>
                 <ul>
-                    <li>소프트웨어 생명주기(Software Life Cycle)</li>
+                    <li>연관 관계</li>
+                    <li>집합 관계</li>
+                    <li>포함 관계</li>
+                    <li>일반화 관계</li>
+                    <li>의존 관계</li>
+                    <li>실체화 관계</li>
                 </ul>
-            </li>
-            <li> 소프트웨어 생명주기 모형에 대한 다음 설명에서 괄호에 들어갈 알맞은 용어를 쓰시오
-                <blockquote>
+                <h3>연관 관계 (Association)</h3>
+                <ul>
+                    <li><b>2개이상의 사물이 서로 관련되어 있는 관계</b></li>
+                    <li>사물 사이를 실선으로 연결하여 표현</li>
+                    <li>방향성은 화살표로 표현</li>
+                    <li>다중도를 선 위에 표기</li>
+                </ul> 
+                <p class="diagram"><span>사람</span>⎯<sup>1</sup>⎯⎯⎯⎯<sup>1</sup>⎯><span>집</span>
+                    <sup>사람은 집을 소유한다. 사람은 집에 대하 알고 있지만 집은 자신의 소유자를 모른다. 
+                        사람 쪽의 다중도 1이므로 집은 한사람의 집주인만 가질 수 있다. 
+                        집 쪽의 다중도가 1이므로 사람은 집을 하나만 가질 수 있다.
+                    </sup>
+                </p>
+                <h3>집합 관계 (Aggregation)</h3>
+                <ul>
+                    <li><b>하나의 사물이 다른 사물에 포함되어 있는 관계</b></li>
+                    <li>포함하는 쪽과 포함되는 쪽은 서로 독립적</li>
+                    <li>포함하는 쪽으로 <b>마름모</b>를 연결하여 표현한다</li>            
+                </ul>
+                <p class="diagram"><span>컴퓨터</span>◇⎯⎯⎯⎯<span>프린터</span><sup>프린터는 컴퓨터에 연결 가능, 다른 컴퓨터 연결 가능.</sup></p>
+                <h3>포함 관계 (Composition)</h3>
+                <ul>
+                    <li>집합 관계의 특수한 형태. <b>포함하는 사물의 변화가 사물에게 영향을 미치는 관계</b></li>
+                    <li>포함하는 쪽과 포함되는 쪽은 서로 독립될 수 없고, 생명주기를 함께한다</li>
+                    <li>속이 채워진 마름모를 연결하여 표현한다</li>
+                </ul>
+                <p class="diagram"><span>문(Door)</span>◆⎯⎯⎯⎯<span>키(Key)</span><sup>문을 열 수 있는 키는 하나. 해당키로 다른 문 열수 없다. 문이 없어지면 키도 불필요.</sup></p>
+                <h3>일반화 관계 (Generalization)</h3>
+                <ul>
+                    <li>하나의 사물이 다른 사물에 비해 더 일반적이거나 구체적인 관계</li>
+                    <li>보다 일반적인 개념 : 상위(부모) 보다 구체적인 개념 : 하위(자식)</li>            
+                    <li>자식에서 부모로 속이 빈 화살표 연결</li>
+                </ul>
+                <table class="diagram">
+                    <tr>
+                        <td rowspan="2"><span>커피</span></td>
+                        <td>◁⎯⎯<span>에스프레소</span></td>
+                    </tr>
+                    <tr>
+                        <td>◁⎯⎯⎯⎯⎯⎯⎯⎯<span>아메리카노</span></td>
+                    </tr>
+                </table>
+                </p>
+                <h3>의존관계 (Dependency)</h3>
+                <ul>
+                    <li>필요에 의해 서로에게 영향을 주는 특정 시간동안만 연관을 유지하는 관계</li>            
+                </ul>
+                <p class="diagram"><span>등급</span>-------><span>할인율</span>
+                    <sup>등급이 높으면 할인율 적용하고 낮으면 적용하지 않는다.</sup>
+                </p>
+                <h3>실체화 관계</h3>
+                <ul>
+                    <li>사물이 할 수 있거나 해야 하는 기능으로, 서로를 그룹화 할 수 있는 관계</li>
+                </ul>
+                <table class="diagram">
+                    <tr>
+                        <td rowspan="2"><span>날 수 있다</span></td>
+                        <td>◁--------<span>새</span></td>
+                    </tr>
+                    <tr>
+                        <td>◁----------------<span>비행기</span></td>                
+                    </tr>
+                </table>
+        </article>
+        <article>
+            <header>
+                <h2>다이어그램 (Diagram)</h2>
+            </header>
+            <p>사물과 관계를 도형으로 표현한 것</p>
+            <ul>
+                <li>정적 모델링 : 구조적 다이어그램</li>
+                <li>동적 모델링 : 행위 다이어그램</li>
+            </ul>
+            <h3>구조적 다이어그램</h3>
+            <ul>
+                <li>클래스 다이어그램 (Class Diagram)
                     <ul>
-                        <li>( )모형은 고객의 요구사항 변화에 유연하게 대응할 수 있도록 일정한 주기를 반복하면서 개발과정을 진행한다.</li>
-                        <li>어느 특정 개발 방법론이 아니라 좋은 것을 빠르고 낭비 없게 만들기 위해 고객과의 소통에 초점을 맞춘 방법론을 통칭한다.</li>
-                        <li>각 개발주기에서는 고객이 요구사항에 우선순위를 부여하여 개발 작업을 진행한다.</li>
-                        <li>소규모 프로젝트, 고도로 숙달된 개발자, 급변하는 요구사항에 적합하다.</li>
+                        <li>클래스, 클래스의 속성, 클래스 사이의 관계를 표현</li>
                     </ul>
-                </blockquote>
-                답
-                <ul>
-                    <li>애자일(Agile)</li>
-                </ul>
-            </li>
-            <li> 개발 방법론과 관련된 다음 설명에서 괄호에 공통으로 들어갈 용어를 쓰시오 
-                <blockquote>
-                    <p>( )은 애자일 모형을 기반으로 하느 팀 중심의 소프트웨어 개발 모형으로, 럭비에서 반칙으로 경기가 중단된 경우 양 팀의 선수들이 
-                    럭비공을 가운데 두고 상태팀을 밀치기 위해 서로 대치해 있느 팀 대형인 ( ) 에서 유래하였다. ( )은 10명 이하의 팀으로 구성되어 
-                    백로그(Backlog)를 기반으로 개발을 진행하며 스프린트(Sprint)라는 실제 개발 과저을 2~4주 기간바다 반복한다.</p>
-                </blockquote>
-                답
-                <ul>
-                    <li>스크럼 (Scrum)</li>
-                </ul>
-            </li>
-            <li>애자일 기반의 개발 방법론과 관련하여 다음 설명에 해당하는 모형이 무었인지 쓰시오
-                <blockquote>
+                </li>
+                <li>객체 다이어그램 (Object Diagram)
                     <ul>
-                        <li>수시로 발생하는 고객의 요구사항에 유연하게 대응하기 위해 고객의 참여와 개발 과정의 반복을 극대화하여 개발 생산성을 향상시키는 모형이다.</li>
-                        <li>짧고 반복적인 개발주기, 단순한 설계, 고객의 적극적인 참여를 통해 소프트웨어를 빠르게 개발하는 것을 목적으로 한다.</li>
-                        <li>릴리즈 테스트마다 고객을 직접 참여시킴으로써 요구한 기능이 제대로 작동하는지 고객이 직접 확인할 수 있다.</li>
-                        <li>의사소통(Communication), 단순성(Simplicity), 용기(Courage), 존중(Respect), 피드백(Feedback)을 핵심가치로 삼는다.
+                        <li>클래스에 속한 객채(Instance)를 특정시점의 객체와 객체사이의 관계로 표현</li>
+                        <li>럼바우(Rumbaugh) 객체지향 분석 기법에서 객체 모델링에 활용</li>
                     </ul>
-                </blockquote>
-                답
-                <ul>
-                    <li>익스트림 프로그래밍 (XP : eXtreme Programming)</li>
-                </ul>
-            </li>
-            <li> 다음은 XP(eXtreme Programming) 개발 방법론의 주요 실천방법(PracTice)에 대한 설명이다. 괄호(1,2)에 들어갈 가장 적합한 실천방법을 쓰시오.
-                <table>
-                    <thead>
-                        <tr>
-                            <th>실천방법</th>
-                            <th>내용</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>( 1 )</td>
-                            <td>다른 사람과 함께 프로그래밍을 수행함으로써 개발에 대한 책임을 공동으로 나눠 갖는 환경을 조성한다.</td>                            
-                        </tr>
-                        <tr>
-                            <td>Test-Driven Development</td>
-                            <td>
-                                <ul>
-                                    <li>개발자가 실제 코드를 작성하기 전에 테스트 케이스를 먼저 작성하므로 자신이 무엇을 해야 할 지를 정확히 파악한다.</li>
-                                    <li>테스트가 지속적으로 진행될 수 있도록 자동화된 테스팅 도구(구조, 프레임워크)를 사용한다.</li>                                                                        
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>( 2 )</td>
-                            <td>개발에 참여하는 모든 구성원(고객 포함)드은 각자 자신의 역할이 있고 그 역할에 대한 책임을 가져야 한다.</td>
-                        </tr>
-                        <tr>
-                            <td>Continuous Interation(계속적인 통합)</td>
-                            <td>모듈 단위로 나눠서 개발된 코드들은 하나의 작업이 마무리될 때마다 지속적으로 통합한다.</td>
-                        </tr>
-                        <tr>
-                            <td>Refactoring(리팩토링)</td>
-                            <td>프로그램 기능의 변경 없이 단순화,유연성 강화 등을 통해 시스템을 재구성한다.</td>
-                        </tr>
-                        <tr>
-                            <td>Small Release(소규모 릴리즈)</td>
-                            <td>릴리즈 기간을 짧게 반복함으로써 고객의 요구변화에 신속히 대응할 수 있다.</td>
-                        </tr>
-                    </tbody>
-                </table>            
-                답
-                <ul>
-                    <li>1: Pair Programming (짝 프로그래밍)</li>
-                    <li>2: Whole Team(전체 팀)</li>
-                </ul>
-            </li>
-            <li>다음에 제시된 요구사항을 기능 요구사항과 비기능 요구사항으로 구분하여 기호(ㄱ~ㄹ)로 쓰시오
-                <blockquote>
-                    <p>ㄱ : 항공편, 탑승객, 예약을 입력하는 방법을 결정해야 한다.</p>
-                    <p>ㄴ : 티켓과 리포트에 어떤 정보를 표시할지 결정해야 한다.</p>
-                    <p>ㄷ : 여행사와 고객이 데이터베이스에 접근할 떄 어떤 정보를 얻을 수 있는지 결정해야 한다.</p>
-                    <p>ㄹ : 자주 탑승하는 고객으 서비스하기 위해 시스템을 확장할 수 있도록 설계해야 한다.</p>
-                </blockquote>
-                답
-                <ul>
-                    <li>1 기능 요구사항 : ㄱ,ㄴ,ㄷ</li>
-                    <li>2 비기능 요구사항 : ㄹ</li>
-                </ul>
-            </li>
-            <li>다음은 요구사항 명세 기법에 대한 설명이다. 괄호(1,2)에 들어갈 알맞은 기법을 쓰시오.
-                <blockquote>
-                    <p>요구사항 명세기법은 (1)기법과 (2)기법으로 구분된다.</p>
+                </li>
+                <li>컴포넌트 다이어그램 (Component Diagram)
+                    <ul>
+                        <li>컴포넌트 간의 관계, 컴포넌트 간의 인터페이스를 표현</li>
+                        <li>구현 단계에서 사용됨</li>
+                    </ul>
+                </li>
+                <li>배치 다이어그램 (Deployment Diagram)
+                    <ul>
+                        <li>결과물, 프로세스, 컴포넌트 등 물리적 요소들의 위치를 표현</li>
+                        <li>구현 단계에서 사용됨</li>
+                    </ul>
+                </li>
+                <li>복합체 구조 다이어그램
+                    <ul>
+                        <li>클래스나 컴포넌트가 복합구조를 갖는 경우 그 내부 구조를 표현</li>
+                    </ul>
+                </li>
+                <li>패키지 다이어그램 (Package Diagram)
+                    <ul>
+                        <li>유스케이스나 클래스 등의 모델 요소들을 그룹화한 패키지들의 관계를 표현</li>
+                    </ul>
+                </li>
+            </ul>        
+            <h3>행위 다이어그램</h3>
+            <ul>
+                <li>유스케이스 다이어그램 (Use Case Diagram)
+                    <ul>
+                        <li>사용자의 요구를 분석하는 것</li>
+                        <li>기능 모델링 작업에 사용</li>
+                        <li>사용자(<b>Actor</b>)와 사용 사계(<b>>Use Case</b>)로 구성</li>
+                    </ul>                
+                </li>
+                <li>시퀀스 다이어그램 (Sequence Diagram)
+                    <ul>
+                        <li>상호작용하는 시스템이나 객체들이 주고받는 메시지를 표현</li>
+                    </ul>
+                </li>
+                <li>상태 다이어그램 (State Diagram)
+                    <ul>
+                        <li>하나의 객체가 자신이 속한 클래스의 상태변화 혹은 다른 객체와의 상호작용에 따라 상채가 어떻게 변화하는지를 표현</li>                    
+                        <li><b>럼바우(Rumbaugh)</b> 객체지향 분석 기법에서 동적 모델링에 활용</li>
+                    </ul>                
+                </li>
+                <li>활동 다이어그램 (Activity Diagram)
+                    <ul>
+                        <li>시스템이 어떤 기능을 수행하는지 객체의 처리 로직이나 조건에 따른 처리의 흐름을 순서에 따라 표현</li>
+                    </ul>
+                </li>
+                <li>상호작용 개요 다이어그램 (Interation Overview Diagram) 
+                    <ul>
+                        <li>상호작용 다이어그램 간의 제어흐름을 표현</li>
+                    </ul>
+                </li>
+                <li>타이밍 다이어그램 (Timing Diagram)
+                    <ul>
+                        <li>객체 상태 변화와 시간 제약을 명시적으로 표현</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+    
+        <article>
+            <header>
+                <h2>스테레오 타입</h2>
+            </header>
+            <ul>
+                <li>UML에서 표현하는 기본기능 외에 <b>추가적인 기능</b>을 표현하는 것</li>
+                <li>길러멧(Guilemet)이라고 부르는 겹화살표(<b>&#171;&#187;</b>)사이에 표현할 형태를 기숧한다.</li>
+            </ul>
+        </article>
+    
+        <article>
+            <header>
+                <h2>예상문제</h2>
+            </header>
+            <ol>
+                <li>소프트웨어 개발 방법론 중 나선형모형(Spiral Model)에 대해 간략히 서술하시오<br />
+                    답
+                    <ul>
+                        <li>여러번의 개발 과정을 거쳐 점진적으로 완벽한 최종 소프트웨어를 만드는 모형이다.</li>
+                    </ul>
+                </li>
+                <li>다음이 설명하는 소프트웨어 개발과 관련된 용어를 쓰시오
+                    <blockquote>
+                        <ul>
+                            <li>소프트웨어 개발 방법론의 바탕이 되는것으로, 소프트웨어를 개발하기 위한 설계, 운용, 유지보수 등의 과정을 각 단계별로 나눈 것이다.</li>
+                            <li>소프트웨어 개발 단계와 각 단계와 각 단계별 주요활동, 그리고 활동의 결과에 대한 산출물로 표현한다.</li>
+                            <li>이것의 대표적인 모형에는 폭포수 모형, 프로토타입 모형, 나선형 모형, 애자일 모형 등이 있다.</li>
+                        </ul>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>소프트웨어 생명주기(Software Life Cycle)</li>
+                    </ul>
+                </li>
+                <li> 소프트웨어 생명주기 모형에 대한 다음 설명에서 괄호에 들어갈 알맞은 용어를 쓰시오
+                    <blockquote>
+                        <ul>
+                            <li>( )모형은 고객의 요구사항 변화에 유연하게 대응할 수 있도록 일정한 주기를 반복하면서 개발과정을 진행한다.</li>
+                            <li>어느 특정 개발 방법론이 아니라 좋은 것을 빠르고 낭비 없게 만들기 위해 고객과의 소통에 초점을 맞춘 방법론을 통칭한다.</li>
+                            <li>각 개발주기에서는 고객이 요구사항에 우선순위를 부여하여 개발 작업을 진행한다.</li>
+                            <li>소규모 프로젝트, 고도로 숙달된 개발자, 급변하는 요구사항에 적합하다.</li>
+                        </ul>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>애자일(Agile)</li>
+                    </ul>
+                </li>
+                <li> 개발 방법론과 관련된 다음 설명에서 괄호에 공통으로 들어갈 용어를 쓰시오 
+                    <blockquote>
+                        <p>( )은 애자일 모형을 기반으로 하느 팀 중심의 소프트웨어 개발 모형으로, 럭비에서 반칙으로 경기가 중단된 경우 양 팀의 선수들이 
+                        럭비공을 가운데 두고 상태팀을 밀치기 위해 서로 대치해 있느 팀 대형인 ( ) 에서 유래하였다. ( )은 10명 이하의 팀으로 구성되어 
+                        백로그(Backlog)를 기반으로 개발을 진행하며 스프린트(Sprint)라는 실제 개발 과저을 2~4주 기간바다 반복한다.</p>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>스크럼 (Scrum)</li>
+                    </ul>
+                </li>
+                <li>애자일 기반의 개발 방법론과 관련하여 다음 설명에 해당하는 모형이 무었인지 쓰시오
+                    <blockquote>
+                        <ul>
+                            <li>수시로 발생하는 고객의 요구사항에 유연하게 대응하기 위해 고객의 참여와 개발 과정의 반복을 극대화하여 개발 생산성을 향상시키는 모형이다.</li>
+                            <li>짧고 반복적인 개발주기, 단순한 설계, 고객의 적극적인 참여를 통해 소프트웨어를 빠르게 개발하는 것을 목적으로 한다.</li>
+                            <li>릴리즈 테스트마다 고객을 직접 참여시킴으로써 요구한 기능이 제대로 작동하는지 고객이 직접 확인할 수 있다.</li>
+                            <li>의사소통(Communication), 단순성(Simplicity), 용기(Courage), 존중(Respect), 피드백(Feedback)을 핵심가치로 삼는다.
+                        </ul>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>익스트림 프로그래밍 (XP : eXtreme Programming)</li>
+                    </ul>
+                </li>
+                <li> 다음은 XP(eXtreme Programming) 개발 방법론의 주요 실천방법(PracTice)에 대한 설명이다. 괄호(1,2)에 들어갈 가장 적합한 실천방법을 쓰시오.
                     <table>
                         <thead>
                             <tr>
-                                <th>구분</th>
-                                <th>(1)기법</th>
-                                <th>(2)기법</th>
+                                <th>실천방법</th>
+                                <th>내용</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>기법</td>
-                                <td>수학적 원리 기반, 모델 기반</td>
-                                <td>상태/기능/객체 중심</td>
+                                <td>( 1 )</td>
+                                <td>다른 사람과 함께 프로그래밍을 수행함으로써 개발에 대한 책임을 공동으로 나눠 갖는 환경을 조성한다.</td>                            
                             </tr>
                             <tr>
-                                <td>작성법</td>
-                                <td>수학적 기호, 정형화된 표기법</td>
-                                <td>일반 명사, 동사 등의 자연어를 기반으로 서숳 또는 다이어그램으로 작성</td>
+                                <td>Test-Driven Development</td>
+                                <td>
+                                    <ul>
+                                        <li>개발자가 실제 코드를 작성하기 전에 테스트 케이스를 먼저 작성하므로 자신이 무엇을 해야 할 지를 정확히 파악한다.</li>
+                                        <li>테스트가 지속적으로 진행될 수 있도록 자동화된 테스팅 도구(구조, 프레임워크)를 사용한다.</li>                                                                        
+                                    </ul>
+                                </td>
                             </tr>
                             <tr>
-                                <td>특징</td>
-                                <td>
-                                    <ul>
-                                        <li>요구사항을 정확하고 간결하게 표현할 수 있음</li>
-                                        <li>요구사항에 대한 결과가 작성자에 관계없이 일관성이 있으므로 완전성 검증이 가능함</li>
-                                        <li>표기법이 어려워 사용자가 이해하기 어려움</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul>
-                                        <li>자연어의 사용으로 인해 일관성이 떨어지고, 해석이 달라질 수 있음</li>
-                                        <li>내용의 이해가 쉬워 의사소통이 용이함</li>
-                                    </ul>
-                                </td>
+                                <td>( 2 )</td>
+                                <td>개발에 참여하는 모든 구성원(고객 포함)드은 각자 자신의 역할이 있고 그 역할에 대한 책임을 가져야 한다.</td>
+                            </tr>
+                            <tr>
+                                <td>Continuous Interation(계속적인 통합)</td>
+                                <td>모듈 단위로 나눠서 개발된 코드들은 하나의 작업이 마무리될 때마다 지속적으로 통합한다.</td>
+                            </tr>
+                            <tr>
+                                <td>Refactoring(리팩토링)</td>
+                                <td>프로그램 기능의 변경 없이 단순화,유연성 강화 등을 통해 시스템을 재구성한다.</td>
+                            </tr>
+                            <tr>
+                                <td>Small Release(소규모 릴리즈)</td>
+                                <td>릴리즈 기간을 짧게 반복함으로써 고객의 요구변화에 신속히 대응할 수 있다.</td>
                             </tr>
                         </tbody>
-                    </table>
-                </blockquote>
-                답 
-                <ul>
-                    <li>1 : 정형 명세</li>
-                    <li>2 : 비정형 명세</li>
-                </ul>
-            </li>
-            <li>요구사항 분석 기법에 대한 다음 설명에서 괄호(1,2)에 들어갈 알맞은 명칭을 쓰시오
-                <blockquote>
-                    <p>요구사항 분석에서 자료의 흐름 및 변환 과정과 기능을 도형 중심으로 기술하는 방법을 자료흐름도라고 한다. 자료 흐름도에서 사용하는 네가지 기본 기호는 다음과 같다.</p>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>프로세스(Process)</td>
-                                <td>
-                                    <ul>
-                                        <li>자료를 변환시키는 시스템의 한 부분(처리과정)을 나타내며 처리, 기능, 변환, 버블이라고 한다.</li>
-                                        <li>원이나 둥근 사각형으로 표시하고 그 안에 프로세스 이름을 기입한다.</li>                                        
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>(1)</td>
-                                <td>
-                                    <ul>
-                                        <li>자료의 이동(흐름)이나 연관관계를 나타낸다.</li>
-                                        <li>화살표 위에 자료의 이름을 기입한다.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>(2)</td>
-                                <td>
-                                     <ul>
-                                        <li>시스템에서의 파일, 데이터베이스 등을 나타낸다.</li>
-                                        <li>도형 안에 저장소의 이름을 기입한다.</li>
-                                     </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>단말(Terminator)</td>
-                                <td>
-                                    <ul>
-                                        <li>시스템과 교신하는 외부 개체로, 입력 데이터가 만들어지고 출력 데이터를 받는다.</li>
-                                        <li>도형 안에 이름을 기입한다.</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </blockquote>
-                답 
-                <ul>
-                    <li>1 : 자료흐름 (Data Flow)</li>
-                    <li>2 : 자료 저장소 (Data Store)</li>
-                </ul>
-            </li>
-            <li>요구사항 분석용 CASE에 대해 간략히 서술하시오<br/>
-                답 
-                <ul>
-                    <li>요구사항을 자동으로 분석하고 분석명세서를 기술하도록 개발된 도구</li>
-                </ul>
-            </li>
-            <li>다음은 UML 다이어그램에서 사용되는 관계를 나열한 것이다. 관계 기호(1~4)에 해당하는 명칭을 보기에서 찾아 기호로 쓰시오.
-                <blockquote>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>ㄱ : 집합(Aggregation) 관계</td>
-                                <td>ㄴ : 포함(Composition) 관계</td>                                
-                            </tr>
-                            <tr>
-                                <td>ㄷ : 일반화(Generalization) 관계</td>
-                                <td>ㄹ : 의존(Dependency) 관계</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </blockquote>
-                답 
-                <ul>
-                    <li>1 &#60----- : ㄹ 의존 관계</li>
-                    <li>2 ◁⎯⎯ : ㄷ 일반화 관계</li>
-                    <li>3 ◆⎯⎯ : ㄴ 포함 관계</li>
-                    <li>4 ◇⎯⎯ : ㄱ 집합 관계</li>
-                </ul>
-            </li>
-            <li>다음은 UML 다이어그램의 종류를 나열한 것이다. 보기에 나열된 다이어그램을 구조적 다이어그램과 행위 다이어그램으로 구분하여 기호(ㄱ~ㅍ)로 쓰시오. <br/>
-                보기 
-                <blockquote>
+                    </table>            
+                    답
                     <ul>
-                        <li>ㄱ : 유스케이스 다이어그램</li>
-                        <li>ㄴ : 클래스 다이어그램</li>
-                        <li>ㄷ : 시퀀스 다이어그램</li>
-                        <li>ㄹ : 커뮤니케이션 다이어그램</li>
-                        <li>ㅁ : 객체 다이어그램</li>
-                        <li>ㅂ : 컴포넌트 다이어그램</li>
-                        <li>ㅅ : 배치 다이어그램</li>
-                        <li>ㅇ : 상태 다이어그램</li>
-                        <li>ㅈ : 활동 다이어그램</li>
-                        <li>ㅊ : 상호작용 개요 다이어그램</li>
-                        <li>ㅋ : 타이밍 다이어그램</li>
-                        <li>ㅌ : 복합체 구조 다이어그램</li>
-                        <li>ㅍ : 패키지 다이어그램</li>
+                        <li>1: Pair Programming (짝 프로그래밍)</li>
+                        <li>2: Whole Team(전체 팀)</li>
                     </ul>
-                </blockquote>
-                답 
-                <ul>
-                    <li>1. 구조적 다이어그램 : ㄴ, ㅁ, ㅂ, ㅅ, ㅌ, ㅍ</li>
-                    <li>2. 행위 다이어그램 : ㄱ, ㄷ, ㄹ, ㅇ, ㅈ, ㅊ, ㅋ</li>
-                </ul>
-            </li>
-        </ol>        
-    </article>
-    
-</body>
+                </li>
+                <li>다음에 제시된 요구사항을 기능 요구사항과 비기능 요구사항으로 구분하여 기호(ㄱ~ㄹ)로 쓰시오
+                    <blockquote>
+                        <p>ㄱ : 항공편, 탑승객, 예약을 입력하는 방법을 결정해야 한다.</p>
+                        <p>ㄴ : 티켓과 리포트에 어떤 정보를 표시할지 결정해야 한다.</p>
+                        <p>ㄷ : 여행사와 고객이 데이터베이스에 접근할 떄 어떤 정보를 얻을 수 있는지 결정해야 한다.</p>
+                        <p>ㄹ : 자주 탑승하는 고객으 서비스하기 위해 시스템을 확장할 수 있도록 설계해야 한다.</p>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>1 기능 요구사항 : ㄱ,ㄴ,ㄷ</li>
+                        <li>2 비기능 요구사항 : ㄹ</li>
+                    </ul>
+                </li>
+                <li>다음은 요구사항 명세 기법에 대한 설명이다. 괄호(1,2)에 들어갈 알맞은 기법을 쓰시오.
+                    <blockquote>
+                        <p>요구사항 명세기법은 (1)기법과 (2)기법으로 구분된다.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>(1)기법</th>
+                                    <th>(2)기법</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>기법</td>
+                                    <td>수학적 원리 기반, 모델 기반</td>
+                                    <td>상태/기능/객체 중심</td>
+                                </tr>
+                                <tr>
+                                    <td>작성법</td>
+                                    <td>수학적 기호, 정형화된 표기법</td>
+                                    <td>일반 명사, 동사 등의 자연어를 기반으로 서숳 또는 다이어그램으로 작성</td>
+                                </tr>
+                                <tr>
+                                    <td>특징</td>
+                                    <td>
+                                        <ul>
+                                            <li>요구사항을 정확하고 간결하게 표현할 수 있음</li>
+                                            <li>요구사항에 대한 결과가 작성자에 관계없이 일관성이 있으므로 완전성 검증이 가능함</li>
+                                            <li>표기법이 어려워 사용자가 이해하기 어려움</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>자연어의 사용으로 인해 일관성이 떨어지고, 해석이 달라질 수 있음</li>
+                                            <li>내용의 이해가 쉬워 의사소통이 용이함</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </blockquote>
+                    답 
+                    <ul>
+                        <li>1 : 정형 명세</li>
+                        <li>2 : 비정형 명세</li>
+                    </ul>
+                </li>
+                <li>요구사항 분석 기법에 대한 다음 설명에서 괄호(1,2)에 들어갈 알맞은 명칭을 쓰시오
+                    <blockquote>
+                        <p>요구사항 분석에서 자료의 흐름 및 변환 과정과 기능을 도형 중심으로 기술하는 방법을 자료흐름도라고 한다. 자료 흐름도에서 사용하는 네가지 기본 기호는 다음과 같다.</p>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>프로세스(Process)</td>
+                                    <td>
+                                        <ul>
+                                            <li>자료를 변환시키는 시스템의 한 부분(처리과정)을 나타내며 처리, 기능, 변환, 버블이라고 한다.</li>
+                                            <li>원이나 둥근 사각형으로 표시하고 그 안에 프로세스 이름을 기입한다.</li>                                        
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>(1)</td>
+                                    <td>
+                                        <ul>
+                                            <li>자료의 이동(흐름)이나 연관관계를 나타낸다.</li>
+                                            <li>화살표 위에 자료의 이름을 기입한다.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>(2)</td>
+                                    <td>
+                                         <ul>
+                                            <li>시스템에서의 파일, 데이터베이스 등을 나타낸다.</li>
+                                            <li>도형 안에 저장소의 이름을 기입한다.</li>
+                                         </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>단말(Terminator)</td>
+                                    <td>
+                                        <ul>
+                                            <li>시스템과 교신하는 외부 개체로, 입력 데이터가 만들어지고 출력 데이터를 받는다.</li>
+                                            <li>도형 안에 이름을 기입한다.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </blockquote>
+                    답 
+                    <ul>
+                        <li>1 : 자료흐름 (Data Flow)</li>
+                        <li>2 : 자료 저장소 (Data Store)</li>
+                    </ul>
+                </li>
+                <li>요구사항 분석용 CASE에 대해 간략히 서술하시오<br/>
+                    답 
+                    <ul>
+                        <li>요구사항을 자동으로 분석하고 분석명세서를 기술하도록 개발된 도구</li>
+                    </ul>
+                </li>
+                <li>다음은 UML 다이어그램에서 사용되는 관계를 나열한 것이다. 관계 기호(1~4)에 해당하는 명칭을 보기에서 찾아 기호로 쓰시오.
+                    <blockquote>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>ㄱ : 집합(Aggregation) 관계</td>
+                                    <td>ㄴ : 포함(Composition) 관계</td>                                
+                                </tr>
+                                <tr>
+                                    <td>ㄷ : 일반화(Generalization) 관계</td>
+                                    <td>ㄹ : 의존(Dependency) 관계</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </blockquote>
+                    답 
+                    <ul>
+                        <li>1 &#60----- : ㄹ 의존 관계</li>
+                        <li>2 ◁⎯⎯ : ㄷ 일반화 관계</li>
+                        <li>3 ◆⎯⎯ : ㄴ 포함 관계</li>
+                        <li>4 ◇⎯⎯ : ㄱ 집합 관계</li>
+                    </ul>
+                </li>
+                <li>다음은 UML 다이어그램의 종류를 나열한 것이다. 보기에 나열된 다이어그램을 구조적 다이어그램과 행위 다이어그램으로 구분하여 기호(ㄱ~ㅍ)로 쓰시오. <br/>
+                    보기 
+                    <blockquote>
+                        <ul>
+                            <li>ㄱ : 유스케이스 다이어그램</li>
+                            <li>ㄴ : 클래스 다이어그램</li>
+                            <li>ㄷ : 시퀀스 다이어그램</li>
+                            <li>ㄹ : 커뮤니케이션 다이어그램</li>
+                            <li>ㅁ : 객체 다이어그램</li>
+                            <li>ㅂ : 컴포넌트 다이어그램</li>
+                            <li>ㅅ : 배치 다이어그램</li>
+                            <li>ㅇ : 상태 다이어그램</li>
+                            <li>ㅈ : 활동 다이어그램</li>
+                            <li>ㅊ : 상호작용 개요 다이어그램</li>
+                            <li>ㅋ : 타이밍 다이어그램</li>
+                            <li>ㅌ : 복합체 구조 다이어그램</li>
+                            <li>ㅍ : 패키지 다이어그램</li>
+                        </ul>
+                    </blockquote>
+                    답 
+                    <ul>
+                        <li>1. 구조적 다이어그램 : ㄴ, ㅁ, ㅂ, ㅅ, ㅌ, ㅍ</li>
+                        <li>2. 행위 다이어그램 : ㄱ, ㄷ, ㄹ, ㅇ, ㅈ, ㅊ, ㅋ</li>
+                    </ul>
+                </li>
+            </ol>        
+        </article>    
+    </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="Study Vue.js" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+    
+        <link rel="stylesheet" type="text/css" href="../style.css"></link>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="../java.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>        
+        <h1>Study Vue.js</h1>
+        <article id="app">
+            <header>
+                <h2>click </h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>나</th>
+                        <th>컴퓨터</th>
+                        <th>결과</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="result in gaweBaweBohResults">
+                        <th>{{result.number}}</th>
+                        <td>{{result.me}}</td>
+                        <td>{{result.com}}</td>
+                        <td>{{result.result}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                {{gaweBaweBohResults.length}} 전
+                {{win}} 승 
+                {{tied}} 무 
+                {{lose}} 패
+            </p>
+            <p>
+                <button v-on:click="gawe">
+                    가위                              
+                </button>
+                <button v-on:click="bawe">
+                    바위
+                </button>
+                <button v-on:click="boh">
+                    보
+                </button>
+                </p>                
+        </article>
+        
+          
+        <article id="app1">
+            <header>
+                <h2>선언적 랜더링</h2>
+            </header>
+            <ol>
+                <li>{{msg1}}</li>
+                <li>{{msg2}}</li>
+            </ol>
+        </article>
+
+        <article id="app2">
+            <header>
+                <h2>동적바인딩</h2>
+            </header>
+            <p>{{desc}}</p>
+            <img v-bind:src="cat_image" width="100%" v-bind:title="msg"/>
+            <p>
+            <button v-on:click="cangePicture">그림 바꾸기</button>
+            </p>
+        </article>
+
+
+        <article id="app3">
+            <header>
+                <h2>조건문과 반복문</h2>
+            </header>
+            <p v-if="show">show 가 true 면 이 메시지가 보인당께</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>number</th>
+                        <th>photo</th>
+                        <th>desc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="cat_image in cat_images">
+                        <th>{{cat_image.number}}</th>
+                        <td><image v-bind:src="cat_image.url" width="100%"/></td>
+                        <td>{{cat_image.desc}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <article id = "app4">
+            <header>
+                <h2>사용자 입력 핸들링</h2>
+            </header>
+            <p>{{name}} : {{phone_number}}</p>
+            <p><input v-model="name" /></p>
+            <p><input v-model="phone_number" @input="searchChangeFunc($event)"/></p>
+
+        </article>
+
+        <article>
+            <header>
+                <h2>컴포넌트</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div id="app5">
+                    <todo-item
+                    v-for="item in groceryList"
+                    v-bind:todo="item"
+                    v-bind:key="item.id"
+                    ></todo-item>  
+                    </div>  
+                </tbody>
+            </table>
+        </article>
+    </body>
+    <script src="./vue.js"></script>
+</html>
