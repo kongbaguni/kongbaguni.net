@@ -17,48 +17,6 @@
 
     <body>        
         <h1>Study Vue.js</h1>
-        <article id="app">
-            <header>
-                <h2>click </h2>
-            </header>
-            <table>
-                <thead>
-                    <tr>
-                        <th>순번</th>
-                        <th>나</th>
-                        <th>컴퓨터</th>
-                        <th>결과</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="result in gaweBaweBohResults">
-                        <th>{{result.number}}</th>
-                        <td>{{result.me}}</td>
-                        <td>{{result.com}}</td>
-                        <td>{{result.result}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>
-                {{gaweBaweBohResults.length}} 전
-                {{win}} 승 
-                {{tied}} 무 
-                {{lose}} 패
-            </p>
-            <p>
-                <button v-on:click="gawe">
-                    가위                              
-                </button>
-                <button v-on:click="bawe">
-                    바위
-                </button>
-                <button v-on:click="boh">
-                    보
-                </button>
-                </p>                
-        </article>
-        
-          
         <article id="app1">
             <header>
                 <h2>선언적 랜더링</h2>
@@ -111,7 +69,84 @@
             <p>{{name}} : {{phone_number}}</p>
             <p><input v-model="name" /></p>
             <p><input v-model="phone_number" @input="searchChangeFunc($event)"/></p>
+        </article>
 
+        <article id="gawebaweboh">
+            <header>
+                <h2>가위바위보</h2>
+            </header>
+            <table>
+                <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>나</th>
+                        <th>컴퓨터</th>
+                        <th>결과</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="result in gaweBaweBohResults">
+                        <th>{{result.number}}</th>
+                        <td>{{result.me}}</td>
+                        <td>{{result.com}}</td>
+                        <td>{{result.result}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                {{gaweBaweBohResults.length}} 전
+                {{win}} 승 
+                {{tied}} 무 
+                {{lose}} 패
+            </p>
+            <p>
+                <button v-on:click="gawe">
+                    가위                              
+                </button>
+                <button v-on:click="bawe">
+                    바위
+                </button>
+                <button v-on:click="boh">
+                    보
+                </button>
+                <button v-on:click="reset">
+                    reset
+                </button>
+                </p>                
+        </article>
+
+
+        <article id = "baseballGame">
+            <header>
+                <h2>야구 게임</h2>
+            </header>
+            <table>
+                <thead v-if="game_data.length > 0">
+                    <th>순번</th>
+                    <th>숫자</th>
+                    <th>판정</th>
+                </thead>
+                <tbody>
+                    <tr v-for="data in game_data">
+                        <th>{{data.count}}</th>
+                        <td>{{data.input}}</td>
+                        <td>{{data.result.strike}} 스트라이크 {{data.result.ball}} 볼</td>
+                    </tr>
+                </tbody>
+                <tfoot v-if="game_start">
+                    <tr>
+                        <td colspan="3">
+                            <input type="number"  v-model="input_number" @input="inputChange($event)" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p v-if="!game_start">
+                <button v-on:click = "new_game">
+                    new game    
+                </button>
+            </p>
+            
         </article>
 
         <article>

@@ -11,8 +11,8 @@ var images = [
 var random = getRandomInt(0,images.length-1);
 
 
-var app = new Vue({
-  el: '#app',
+var game1 = new Vue({
+  el: '#gawebaweboh',
   data : {
     me : "",
     com : "",
@@ -26,38 +26,44 @@ var app = new Vue({
   },
   methods : {
     gawe: function() {
-      app.me = "가위";
-      app.com = getGaweBaweBoh();
+      game1.me = "가위";
+      game1.com = getGaweBaweBoh();
       gaweBaweBohCheck();
     },
     bawe: function() {
-      app.me = "바위";
-      app.com = getGaweBaweBoh();
+      game1.me = "바위";
+      game1.com = getGaweBaweBoh();
       gaweBaweBohCheck();
     },
     boh: function() {
-      app.me = "보";
-      app.com = getGaweBaweBoh();
+      game1.me = "보";
+      game1.com = getGaweBaweBoh();
       gaweBaweBohCheck();
+    },
+    reset : function() {
+      game1.gaweBaweBohResults = [];
+      game1.win = 0;
+      game1.lose = 0;
+      game1.tied = 0;
     }
   }
 })
 
 function gaweBaweBohCheck() {
-  app.result = checkGaweBaweBoh(app.me, app.com);
-  switch (app.result) {
+  game1.result = checkGaweBaweBoh(game1.me, game1.com);
+  switch (game1.result) {
     case "이겼다":
-      app.win++;
+      game1.win++;
       break;
     case "비겼다":
-      app.tied++;
+      game1.tied++;
       break;
     case "졌다":
-      app.lose ++;
+      game1.lose ++;
       break;
   }
-  app.gaweBaweBohResults.push(
-    {number:app.gaweBaweBohResults.length+1,me:app.me,com:app.com,result:app.result}
+  game1.gaweBaweBohResults.push(
+    {number:game1.gaweBaweBohResults.length+1,me:game1.me,com:game1.com,result:game1.result}
   )
 }
 
@@ -122,3 +128,79 @@ var app4 = new Vue({
     }
   })
   
+
+
+  var baseballGame = new Vue({
+    el : '#baseballGame',
+    data : {      
+      numbers:[getRandomInt(0,9),getRandomInt(0,9),getRandomInt(0,9)],
+      game_data:[],
+      input_number:"",
+      game_start:true
+    },
+    methods : {
+      inputChange : function (event) {
+        console.log(event.target.value);
+        var value = event.target.value;
+        if (value.length >= 3) {
+          this.input_number =  value.substring(0, 3);
+          var result = checkGame();
+          console.log(result);
+          console.log(baseballGame.numbers);
+          this.game_data.push(
+            {
+              count:this.game_data.length + 1,
+              input:this.input_number, 
+              result:result
+            }
+          );
+          if(result.strike == 3) {
+            this.game_start = false 
+          }
+        }
+      },
+      new_game : function() {
+        console.log("new game");
+        this.numbers = [getRandomInt(0,9),getRandomInt(0,9),getRandomInt(0,9)];
+        this.game_data = [];
+        this.input_number = "";
+        this.game_start = true;
+      }
+    }
+  })
+
+  function checkGame() {    
+    var strike = 0
+    var ball = 0
+    console.log(baseballGame.numbers.length);
+    console.log("_------------");
+    var a = [];
+    var b = baseballGame.numbers;
+
+    var aa = [];
+    var bb = [];
+
+    for (var i=0;i<baseballGame.input_number.length;i++) {
+      a.push(baseballGame.input_number[i])
+    }
+
+    //스트라이크 판정
+    for (var i=0;i<b.length;i++) {
+      if (a[i] == b[i]) {
+        strike ++;
+      } else {
+        aa.push(a[i]);
+        bb.push(b[i]);
+      }
+    }
+
+    //볼 판정
+    for (var i=0; i<aa.length; i++) {
+      for (var j=0; j<bb.length; j++) {
+        if (aa[i] == bb[j]) {
+          ball ++;
+        }
+      }
+    }
+    return {strike:strike, ball:ball}
+  }
