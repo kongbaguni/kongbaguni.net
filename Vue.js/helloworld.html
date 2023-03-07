@@ -68,7 +68,7 @@
             </header>
             <p>{{name}} : {{phone_number}}</p>
             <p><input v-model="name" /></p>
-            <p><input v-model="phone_number" @input="searchChangeFunc($event)"/></p>
+            <p><input type = "number" inputmode="tel" v-model="phone_number" @input="searchChangeFunc($event)"/></p>
         </article>
 
         <article id="gawebaweboh">
@@ -136,7 +136,7 @@
                 <tfoot v-if="game_start">
                     <tr>
                         <td colspan="3">
-                            <input type="number"  v-model="input_number" @input="inputChange($event)" />
+                            <input type = "number" inputmode="decimal"  v-model="input_number" @input="inputChange($event)" />
                         </td>
                     </tr>
                 </tfoot>
