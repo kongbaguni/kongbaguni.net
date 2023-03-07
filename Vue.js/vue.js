@@ -154,6 +154,7 @@ var app4 = new Vue({
               result:result
             }
           );
+          this.input_number = "";
           if(result.strike == 3) {
             this.game_start = false 
           }
