@@ -335,3 +335,12 @@ h2 sup::after, h3 sup::after, h4 sup::after, h5 sup::after, h6 sup::after {
     content: ")";
     color: yellow;
 }
+
+
+div.cardDeck {
+    border: 2px dotted #48f;
+    padding: 10px;
+    margin: 10px;
+    min-height: 80px;
+
+}

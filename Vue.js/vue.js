@@ -205,3 +205,144 @@ var app4 = new Vue({
     }
     return {strike:strike, ball:ball}
   }
+
+
+
+  var poker = new Vue ({
+    el:'#poker',
+    data:{
+      cards:[
+        {type:"S", value:"A", image:"./images/poker/SA.svg", desc:"SA"},
+        {type:"S", value:"2", image:"./images/poker/S2.svg", desc:"S2"},
+        {type:"S", value:"3", image:"./images/poker/S3.svg", desc:"S3"},
+        {type:"S", value:"4", image:"./images/poker/S4.svg", desc:"S4"},
+        {type:"S", value:"5", image:"./images/poker/S5.svg", desc:"S5"},
+        {type:"S", value:"6", image:"./images/poker/S6.svg", desc:"S6"},
+        {type:"S", value:"7", image:"./images/poker/S7.svg", desc:"S7"},
+        {type:"S", value:"8", image:"./images/poker/S8.svg", desc:"S8"},
+        {type:"S", value:"9", image:"./images/poker/S9.svg", desc:"S9"},
+        {type:"S", value:"10", image:"./images/poker/S10.svg", desc:"S10"},
+        {type:"S", value:"J", image:"./images/poker/SJ.svg", desc:"SJ"},
+        {type:"S", value:"Q", image:"./images/poker/SQ.svg", desc:"SQ"},
+        {type:"S", value:"K", image:"./images/poker/SK.svg", desc:"SK"},
+
+        {type:"D", value:"A", image:"./images/poker/DA.svg", desc:"DA"},
+        {type:"D", value:"2", image:"./images/poker/D2.svg", desc:"D2"},
+        {type:"D", value:"3", image:"./images/poker/D3.svg", desc:"D3"},
+        {type:"D", value:"4", image:"./images/poker/D4.svg", desc:"D4"},
+        {type:"D", value:"5", image:"./images/poker/D5.svg", desc:"D5"},
+        {type:"D", value:"6", image:"./images/poker/D6.svg", desc:"D6"},
+        {type:"D", value:"7", image:"./images/poker/D7.svg", desc:"D7"},
+        {type:"D", value:"8", image:"./images/poker/D8.svg", desc:"D8"},
+        {type:"D", value:"9", image:"./images/poker/D9.svg", desc:"D9"},
+        {type:"D", value:"10", image:"./images/poker/D10.svg", desc:"D10"},
+        {type:"D", value:"J", image:"./images/poker/DJ.svg", desc:"DJ"},
+        {type:"D", value:"Q", image:"./images/poker/DQ.svg", desc:"DQ"},
+        {type:"D", value:"K", image:"./images/poker/DK.svg", desc:"DK"},
+
+        {type:"H", value:"A", image:"./images/poker/HA.svg", desc:"HA"},
+        {type:"H", value:"2", image:"./images/poker/H2.svg", desc:"H2"},
+        {type:"H", value:"3", image:"./images/poker/H3.svg", desc:"H3"},
+        {type:"H", value:"4", image:"./images/poker/H4.svg", desc:"H4"},
+        {type:"H", value:"5", image:"./images/poker/H5.svg", desc:"H5"},
+        {type:"H", value:"6", image:"./images/poker/H6.svg", desc:"H6"},
+        {type:"H", value:"7", image:"./images/poker/H7.svg", desc:"H7"},
+        {type:"H", value:"8", image:"./images/poker/H8.svg", desc:"H8"},
+        {type:"H", value:"9", image:"./images/poker/H9.svg", desc:"H9"},
+        {type:"H", value:"10", image:"./images/poker/H10.svg", desc:"H10"},
+        {type:"H", value:"J", image:"./images/poker/HJ.svg", desc:"HJ"},
+        {type:"H", value:"Q", image:"./images/poker/HQ.svg", desc:"HQ"},
+        {type:"H", value:"K", image:"./images/poker/HK.svg", desc:"HK"},
+
+        {type:"C", value:"A", image:"./images/poker/CA.svg", desc:"CA"},
+        {type:"C", value:"2", image:"./images/poker/C2.svg", desc:"C2"},
+        {type:"C", value:"3", image:"./images/poker/C3.svg", desc:"C3"},
+        {type:"C", value:"4", image:"./images/poker/C4.svg", desc:"C4"},
+        {type:"C", value:"5", image:"./images/poker/C5.svg", desc:"C5"},
+        {type:"C", value:"6", image:"./images/poker/C6.svg", desc:"C6"},
+        {type:"C", value:"7", image:"./images/poker/C7.svg", desc:"C7"},
+        {type:"C", value:"8", image:"./images/poker/C8.svg", desc:"C8"},
+        {type:"C", value:"9", image:"./images/poker/C9.svg", desc:"C9"},
+        {type:"C", value:"10", image:"./images/poker/C10.svg", desc:"C10"},
+        {type:"C", value:"J", image:"./images/poker/CJ.svg", desc:"CJ"},
+        {type:"C", value:"Q", image:"./images/poker/CQ.svg", desc:"CQ"},
+        {type:"C", value:"K", image:"./images/poker/CK.svg", desc:"CK"},
+      ],
+      deck : [], 
+      player_deck : [],
+      communiti_deck : [],
+      dealer_deck : [],   
+      game_status : "ready"   
+    },
+    methods : {
+      shuffleCard : function() {
+        var copyarr = Array.from(this.cards);
+        while (copyarr.length > 0) {
+          shuffle(copyarr);
+          this.deck.unshift(copyarr.pop());
+          
+        }
+      },
+      reset : function() {
+        this.dealer_deck = []
+        this.communiti_deck = []
+        this.player_deck = []
+        this.game_status = "ready"
+      },
+      preflop : function() {        
+        if (this.game_status != "ready") {
+          return;
+        }
+        if (this.deck.length < 12) {
+          this.shuffleCard();
+        }
+        setTimeout(function () {
+          poker.dealer_deck.push(poker.deck.pop());
+          poker.dealer_deck.push(poker.deck.pop());            
+        }, 1000);
+
+        setTimeout(function () {
+          poker.player_deck.push(poker.deck.pop());
+          poker.player_deck.push(poker.deck.pop());
+        }, 2000);
+        this.game_status = "preflop";
+      },
+      flop : function() {
+        if (this.game_status != "preflop") {
+          return;
+        }
+        this.communiti_deck.push(this.deck.pop());      
+        setTimeout(function () {
+          poker.communiti_deck.push(poker.deck.pop());
+        }, 1000);
+        setTimeout(function () {
+          poker.communiti_deck.push(poker.deck.pop());
+        }, 2000);
+        
+        this.deck.pop();
+        this.game_status = "flop"
+      },
+      turn : function() {
+        if(this.game_status != "flop") {
+          return;
+        }
+        this.communiti_deck.push(this.deck.pop());      
+        this.deck.pop();
+        this.game_status = "turn"
+      }, 
+      river : function() {
+        if(this.game_status != "turn") {
+          return;
+        }
+        this.communiti_deck.push(this.deck.pop());      
+        this.deck.pop();
+        setTimeout(function () {
+          poker.game_status = "river"
+        }, 1000)
+        
+      }
+
+    }
+  }
+
+  )
