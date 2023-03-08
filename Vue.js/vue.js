@@ -294,6 +294,7 @@ var app4 = new Vue({
           return;
         }
         if (this.deck.length < 12) {
+          this.deck = [];
           this.shuffleCard();
         }
         setTimeout(function () {
@@ -336,10 +337,7 @@ var app4 = new Vue({
         }
         this.communiti_deck.push(this.deck.pop());      
         this.deck.pop();
-        setTimeout(function () {
-          poker.game_status = "river"
-        }, 1000)
-        
+        this.game_status = "river"        
       }
 
     }

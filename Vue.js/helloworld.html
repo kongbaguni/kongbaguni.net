@@ -202,11 +202,13 @@
                     <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="30px" />
                 </p>
             </div>
-            <button v-on:click="preflop">preflop</button>
-            <button v-on:click="flop">flop</button>
-            <button v-on:click="turn">turn</button>
-            <button v-on:click="river">river</button>
-            <button v-on:click="reset">reset</button>
+            <p>
+                <button v-on:click="preflop">preflop</button>
+                <button v-on:click="flop">flop</button>
+                <button v-on:click="turn">turn</button>
+                <button v-on:click="river">river</button>
+                <button v-on:click="reset">reset</button>
+            </p>
         </article>
     </body>
     <script src="./vue.js"></script>
