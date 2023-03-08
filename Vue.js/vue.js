@@ -271,7 +271,8 @@ var app4 = new Vue({
       player_deck : [],
       communiti_deck : [],
       dealer_deck : [],   
-      game_status : "ready"   
+      game_status : "ready",
+      player_hand : ""
     },
     methods : {
       shuffleCard : function() {
@@ -304,6 +305,7 @@ var app4 = new Vue({
         setTimeout(function () {
           poker.player_deck.push(poker.deck.pop());
           poker.player_deck.push(poker.deck.pop());
+
         }, 2000);
         this.game_status = "preflop";
       },
@@ -317,10 +319,13 @@ var app4 = new Vue({
         }, 1000);
         setTimeout(function () {
           poker.communiti_deck.push(poker.deck.pop());
+          poker.checkPlayerHand();
+
         }, 2000);
         
         this.deck.pop();
-        this.game_status = "flop"
+        this.game_status = "flop";
+        
       },
       turn : function() {
         if(this.game_status != "flop") {
@@ -337,7 +342,95 @@ var app4 = new Vue({
         this.communiti_deck.push(this.deck.pop());      
         this.deck.pop();
         this.game_status = "river"        
-      }
+      },
 
+      checkPlayerHand: function() {
+        console.log("checkPlayerHand");
+        var cards = []
+        for (i = 0; i< this.communiti_deck.length; i++) {
+          cards.push(this.communiti_deck[i])
+        }
+        for (i=0; i< this.player_deck.length;i++) {
+          cards.push(this.player_deck[i])
+        }
+        console.log(cards);
+        if (cards.length == 5) {
+          this.player_hand = this.evaluatePokerHand(cards);
+          console.log(this.player_hand);
+        }
+      },
+      
+      evaluatePokerHand : function(cards) {
+        console.log("evaluatePokerHand");
+        // 카드 무늬와 숫자를 분리해서 저장
+        const suits = cards.map(card => card.type);
+        const ranks = cards.map(card => card.value);
+      
+        // 카드 숫자를 정렬
+        ranks.sort((a, b) => {
+          if (a === "A") return 14;
+          else if (a === "K") return 13;
+          else if (a === "Q") return 12;
+          else if (a === "J") return 11;
+          else if (a === "T") return 10;
+          else return parseInt(a);
+        });
+      
+        // 포커 판정
+        if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {
+          return {title : "Four of a Kind", rank:7};
+        }
+      
+        // 풀하우스 판정
+        if ((ranks[0] === ranks[1] && ranks[2] === ranks[4]) || (ranks[0] === ranks[2] && ranks[3] === ranks[4])) {
+          return {title: "Full House", rank:6};
+        }
+      
+        // 플러시 판정
+        if (suits.every(suit => suit === suits[0])) {
+          return {title: "Flush" , rank:5};
+        }
+      
+        // 스트레이트 판정
+        let straight = true;
+        for (let i = 0; i < ranks.length - 1; i++) {
+          if (ranks[i + 1] - ranks[i] !== 1) {
+            straight = false;
+            break;
+          }
+        }
+        if (straight) {
+          return {title : "Straight", rank : 4};
+        }
+      
+        // 스트레이트 플러시 판정
+        if (straight && suits.every(suit => suit === suits[0])) {
+          return {title : "Straight Flush", rank : 8};
+        }
+      
+        // 쓰리카인드 판정
+        if (ranks[0] === ranks[2] || ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
+          return {title : "Three of a Kind", rank : 3};
+        }
+      
+        // 투페어 판정
+        let pairs = 0;
+        for (let i = 0; i < ranks.length - 1; i++) {
+          if (ranks[i] === ranks[i + 1]) {
+            pairs++;
+          }
+        }
+        if (pairs === 2) {
+          return {title : "Two Pair", rank : 2};
+        }
+      
+        // 원 페어 판정
+        if (pairs === 1) {
+          return {title : "One Pair", rank : 1};
+        }
+      
+        // 하이카드 판정
+        return {title : "High Card", rank: 0};
+      }
     }
   })
