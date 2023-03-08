@@ -206,8 +206,7 @@ var app4 = new Vue({
     return {strike:strike, ball:ball}
   }
 
-
-
+  /** 포커 */
   var poker = new Vue ({
     el:'#poker',
     data:{
@@ -341,6 +340,4 @@ var app4 = new Vue({
       }
 
     }
-  }
-
-  )
+  })

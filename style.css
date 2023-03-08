@@ -341,6 +341,15 @@ div.cardDeck {
     border: 2px dotted #48f;
     padding: 10px;
     margin: 10px;
-    min-height: 80px;
+    min-height: 90px;
 
+}
+
+
+div.cardDeck.before p {
+    margin-left: 63px;
+}
+div.cardDeck.before img{
+    display: inline-block;
+    margin-left: -63px;
 }
