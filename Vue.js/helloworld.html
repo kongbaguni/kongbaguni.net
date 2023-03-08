@@ -203,10 +203,10 @@
                 </p>
             </div>
             <p>
-                <button v-on:click="preflop">preflop</button>
-                <button v-on:click="flop">flop</button>
-                <button v-on:click="turn">turn</button>
-                <button v-on:click="river">river</button>
+                <button v-if="game_status == 'ready'" v-on:click="preflop">preflop</button>
+                <button v-if="game_status == 'preflop'" v-on:click="flop">flop</button>
+                <button v-if="game_status == 'flop'" v-on:click="turn">turn</button>
+                <button v-if="game_status == 'turn'" v-on:click="river">river</button>
                 <button v-on:click="reset">reset</button>
             </p>
         </article>
