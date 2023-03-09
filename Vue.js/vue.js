@@ -281,6 +281,8 @@ var app4 = new Vue({
       dealer_cidx : "", // 딜러 족보에 사용된 커뮤니티카드 인덱스 
       dealer_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
       dealer_kiker : {}, // 딜러 키커
+
+      game_result : "" // 게임 결과 (승패)
     },
     methods : {
       shuffleCard : function() {
@@ -353,6 +355,38 @@ var app4 = new Vue({
         this.game_status = "river";
         this.checkPlayerHand();
         this.checkDelarHand();
+        switch(this.compareHand()) {
+          case 1:
+            this.game_result = "WIN";
+            break;
+          case 0:
+            this.game_result = "LOSE";
+            break;
+          case -1:
+            this.game_result = "TIED";
+            break
+        }
+      },
+      compareHand : function() {
+        const p = this.player_hand;
+        const d = this.dealer_hand;
+        if(p.rank > d.rank) {
+          return 1
+        }
+        if(p.rank == d.rank) {
+          if (p.kiker.point > d.kiker.point) {
+            return 1
+          }
+          if (p.kiker.point == d.kiker.point) {
+            if (p.kiker.typepoint > d.kiker.typepoint) {
+              return 1
+            }
+            if (p.kiker.typepoint == d.kiker.typepoint) {
+              return 0
+            }
+          }
+        }        
+        return -1
       },
       getCCardForHandCheck : function() {
         var cd = this.communiti_deck;

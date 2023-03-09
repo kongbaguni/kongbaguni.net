@@ -229,6 +229,9 @@
                 </p>                
             </div>
             <p>
+                {{game_result}}
+            </p>
+            <p>
                 <button v-if="game_status == 'ready'" v-on:click="preflop">preflop</button>
                 <button v-if="game_status == 'preflop'" v-on:click="flop">flop</button>
                 <button v-if="game_status == 'flop'" v-on:click="turn">turn</button>
