@@ -44,7 +44,7 @@ var game1 = new Vue({
       game1.gaweBaweBohResults = [];
       game1.win = 0;
       game1.lose = 0;
-      game1.tied = 0;
+      game1.tied = 0;      
     }
   }
 })
@@ -211,68 +211,76 @@ var app4 = new Vue({
     el:'#poker',
     data:{
       cards:[
-        {type:"S", value:"A", image:"./images/poker/SA.svg", desc:"SA"},
-        {type:"S", value:"2", image:"./images/poker/S2.svg", desc:"S2"},
-        {type:"S", value:"3", image:"./images/poker/S3.svg", desc:"S3"},
-        {type:"S", value:"4", image:"./images/poker/S4.svg", desc:"S4"},
-        {type:"S", value:"5", image:"./images/poker/S5.svg", desc:"S5"},
-        {type:"S", value:"6", image:"./images/poker/S6.svg", desc:"S6"},
-        {type:"S", value:"7", image:"./images/poker/S7.svg", desc:"S7"},
-        {type:"S", value:"8", image:"./images/poker/S8.svg", desc:"S8"},
-        {type:"S", value:"9", image:"./images/poker/S9.svg", desc:"S9"},
-        {type:"S", value:"10", image:"./images/poker/S10.svg", desc:"S10"},
-        {type:"S", value:"J", image:"./images/poker/SJ.svg", desc:"SJ"},
-        {type:"S", value:"Q", image:"./images/poker/SQ.svg", desc:"SQ"},
-        {type:"S", value:"K", image:"./images/poker/SK.svg", desc:"SK"},
+        {type:"S", value:"A", image:"./images/poker/SA.svg", desc:"SA", point:14, typepoint:4},
+        {type:"S", value:"2", image:"./images/poker/S2.svg", desc:"S2", point:2, typepoint:4},
+        {type:"S", value:"3", image:"./images/poker/S3.svg", desc:"S3", point:3, typepoint:4},
+        {type:"S", value:"4", image:"./images/poker/S4.svg", desc:"S4", point:4, typepoint:4},
+        {type:"S", value:"5", image:"./images/poker/S5.svg", desc:"S5", point:5, typepoint:4},
+        {type:"S", value:"6", image:"./images/poker/S6.svg", desc:"S6", point:6, typepoint:4},
+        {type:"S", value:"7", image:"./images/poker/S7.svg", desc:"S7", point:7, typepoint:4},
+        {type:"S", value:"8", image:"./images/poker/S8.svg", desc:"S8", point:8, typepoint:4},
+        {type:"S", value:"9", image:"./images/poker/S9.svg", desc:"S9", point:9, typepoint:4},
+        {type:"S", value:"10", image:"./images/poker/S10.svg", desc:"S10", point:10, typepoint:4},
+        {type:"S", value:"J", image:"./images/poker/SJ.svg", desc:"SJ", point:11, typepoint:4},
+        {type:"S", value:"Q", image:"./images/poker/SQ.svg", desc:"SQ", point:12, typepoint:4},
+        {type:"S", value:"K", image:"./images/poker/SK.svg", desc:"SK", point:13, typepoint:4},
 
-        {type:"D", value:"A", image:"./images/poker/DA.svg", desc:"DA"},
-        {type:"D", value:"2", image:"./images/poker/D2.svg", desc:"D2"},
-        {type:"D", value:"3", image:"./images/poker/D3.svg", desc:"D3"},
-        {type:"D", value:"4", image:"./images/poker/D4.svg", desc:"D4"},
-        {type:"D", value:"5", image:"./images/poker/D5.svg", desc:"D5"},
-        {type:"D", value:"6", image:"./images/poker/D6.svg", desc:"D6"},
-        {type:"D", value:"7", image:"./images/poker/D7.svg", desc:"D7"},
-        {type:"D", value:"8", image:"./images/poker/D8.svg", desc:"D8"},
-        {type:"D", value:"9", image:"./images/poker/D9.svg", desc:"D9"},
-        {type:"D", value:"10", image:"./images/poker/D10.svg", desc:"D10"},
-        {type:"D", value:"J", image:"./images/poker/DJ.svg", desc:"DJ"},
-        {type:"D", value:"Q", image:"./images/poker/DQ.svg", desc:"DQ"},
-        {type:"D", value:"K", image:"./images/poker/DK.svg", desc:"DK"},
+        {type:"D", value:"A", image:"./images/poker/DA.svg", desc:"DA", point:14, typepoint:3},
+        {type:"D", value:"2", image:"./images/poker/D2.svg", desc:"D2", point:2, typepoint:3},
+        {type:"D", value:"3", image:"./images/poker/D3.svg", desc:"D3", point:3, typepoint:3},
+        {type:"D", value:"4", image:"./images/poker/D4.svg", desc:"D4", point:4, typepoint:3},
+        {type:"D", value:"5", image:"./images/poker/D5.svg", desc:"D5", point:5, typepoint:3},
+        {type:"D", value:"6", image:"./images/poker/D6.svg", desc:"D6", point:6, typepoint:3},
+        {type:"D", value:"7", image:"./images/poker/D7.svg", desc:"D7", point:7, typepoint:3},
+        {type:"D", value:"8", image:"./images/poker/D8.svg", desc:"D8", point:8, typepoint:3},
+        {type:"D", value:"9", image:"./images/poker/D9.svg", desc:"D9", point:9, typepoint:3},
+        {type:"D", value:"10", image:"./images/poker/D10.svg", desc:"D10", point:10, typepoint:3},
+        {type:"D", value:"J", image:"./images/poker/DJ.svg", desc:"DJ", point:11, typepoint:3},
+        {type:"D", value:"Q", image:"./images/poker/DQ.svg", desc:"DQ", point:12, typepoint:3},
+        {type:"D", value:"K", image:"./images/poker/DK.svg", desc:"DK", point:13, typepoint:3},
 
-        {type:"H", value:"A", image:"./images/poker/HA.svg", desc:"HA"},
-        {type:"H", value:"2", image:"./images/poker/H2.svg", desc:"H2"},
-        {type:"H", value:"3", image:"./images/poker/H3.svg", desc:"H3"},
-        {type:"H", value:"4", image:"./images/poker/H4.svg", desc:"H4"},
-        {type:"H", value:"5", image:"./images/poker/H5.svg", desc:"H5"},
-        {type:"H", value:"6", image:"./images/poker/H6.svg", desc:"H6"},
-        {type:"H", value:"7", image:"./images/poker/H7.svg", desc:"H7"},
-        {type:"H", value:"8", image:"./images/poker/H8.svg", desc:"H8"},
-        {type:"H", value:"9", image:"./images/poker/H9.svg", desc:"H9"},
-        {type:"H", value:"10", image:"./images/poker/H10.svg", desc:"H10"},
-        {type:"H", value:"J", image:"./images/poker/HJ.svg", desc:"HJ"},
-        {type:"H", value:"Q", image:"./images/poker/HQ.svg", desc:"HQ"},
-        {type:"H", value:"K", image:"./images/poker/HK.svg", desc:"HK"},
+        {type:"H", value:"A", image:"./images/poker/HA.svg", desc:"HA", point:14, typepoint:2},
+        {type:"H", value:"2", image:"./images/poker/H2.svg", desc:"H2", point:2, typepoint:2},
+        {type:"H", value:"3", image:"./images/poker/H3.svg", desc:"H3", point:3, typepoint:2},
+        {type:"H", value:"4", image:"./images/poker/H4.svg", desc:"H4", point:4, typepoint:2},
+        {type:"H", value:"5", image:"./images/poker/H5.svg", desc:"H5", point:5, typepoint:2},
+        {type:"H", value:"6", image:"./images/poker/H6.svg", desc:"H6", point:6, typepoint:2},
+        {type:"H", value:"7", image:"./images/poker/H7.svg", desc:"H7", point:7, typepoint:2},
+        {type:"H", value:"8", image:"./images/poker/H8.svg", desc:"H8", point:8, typepoint:2},
+        {type:"H", value:"9", image:"./images/poker/H9.svg", desc:"H9", point:9, typepoint:2},
+        {type:"H", value:"10", image:"./images/poker/H10.svg", desc:"H10", point:10, typepoint:2},
+        {type:"H", value:"J", image:"./images/poker/HJ.svg", desc:"HJ", point:11, typepoint:2},
+        {type:"H", value:"Q", image:"./images/poker/HQ.svg", desc:"HQ", point:12, typepoint:2},
+        {type:"H", value:"K", image:"./images/poker/HK.svg", desc:"HK", point:13, typepoint:2},
 
-        {type:"C", value:"A", image:"./images/poker/CA.svg", desc:"CA"},
-        {type:"C", value:"2", image:"./images/poker/C2.svg", desc:"C2"},
-        {type:"C", value:"3", image:"./images/poker/C3.svg", desc:"C3"},
-        {type:"C", value:"4", image:"./images/poker/C4.svg", desc:"C4"},
-        {type:"C", value:"5", image:"./images/poker/C5.svg", desc:"C5"},
-        {type:"C", value:"6", image:"./images/poker/C6.svg", desc:"C6"},
-        {type:"C", value:"7", image:"./images/poker/C7.svg", desc:"C7"},
-        {type:"C", value:"8", image:"./images/poker/C8.svg", desc:"C8"},
-        {type:"C", value:"9", image:"./images/poker/C9.svg", desc:"C9"},
-        {type:"C", value:"10", image:"./images/poker/C10.svg", desc:"C10"},
-        {type:"C", value:"J", image:"./images/poker/CJ.svg", desc:"CJ"},
-        {type:"C", value:"Q", image:"./images/poker/CQ.svg", desc:"CQ"},
-        {type:"C", value:"K", image:"./images/poker/CK.svg", desc:"CK"},
+        {type:"C", value:"A", image:"./images/poker/CA.svg", desc:"CA", point:14, typepoint:1},
+        {type:"C", value:"2", image:"./images/poker/C2.svg", desc:"C2", point:2, typepoint:1},
+        {type:"C", value:"3", image:"./images/poker/C3.svg", desc:"C3", point:3, typepoint:1},
+        {type:"C", value:"4", image:"./images/poker/C4.svg", desc:"C4", point:4, typepoint:1},
+        {type:"C", value:"5", image:"./images/poker/C5.svg", desc:"C5", point:5, typepoint:1},
+        {type:"C", value:"6", image:"./images/poker/C6.svg", desc:"C6", point:6, typepoint:1},
+        {type:"C", value:"7", image:"./images/poker/C7.svg", desc:"C7", point:7, typepoint:1},
+        {type:"C", value:"8", image:"./images/poker/C8.svg", desc:"C8", point:8, typepoint:1},
+        {type:"C", value:"9", image:"./images/poker/C9.svg", desc:"C9", point:9, typepoint:1},
+        {type:"C", value:"10", image:"./images/poker/C10.svg", desc:"C10", point:10, typepoint:1},
+        {type:"C", value:"J", image:"./images/poker/CJ.svg", desc:"CJ", point:11, typepoint:1},
+        {type:"C", value:"Q", image:"./images/poker/CQ.svg", desc:"CQ", point:12, typepoint:1},
+        {type:"C", value:"K", image:"./images/poker/CK.svg", desc:"CK", point:13, typepoint:1},
       ],
       deck : [], 
       player_deck : [],
       communiti_deck : [],
       dealer_deck : [],   
-      game_status : "ready",
-      player_hand : ""
+      game_status : "ready", // 게임 상태
+      player_hand : "", // 플레이어 족보 출력 
+      player_cidx : "", // 플레이어 족보에 사용된 커뮤니티카드 인덱스
+      player_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
+      player_kiker : {}, // 플레이어 키커
+
+      dealer_hand: "",// 딜러 족보 출력 
+      dealer_cidx : "", // 딜러 족보에 사용된 커뮤니티카드 인덱스 
+      dealer_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
+      dealer_kiker : {}, // 딜러 키커
     },
     methods : {
       shuffleCard : function() {
@@ -284,10 +292,19 @@ var app4 = new Vue({
         }
       },
       reset : function() {
-        this.dealer_deck = []
-        this.communiti_deck = []
-        this.player_deck = []
-        this.game_status = "ready"
+        this.dealer_deck = [];
+        this.communiti_deck = [];
+        this.player_deck = [];
+        this.game_status = "ready";
+        this.player_hand = "";
+        this.player_cidx = "";
+        this.player_kiker = {};
+        this.player_cidx_arr = [];
+
+        this.dealer_hand = "";
+        this.dealer_cidx = "";
+        this.dealer_kiker = {};
+        this.dealer_cidx_arr = [];
       },
       preflop : function() {        
         if (this.game_status != "ready") {
@@ -308,6 +325,7 @@ var app4 = new Vue({
 
         }, 2000);
         this.game_status = "preflop";
+        this.player_hand = "";
       },
       flop : function() {
         if (this.game_status != "preflop") {
@@ -334,6 +352,7 @@ var app4 = new Vue({
         this.communiti_deck.push(this.deck.pop());      
         this.deck.pop();
         this.game_status = "turn"
+        this.checkPlayerHand();
       }, 
       river : function() {
         if(this.game_status != "turn") {
@@ -341,26 +360,120 @@ var app4 = new Vue({
         }
         this.communiti_deck.push(this.deck.pop());      
         this.deck.pop();
-        this.game_status = "river"        
+        this.game_status = "river";
+        this.checkPlayerHand();
+        this.checkDelarHand();
       },
-
-      checkPlayerHand: function() {
+      getCCardForHandCheck : function() {
+        var cd = this.communiti_deck;
         console.log("checkPlayerHand");
-        var cards = []
-        for (i = 0; i< this.communiti_deck.length; i++) {
-          cards.push(this.communiti_deck[i])
+        var ccards = [[cd[0],cd[1],cd[2]]];
+
+        var cidxs = ["012"];
+        switch (cd.length) {
+          case 4:
+            cidxs = ["012","013","023","123"];
+            break;
+          case 5:
+            cidxs = ["012","013","023","123","014","024","034","124","134","234"];
+            break;
         }
-        for (i=0; i< this.player_deck.length;i++) {
-          cards.push(this.player_deck[i])
+        switch (cd.length) {
+          case 5:
+            ccards.push([cd[0],cd[1],cd[4]]);
+            ccards.push([cd[0],cd[2],cd[4]]);
+            ccards.push([cd[0],cd[3],cd[4]]);
+            ccards.push([cd[1],cd[2],cd[4]]);
+            ccards.push([cd[1],cd[3],cd[4]]);
+            ccards.push([cd[2],cd[3],cd[4]]);
+          case 4:
+            ccards.push([cd[0],cd[1],cd[3]]);
+            ccards.push([cd[0],cd[2],cd[3]]);
+            ccards.push([cd[1],cd[2],cd[3]]);
         }
-        console.log(cards);
-        if (cards.length == 5) {
-          this.player_hand = this.evaluatePokerHand(cards);
-          console.log(this.player_hand);
-        }
+        console.log("커뮤니티드 "+cd.length+"개 : "+cidxs.length + " "+ccards.length);
+        console.log(cidxs);
+        console.log("_----------_")
+        return {cards:ccards, idxs:cidxs};
       },
       
-      evaluatePokerHand : function(cards) {
+      checkPlayerHand: function() {
+        if (this.communiti_deck.length < 3) {
+          return 
+        }
+        var cc = this.getCCardForHandCheck();
+        var handResuts = [];
+        for(var i=0; i<cc.cards.length; i++) {
+          var arr = [this.player_deck[0],this.player_deck[1]];
+          for (var j=0; j<cc.cards[i].length; j++) {
+            arr.push(cc.cards[i][j]);
+          }
+          console.log(arr);
+          handResuts.push(this.evaluatePokerHand(arr,cc.idxs[i]));                    
+        }
+        this.player_hand = this.getHighHand(handResuts);
+        console.log(handResuts)
+        this.player_cidx = this.player_hand.cidx;
+        this.player_cidx_arr = this.getCidsArr(this.player_cidx);
+        this.player_kiker = this.player_hand.kiker;
+      },
+
+      checkDelarHand : function() {
+        if (this.communiti_deck.length < 3) {
+          return 
+        }
+        var cc = this.getCCardForHandCheck();
+        var handResuts = [];
+        for(var i=0; i<cc.cards.length; i++) {
+          var arr = [this.dealer_deck[0],this.dealer_deck[1]];
+          for (var j=0; j<cc.cards[i].length; j++) {
+            arr.push(cc.cards[i][j]);
+          }
+          console.log(arr);
+          handResuts.push(this.evaluatePokerHand(arr,cc.idxs[i]));                    
+        }
+        this.dealer_hand = this.getHighHand(handResuts);
+        console.log(handResuts)
+        this.dealer_cidx = this.dealer_hand.cidx;
+        this.dealer_cidx_arr = this.getCidsArr(this.dealer_cidx);
+        this.dealer_kiker = this.dealer_hand.kiker;
+      },
+
+      getCidsArr : function (idxs) {
+        var result = []
+        for (var i = 0; i < this.communiti_deck.length; i++) {
+          var count = 0          
+          for(var j = 0; j < idxs.length; j++) {
+            if(i==idxs[j]) {
+              count += 1;
+            }
+          }          
+          result.push(count > 0);
+        }
+        console.log(result);
+        return result;
+      },
+
+      getKikerCard : function(cards) {
+        if (cards.length == 0) {
+          return 
+        }
+        if (cards.length == 1) {
+          return cards[0];
+        }
+        var card = cards[0];
+        for (var i=0; i<cards.length; i++) {
+          if(cards[i].point > card.point) {
+            card = cards[i];            
+          }
+          else if(cards[i].point == card.point && cards[i].typepoint > card.typepoint) {
+              card = cards[i];
+          }
+        }
+        return card
+      },
+      evaluatePokerHand : function(cards,cidx) {
+        const kiker = this.getKikerCard(cards);
         console.log("evaluatePokerHand");
         // 카드 무늬와 숫자를 분리해서 저장
         const suits = cards.map(card => card.type);
@@ -378,17 +491,17 @@ var app4 = new Vue({
       
         // 포커 판정
         if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {
-          return {title : "Four of a Kind", rank:7};
+          return {title : "Four of a Kind", rank:7, cidx: cidx, kiker:kiker};
         }
       
         // 풀하우스 판정
         if ((ranks[0] === ranks[1] && ranks[2] === ranks[4]) || (ranks[0] === ranks[2] && ranks[3] === ranks[4])) {
-          return {title: "Full House", rank:6};
+          return {title: "Full House", rank:6, cidx: cidx, kiker:kiker};
         }
       
         // 플러시 판정
         if (suits.every(suit => suit === suits[0])) {
-          return {title: "Flush" , rank:5};
+          return {title: "Flush" , rank:5, cidx: cidx, kiker:kiker};
         }
       
         // 스트레이트 판정
@@ -400,17 +513,17 @@ var app4 = new Vue({
           }
         }
         if (straight) {
-          return {title : "Straight", rank : 4};
+          return {title : "Straight", rank : 4, cidx: cidx, kiker:kiker};
         }
       
         // 스트레이트 플러시 판정
         if (straight && suits.every(suit => suit === suits[0])) {
-          return {title : "Straight Flush", rank : 8};
+          return {title : "Straight Flush", rank : 8, cidx: cidx, kiker:kiker};
         }
       
         // 쓰리카인드 판정
         if (ranks[0] === ranks[2] || ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
-          return {title : "Three of a Kind", rank : 3};
+          return {title : "Three of a Kind", rank : 3, cidx: cidx, kiker:kiker};
         }
       
         // 투페어 판정
@@ -421,16 +534,34 @@ var app4 = new Vue({
           }
         }
         if (pairs === 2) {
-          return {title : "Two Pair", rank : 2};
+          return {title : "Two Pair", rank : 2, cidx: cidx, kiker:kiker};
         }
       
         // 원 페어 판정
         if (pairs === 1) {
-          return {title : "One Pair", rank : 1};
+          return {title : "One Pair", rank : 1, cidx: cidx, kiker:kiker};
         }
       
         // 하이카드 판정
-        return {title : "High Card", rank: 0};
+        return {title : "High Card", rank: 0, cidx: cidx, kiker:kiker};
+      },
+
+      getHighHand : function(hands) {
+        var hand = {title : "High Card", rank : 0, cidx:"012", kiker:this.communiti_deck[0]};
+        for (var i=0; i < hands.length; i ++) {
+          if (hands[i].rank > hand.rank) {
+            hand = hands[i];
+          }
+          else if (hands[i].rannk == hand.rank) {
+            if (hands[i].kiker.point > hand.kiker.point) {
+              hand = hands[i];
+            }
+            else if (hands[i].kiker.point == hand.kiker.point && hands[i].kiker.typepoint > hand.kiker.typepoint) {
+              hand = hands[i];
+            }
+          }
+        }
+        return hand
       }
     }
   })

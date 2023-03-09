@@ -184,6 +184,8 @@
             </div>
             <p>game status : {{game_status}}</p>
             <h3>dealer</h3>
+            <p>{{dealer_hand.title}}</p>
+            <p>kiker : <img v-bind:src="dealer_kiker.image" v-bind:alt = "dealer_kiker.desc" width="40px"/></p>
             <div class="cardDeck">
                 <p v-if="game_status != 'river'">
                 <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="70px" />
@@ -194,16 +196,33 @@
             </div>
             <h3>community</h3>
             <div class="cardDeck">
-                <p>
-                <img v-for="card in communiti_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
-                </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td v-for="value in dealer_cidx_arr">
+                                <p v-if="value ==true">O</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-for="card in communiti_deck">
+                                <img v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-for="value in player_cidx_arr">
+                                <p v-if="value ==true">O</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <h3>player</h3>
             <p>{{player_hand.title}}</p>
+            <p>kiker : <img v-bind:src="player_kiker.image" v-bind:alt = "player_kiker.desc" width="40px"/></p>
             <div class="cardDeck">
                 <p>
                     <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
-                </p>
+                </p>                
             </div>
             <p>
                 <button v-if="game_status == 'ready'" v-on:click="preflop">preflop</button>
