@@ -184,14 +184,14 @@
             </div>
             <p>game status : {{game_status}}</p>
             <h3>dealer</h3>
-            <p>{{dealer_hand.title}}</p>
-            <p>kiker : <img v-bind:src="dealer_kiker.image" v-bind:alt = "dealer_kiker.desc" width="40px"/></p>
+            <p>{{dealer_hand.title}}</p>            
             <div class="cardDeck">
                 <p v-if="game_status != 'river'">
                 <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="50px" />
                 </p>
                 <p v-if="game_status == 'river'">
                     <img v-for="card in dealer_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
+                    <span v-if="dealer_kiker != null">kiker : <img v-bind:src="dealer_kiker.image" v-bind:alt = "dealer_kiker.desc" width="40px"/></span>
                 </p>
             </div>
             <h3>community</h3>
@@ -222,11 +222,12 @@
             </div>
             <h3>player</h3>
             <p>{{player_hand.title}}</p>
-            <p>kiker : <img v-bind:src="player_kiker.image" v-bind:alt = "player_kiker.desc" width="40px"/></p>
             <div class="cardDeck">
                 <p>
                     <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
+                    <span v-if="player_kiker != null">kiker : <img v-bind:src="player_kiker.image" v-bind:alt = "player_kiker.desc" width="40px"/></span>
                 </p>                
+
             </div>
             <p>
                 {{game_result}}

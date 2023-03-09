@@ -275,12 +275,12 @@ var app4 = new Vue({
       player_hand : "", // 플레이어 족보 출력 
       player_cidx : "", // 플레이어 족보에 사용된 커뮤니티카드 인덱스
       player_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
-      player_kiker : {}, // 플레이어 키커
+      player_kiker : null, // 플레이어 키커
 
       dealer_hand: "",// 딜러 족보 출력 
       dealer_cidx : "", // 딜러 족보에 사용된 커뮤니티카드 인덱스 
       dealer_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
-      dealer_kiker : {}, // 딜러 키커
+      dealer_kiker : null, // 딜러 키커
 
       game_result : "" // 게임 결과 (승패)
     },
@@ -299,13 +299,15 @@ var app4 = new Vue({
         this.game_status = "ready";
         this.player_hand = "";
         this.player_cidx = "";
-        this.player_kiker = {};
+        this.player_kiker = null;
         this.player_cidx_arr = [];
 
         this.dealer_hand = "";
         this.dealer_cidx = "";
-        this.dealer_kiker = {};
+        this.dealer_kiker = null;
         this.dealer_cidx_arr = [];
+
+        this.game_result = "";
       },
       preflop : function() {        
         if (this.game_status != "ready") {
@@ -371,22 +373,33 @@ var app4 = new Vue({
         const p = this.player_hand;
         const d = this.dealer_hand;
         if(p.rank > d.rank) {
-          return 1
+          return 1;
         }
+        if (p.rank < d.rank) {
+          return -1;
+        }
+
         if(p.rank == d.rank) {
           if (p.kiker.point > d.kiker.point) {
-            return 1
+            return 1;
           }
+          if (p.kiker.point < d.kiker.point) {
+            return -1;
+          }
+
           if (p.kiker.point == d.kiker.point) {
             if (p.kiker.typepoint > d.kiker.typepoint) {
-              return 1
+              return 1;
+            }
+            if (p.kiker.typepoint < d.kiker.typepoint) {
+              return -1;
             }
             if (p.kiker.typepoint == d.kiker.typepoint) {
-              return 0
+              return 0;
             }
           }
         }        
-        return -1
+        return -1;
       },
       getCCardForHandCheck : function() {
         var cd = this.communiti_deck;
