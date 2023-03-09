@@ -365,7 +365,7 @@ var app4 = new Vue({
             cidxs = ["012","013","023","123"];
             break;
           case 5:
-            cidxs = ["012","013","023","123","014","024","034","124","134","234"];
+            cidxs = ["012","014","024","034","124","134","234","013","023","123"];
             break;
         }
         switch (cd.length) {
@@ -532,15 +532,10 @@ var app4 = new Vue({
       },
 
       getHighHand : function(hands) {
-        var hand = null;
+        var hand = hands[0];
+        console.log("------- getHighHand -------- ");      
         console.log(hands);  
-        console.log(hands.length);
-        console.log("getHighHand");      
-        for (var i=0; i < hands.length; i++) {
-          if(hand == null) {
-            hand = hands[i];
-            continue;
-          }
+        for (var i=0; i < hands.length; i++) {          
           console.log("getHighHand for "+i + " " + hands[i].desc);
           if (hands[i].rank > hand.rank) {
             hand = hands[i];
@@ -555,7 +550,7 @@ var app4 = new Vue({
           }
           console.log("getHighHand change to " + hand.kiker.desc);
         }
-        console.log("best kiker : "+hand.kiker.desc);
+        console.log("best kiker : "+hand.kiker.desc + " hend : " + hand.title + " cidx : " + hand.cidx);        
         return hand
       }
     }
