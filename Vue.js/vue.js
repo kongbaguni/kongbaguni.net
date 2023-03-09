@@ -113,21 +113,7 @@ var app4 = new Vue({
       }      
     }
 
-  })
-
-
-  Vue.component('todo-item', {
-    props: ['todo'],
-    template: '<tr><th>{{ todo.number }}</th><td>{{ todo.url }}</td></tr>'
-  })
-  
-  var app7 = new Vue({
-    el: '#app5',
-    data: {
-      groceryList:images
-    }
-  })
-  
+  })  
 
 
   var baseballGame = new Vue({
@@ -600,5 +586,17 @@ var app4 = new Vue({
         console.log("best kiker : "+hand.kiker.desc + " hend : " + hand.title + " cidx : " + hand.cidx);        
         return hand
       }
+    }
+  })
+
+
+  Vue.component('cat-item', {
+    props: ['todo'],
+    template: '<li>{{ todo.desc }} <img v-bind:src="todo.url" width="50px" /></li>'
+  })
+  var app7 = new Vue({
+    el: '#app5',
+    data: {
+      groceryList:images
     }
   })
