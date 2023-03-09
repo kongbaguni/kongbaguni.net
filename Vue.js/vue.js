@@ -287,8 +287,7 @@ var app4 = new Vue({
         var copyarr = Array.from(this.cards);
         while (copyarr.length > 0) {
           shuffle(copyarr);
-          this.deck.unshift(copyarr.pop());
-          
+          this.deck.unshift(copyarr.pop());          
         }
       },
       reset : function() {
@@ -314,16 +313,11 @@ var app4 = new Vue({
           this.deck = [];
           this.shuffleCard();
         }
-        setTimeout(function () {
-          poker.dealer_deck.push(poker.deck.pop());
-          poker.dealer_deck.push(poker.deck.pop());            
-        }, 1000);
+        this.dealer_deck.push(this.deck.pop());
+        this.dealer_deck.push(this.deck.pop());            
 
-        setTimeout(function () {
-          poker.player_deck.push(poker.deck.pop());
-          poker.player_deck.push(poker.deck.pop());
-
-        }, 2000);
+        this.player_deck.push(this.deck.pop());
+        this.player_deck.push(this.deck.pop());
         this.game_status = "preflop";
         this.player_hand = "";
       },
@@ -332,14 +326,10 @@ var app4 = new Vue({
           return;
         }
         this.communiti_deck.push(this.deck.pop());      
-        setTimeout(function () {
-          poker.communiti_deck.push(poker.deck.pop());
-        }, 1000);
-        setTimeout(function () {
-          poker.communiti_deck.push(poker.deck.pop());
-          poker.checkPlayerHand();
+        this.communiti_deck.push(this.deck.pop());
+        this.communiti_deck.push(this.deck.pop());
+        this.checkPlayerHand();
 
-        }, 2000);
         
         this.deck.pop();
         this.game_status = "flop";
@@ -463,32 +453,27 @@ var app4 = new Vue({
         }
         var card = cards[0];
         for (var i=0; i<cards.length; i++) {
+          console.log("kiker check:"+cards[i].desc+" "+cards[i].point+":"+card.point);
           if(cards[i].point > card.point) {
             card = cards[i];            
           }
-          else if(cards[i].point == card.point && cards[i].typepoint > card.typepoint) {
+          if(cards[i].point == card.point && cards[i].typepoint > card.typepoint) {
               card = cards[i];
           }
         }
+        console.log("kiker : "+card.desc);
         return card
       },
       evaluatePokerHand : function(cards,cidx) {
         const kiker = this.getKikerCard(cards);
-        console.log("evaluatePokerHand");
+        console.log("evaluatePokerHand kiker : "+kiker.desc);
         // 카드 무늬와 숫자를 분리해서 저장
         const suits = cards.map(card => card.type);
-        const ranks = cards.map(card => card.value);
-      
-        // 카드 숫자를 정렬
-        ranks.sort((a, b) => {
-          if (a === "A") return 14;
-          else if (a === "K") return 13;
-          else if (a === "Q") return 12;
-          else if (a === "J") return 11;
-          else if (a === "T") return 10;
-          else return parseInt(a);
-        });
-      
+        const ranks = cards.map(card => card.point);
+          
+        ranks.sort();
+        console.log("ranks ------");
+        console.log(ranks);
         // 포커 판정
         if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {
           return {title : "Four of a Kind", rank:7, cidx: cidx, kiker:kiker};
@@ -547,20 +532,30 @@ var app4 = new Vue({
       },
 
       getHighHand : function(hands) {
-        var hand = {title : "High Card", rank : 0, cidx:"012", kiker:this.communiti_deck[0]};
-        for (var i=0; i < hands.length; i ++) {
+        var hand = null;
+        console.log(hands);  
+        console.log(hands.length);
+        console.log("getHighHand");      
+        for (var i=0; i < hands.length; i++) {
+          if(hand == null) {
+            hand = hands[i];
+            continue;
+          }
+          console.log("getHighHand for "+i + " " + hands[i].desc);
           if (hands[i].rank > hand.rank) {
             hand = hands[i];
           }
-          else if (hands[i].rannk == hand.rank) {
+          if (hands[i].rannk == hand.rank) {
+            if (hands[i].kiker.point == hand.kiker.point && hands[i].kiker.typepoint > hand.kiker.typepoint) {
+              hand = hands[i];
+            }
             if (hands[i].kiker.point > hand.kiker.point) {
               hand = hands[i];
             }
-            else if (hands[i].kiker.point == hand.kiker.point && hands[i].kiker.typepoint > hand.kiker.typepoint) {
-              hand = hands[i];
-            }
           }
+          console.log("getHighHand change to " + hand.kiker.desc);
         }
+        console.log("best kiker : "+hand.kiker.desc);
         return hand
       }
     }
