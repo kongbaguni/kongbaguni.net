@@ -362,10 +362,10 @@ var app4 = new Vue({
             this.game_result = "WIN";
             break;
           case 0:
-            this.game_result = "LOSE";
+            this.game_result = "TIED";
             break;
           case -1:
-            this.game_result = "TIED";
+            this.game_result = "LOSE";
             break
         }
       },
