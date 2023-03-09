@@ -347,9 +347,9 @@ div.cardDeck {
 
 
 div.cardDeck.before p {
-    margin-left: 63px;
+    margin-left: 43px;
 }
 div.cardDeck.before img{
     display: inline-block;
-    margin-left: -63px;
+    margin-left: -43px;
 }

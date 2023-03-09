@@ -179,7 +179,7 @@
             <h3>deck</h3>
             <div class="cardDeck before"> 
                 <p>
-                <img v-for="card in deck" src="./images/poker/back.svg" alt="card" width="70px" />
+                <img v-for="card in deck" src="./images/poker/back.svg" alt="card" width="50px" />
                 </p>
             </div>
             <p>game status : {{game_status}}</p>
@@ -188,10 +188,10 @@
             <p>kiker : <img v-bind:src="dealer_kiker.image" v-bind:alt = "dealer_kiker.desc" width="40px"/></p>
             <div class="cardDeck">
                 <p v-if="game_status != 'river'">
-                <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="70px" />
+                <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="50px" />
                 </p>
                 <p v-if="game_status == 'river'">
-                    <img v-for="card in dealer_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
+                    <img v-for="card in dealer_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
                 </p>
             </div>
             <h3>community</h3>
@@ -205,7 +205,7 @@
                         </tr>
                         <tr>
                             <td v-for="card in communiti_deck">
-                                <img v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
+                                <img v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
                             </td>
                         </tr>
                         <tr>
@@ -221,7 +221,7 @@
             <p>kiker : <img v-bind:src="player_kiker.image" v-bind:alt = "player_kiker.desc" width="40px"/></p>
             <div class="cardDeck">
                 <p>
-                    <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="70px" />
+                    <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
                 </p>                
             </div>
             <p>
