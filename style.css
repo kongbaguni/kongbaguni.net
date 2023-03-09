@@ -342,7 +342,7 @@ div.cardDeck {
     padding: 10px;
     margin: 10px;
     min-height: 90px;
-
+    overflow: auto;
 }
 
 
