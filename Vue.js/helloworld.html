@@ -197,23 +197,27 @@
             <h3>community</h3>
             <div class="cardDeck">
                 <table>
-                    <tbody>
+                    <thead>
                         <tr>
-                            <td v-for="value in dealer_cidx_arr">
+                            <th v-for="value in dealer_cidx_arr">
                                 <p v-if="value ==true">O</p>
-                            </td>
+                            </th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td v-for="card in communiti_deck">
                                 <img v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
                             </td>
                         </tr>
-                        <tr>
-                            <td v-for="value in player_cidx_arr">
-                                <p v-if="value ==true">O</p>
-                            </td>
-                        </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th v-for="value in player_cidx_arr">
+                                <p v-if="value ==true">O</p>
+                            </th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <h3>player</h3>

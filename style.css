@@ -255,7 +255,7 @@ table {
     border: 1px solid #fff;
     margin: 5px;
 }
-table thead {
+table thead , table tfoot {
     background-color: #369;
 }
 table th, table td {
@@ -352,4 +352,8 @@ div.cardDeck.before p {
 div.cardDeck.before img{
     display: inline-block;
     margin-left: -43px;
+}
+
+div.cardDeck table th:empty {
+    background: #00000077;
 }
