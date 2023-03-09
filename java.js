@@ -140,36 +140,6 @@ function checkGaweBaweBoh(me,com) {
     return "이상한거 냈다. 나는 "+me+" 컴퓨터는 "+com;
 
 }
-
-function formatPhoneNumber(phoneNumberString) {
-    // 문자열에서 숫자만 추출
-    const cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-    console.log("clean : "+cleaned);    
-  
-    // 국가 코드를 추출
-    
-    const country = (cleaned[0] != "0" && cleaned.length > 10) ? '+' : '';
-    
-    // 국가 코드와 지역 코드, 전화번호를 구분
-    const areaCode = cleaned.substring(0, Math.min(3, cleaned.length));
-    const main = cleaned.substring(Math.min(3, cleaned.length), Math.min(7, cleaned.length));
-    const remaining = cleaned.substring(Math.min(7, cleaned.length), Math.min(11, cleaned.length));
-  
-    console.log("contry:"+country+" areaCode:"+areaCode+" main:"+main+ " remaining:"+remaining);
-    // 전화번호 형식에 맞게 조합
-    let formattedNumber = `${country}${areaCode}-${main}`;
-    if (remaining) {
-        if (cleaned.length >= 9) {
-            formattedNumber += `-${remaining}`;
-        }  
-        else {
-            formattedNumber += `${remaining}`;
-        }
-      
-    }
-  
-    return formattedNumber;
-}
   
 
 function shuffle(array) {

@@ -109,7 +109,6 @@ var app4 = new Vue({
     methods : {
       searchChangeFunc : function (event) {
         console.log(event.target.value);
-        app4.phone_number = formatPhoneNumber(app4.phone_number);
       }      
     }
 
@@ -119,18 +118,21 @@ var app4 = new Vue({
   var baseballGame = new Vue({
     el : '#baseballGame',
     data : {      
-      numbers:[getRandomInt(0,9),getRandomInt(0,9),getRandomInt(0,9)],
+      numbers:[],
       game_data:[],
       input_number:"",
       game_start:true
     },
     methods : {
       inputChange : function (event) {
+        if(this.numbers.length == 0) {
+          this.numbers = this.makeNumbers();
+        }
         console.log(event.target.value);
         var value = event.target.value;
         if (value.length >= 3) {
           this.input_number =  value.substring(0, 3);
-          var result = checkGame();
+          var result = this.checkGame();
           console.log(result);
           console.log(baseballGame.numbers);
           this.game_data.push(
@@ -148,49 +150,58 @@ var app4 = new Vue({
       },
       new_game : function() {
         console.log("new game");
-        this.numbers = [getRandomInt(0,9),getRandomInt(0,9),getRandomInt(0,9)];
+        this.numbers = this.makeNumbers();
         this.game_data = [];
         this.input_number = "";
         this.game_start = true;
-      }
-    }
-  })
-
-  function checkGame() {    
-    var strike = 0
-    var ball = 0
-    console.log(baseballGame.numbers.length);
-    console.log("_------------");
-    var a = [];
-    var b = baseballGame.numbers;
-
-    var aa = [];
-    var bb = [];
-
-    for (var i=0;i<baseballGame.input_number.length;i++) {
-      a.push(baseballGame.input_number[i])
-    }
-
-    //스트라이크 판정
-    for (var i=0;i<b.length;i++) {
-      if (a[i] == b[i]) {
-        strike ++;
-      } else {
-        aa.push(a[i]);
-        bb.push(b[i]);
-      }
-    }
-
-    //볼 판정
-    for (var i=0; i<aa.length; i++) {
-      for (var j=0; j<bb.length; j++) {
-        if (aa[i] == bb[j]) {
-          ball ++;
+      },
+      makeNumbers : function() {
+        var arr = [0,1,2,3,4,5,6,7,8,9];
+        var result = [];
+        while(result.length < 3) {
+          shuffle(arr);
+          result.push(arr.pop());
         }
+        return result;
+      },
+      checkGame : function() {
+        var strike = 0
+        var ball = 0
+        console.log(this.numbers.length);
+        console.log("_------------");
+        var a = [];
+        var b = this.numbers;
+    
+        var aa = [];
+        var bb = [];
+    
+        for (var i=0;i<this.input_number.length;i++) {
+          a.push(this.input_number[i])
+        }
+    
+        //스트라이크 판정
+        for (var i=0;i<b.length;i++) {
+          if (a[i] == b[i]) {
+            strike ++;
+          } else {
+            aa.push(a[i]);
+            bb.push(b[i]);
+          }
+        }
+    
+        //볼 판정
+        for (var i=0; i<aa.length; i++) {
+          for (var j=0; j<bb.length; j++) {
+            if (aa[i] == bb[j]) {
+              ball ++;
+            }
+          }
+        }
+        return {strike:strike, ball:ball}
       }
     }
-    return {strike:strike, ball:ball}
-  }
+
+  })
 
   /** 포커 */
   var poker = new Vue ({
