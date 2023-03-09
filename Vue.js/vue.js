@@ -268,6 +268,7 @@ var app4 = new Vue({
       player_deck : [],
       communiti_deck : [],
       dealer_deck : [],   
+      dealer_open : false,
       game_status : "ready", // 게임 상태
       player_hand : "", // 플레이어 족보 출력 
       player_cidx : "", // 플레이어 족보에 사용된 커뮤니티카드 인덱스
@@ -279,8 +280,11 @@ var app4 = new Vue({
       dealer_cidx_arr : [], // 플레이어 족보에 사용된 커뮤니티카드 출력 위한 배열 
       dealer_kiker : null, // 딜러 키커
 
-      game_result : "" // 게임 결과 (승패)
+      game_result : "", // 게임 결과 (승패)      
+      betting : 0,
+      players_money : 10000
     },
+
     methods : {
       shuffleCard : function() {
         var copyarr = Array.from(this.cards);
@@ -305,6 +309,8 @@ var app4 = new Vue({
         this.dealer_cidx_arr = [];
 
         this.game_result = "";
+        this.dealer_open = false ;
+        this.betting = 0;
       },
       preflop : function() {        
         if (this.game_status != "ready") {
@@ -333,7 +339,10 @@ var app4 = new Vue({
 
         
         this.deck.pop();
-        this.game_status = "flop";
+        this.game_status = "flop";    
+        setTimeout(function () {
+          poker.bettingMoney();
+        }, 1000);
         
       },
       turn : function() {
@@ -344,6 +353,10 @@ var app4 = new Vue({
         this.deck.pop();
         this.game_status = "turn"
         this.checkPlayerHand();
+        setTimeout(function () {
+          poker.bettingMoney();
+        }, 1000);
+        
       }, 
       river : function() {
         if(this.game_status != "turn") {
@@ -353,19 +366,34 @@ var app4 = new Vue({
         this.deck.pop();
         this.game_status = "river";
         this.checkPlayerHand();
-        this.checkDelarHand();
+        setTimeout(function () {
+          poker.bettingMoney();
+          poker.checkDelarHand();
+        }, 1000);
+        
+        
         switch(this.compareHand()) {
           case 1:
             this.game_result = "WIN";
+            this.betting += (this.betting * 2);
             break;
           case 0:
             this.game_result = "TIED";
+            this.betting += this.betting;
             break;
           case -1:
             this.game_result = "LOSE";
             break
         }
+        this.betting = 0;
       },
+
+      bettingMoney: function() {
+        var betting = parseInt(prompt("betting",0));
+        this.players_money -= betting;
+        this.betting += betting;
+      },
+
       compareHand : function() {
         const p = this.player_hand;
         const d = this.dealer_hand;
@@ -471,6 +499,7 @@ var app4 = new Vue({
         this.dealer_cidx = this.dealer_hand.cidx;
         this.dealer_cidx_arr = this.getCidsArr(this.dealer_cidx);
         this.dealer_kiker = this.dealer_hand.kiker;
+        this.dealer_open = true;
       },
 
       getCidsArr : function (idxs) {

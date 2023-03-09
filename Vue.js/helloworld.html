@@ -163,10 +163,10 @@
             <h3>dealer</h3>
             <p>{{dealer_hand.title}}</p>            
             <div class="cardDeck">
-                <p v-if="game_status != 'river'">
+                <p v-if="dealer_open == false">
                 <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="50px" />
                 </p>
-                <p v-if="game_status == 'river'">
+                <p v-if="dealer_open == true">
                     <img v-for="card in dealer_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
                     <span v-if="dealer_kiker != null">kiker : <img v-bind:src="dealer_kiker.image" v-bind:alt = "dealer_kiker.desc" width="40px"/></span>
                 </p>
@@ -196,8 +196,10 @@
                         </tr>
                     </tfoot>
                 </table>
+                <p>betting : {{betting}}</p>
             </div>
             <h3>player</h3>
+            <p>money : {{players_money}}</p>
             <p>{{player_hand.title}}</p>
             <div class="cardDeck">
                 <p>
