@@ -210,13 +210,11 @@
             </div>
             <p>
                 {{game_result}}
-            </p>
+            </p>            
             <p>
-                <button v-if="game_status == 'ready'" v-on:click="preflop">preflop</button>
-                <button v-if="game_status == 'preflop'" v-on:click="flop">flop</button>
-                <button v-if="game_status == 'flop'" v-on:click="turn">turn</button>
-                <button v-if="game_status == 'turn'" v-on:click="river">river</button>
-                <button v-on:click="reset">reset</button>
+                <button v-if="game_status == 'ready'" v-on:click="preflop">Start</button>                
+                <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click="bettingMoney"> betting </button>
+                <button v-if="game_status != 'ready'" v-on:click="reset">restart</button>
             </p>
         </article>
 

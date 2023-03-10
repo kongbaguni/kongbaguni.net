@@ -311,6 +311,7 @@ var app4 = new Vue({
         this.game_result = "";
         this.dealer_open = false ;
         this.betting = 0;
+        this.preflop();
       },
       preflop : function() {        
         if (this.game_status != "ready") {
@@ -339,11 +340,7 @@ var app4 = new Vue({
 
         
         this.deck.pop();
-        this.game_status = "flop";    
-        setTimeout(function () {
-          poker.bettingMoney();
-        }, 1000);
-        
+        this.game_status = "flop";            
       },
       turn : function() {
         if(this.game_status != "flop") {
@@ -352,11 +349,7 @@ var app4 = new Vue({
         this.communiti_deck.push(this.deck.pop());      
         this.deck.pop();
         this.game_status = "turn"
-        this.checkPlayerHand();
-        setTimeout(function () {
-          poker.bettingMoney();
-        }, 1000);
-        
+        this.checkPlayerHand();        
       }, 
       river : function() {
         if(this.game_status != "turn") {
@@ -366,65 +359,87 @@ var app4 = new Vue({
         this.deck.pop();
         this.game_status = "river";
         this.checkPlayerHand();
-        setTimeout(function () {
-          poker.bettingMoney();
-          poker.checkDelarHand();
-        }, 1000);
-        
-        
+      },
+      
+      finishGame : function() {
+        this.checkDelarHand();
         switch(this.compareHand()) {
           case 1:
             this.game_result = "WIN";
-            this.betting += (this.betting * 2);
+            this.players_money += (this.betting * 2);
             break;
           case 0:
             this.game_result = "TIED";
-            this.betting += this.betting;
+            this.players_money += this.betting;
             break;
           case -1:
             this.game_result = "LOSE";
             break
         }
+        this.game_status = "end"
         this.betting = 0;
       },
 
       bettingMoney: function() {
-        var betting = parseInt(prompt("betting",0));
+        var betting = parseInt(prompt("betting",1000));
         this.players_money -= betting;
         this.betting += betting;
+        switch (this.game_status) {
+          case "preflop":
+            this.flop();
+            break;
+          case "flop":
+            this.turn();
+            break;
+          case "turn":
+            this.river();
+            break;
+          case "river":
+            this.finishGame();
+            break;
+        }
       },
 
       compareHand : function() {
         const p = this.player_hand;
         const d = this.dealer_hand;
+        console.log("player_hand ====");
+        console.log(p);
+        console.log("dealer_hand ====");
+        console.log(d);
+        console.log("compareHand : player = " + p.rank + " " + p.kiker.desc + " " + p.kiker.point + " " + p.kiker.typepoint);
+        console.log("compareHand : player = " + d.rank + " " + d.kiker.desc + " " + d.kiker.point + " " + d.kiker.typepoint);
         if(p.rank > d.rank) {
+          console.log("compareHand : Win");
           return 1;
         }
         if (p.rank < d.rank) {
+          console.log("compareHand : Lose");
           return -1;
         }
 
         if(p.rank == d.rank) {
           if (p.kiker.point > d.kiker.point) {
+            console.log("compareHand : Win");
             return 1;
           }
           if (p.kiker.point < d.kiker.point) {
+            console.log("compareHand : lose");
             return -1;
           }
 
           if (p.kiker.point == d.kiker.point) {
             if (p.kiker.typepoint > d.kiker.typepoint) {
+              console.log("compareHand : Win");
               return 1;
             }
             if (p.kiker.typepoint < d.kiker.typepoint) {
+              console.log("compareHand : lose");
               return -1;
-            }
-            if (p.kiker.typepoint == d.kiker.typepoint) {
-              return 0;
             }
           }
         }        
-        return -1;
+        return 0;
       },
       getCCardForHandCheck : function() {
         var cd = this.communiti_deck;
