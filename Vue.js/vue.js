@@ -128,6 +128,13 @@ var app4 = new Vue({
     },
 
     methods : {      
+      getBtnClass:function(number) {
+        var n = this.input_numbers;
+        if(n[0]==number || n[1]==number || n[2]==number) {
+          return "off";
+        }
+        return "on";
+      } ,   
       numberClick:function(number) {
         this.input_numbers[this.select_idx] = number;
         console.log("number : " + number + " select_idx " + this.select_idx); 

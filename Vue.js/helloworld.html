@@ -159,19 +159,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><button v-on:click="numberClick(7)">7</button></td>
-                        <td><button v-on:click="numberClick(8)">8</button></td>
-                        <td><button v-on:click="numberClick(9)">9</button></td>
+                        <td><button v-bind:class="getBtnClass(7)" v-on:click="numberClick(7)">7</button></td>
+                        <td><button v-bind:class="getBtnClass(8)" v-on:click="numberClick(8)">8</button></td>
+                        <td><button v-bind:class="getBtnClass(9)" v-on:click="numberClick(9)">9</button></td>
                     </tr>
                     <tr>
-                        <td><button v-on:click="numberClick(4)">4</button></td>
-                        <td><button v-on:click="numberClick(5)">5</button></td>
-                        <td><button v-on:click="numberClick(6)">6</button></td>
+                        <td><button v-bind:class="getBtnClass(4)" v-on:click="numberClick(4)">4</button></td>
+                        <td><button v-bind:class="getBtnClass(5)" v-on:click="numberClick(5)">5</button></td>
+                        <td><button v-bind:class="getBtnClass(6)" v-on:click="numberClick(6)">6</button></td>
                     </tr>
                     <tr>
-                        <td><button v-on:click="numberClick(1)">1</button></td>
-                        <td><button v-on:click="numberClick(2)">2</button></td>
-                        <td><button v-on:click="numberClick(3)">3</button></td>
+                        <td><button v-bind:class="getBtnClass(1)" v-on:click="numberClick(1)">1</button></td>
+                        <td><button v-bind:class="getBtnClass(2)" v-on:click="numberClick(2)">2</button></td>
+                        <td><button v-bind:class="getBtnClass(3)" v-on:click="numberClick(3)">3</button></td>
                     </tr>
                     <tr>
                         <td><button v-on:click="numberClick(0)">0</button></td>

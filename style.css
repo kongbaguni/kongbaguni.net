@@ -382,3 +382,7 @@ table.keypad tbody button {
 table.keypad tbody button.enter {
     width: 110px;
 }
+
+table.keypad button.off {
+    opacity: 0.5;
+}
