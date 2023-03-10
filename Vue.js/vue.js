@@ -328,7 +328,8 @@ var app4 = new Vue({
 
       game_result : "", // 게임 결과 (승패)      
       betting : 0,
-      players_money : 10000
+      players_money : 10000,
+      lastBetting : 100,
     },
 
     methods : {
@@ -427,7 +428,18 @@ var app4 = new Vue({
       },
 
       bettingMoney: function() {
-        var betting = parseInt(prompt("betting",1000));
+        const bt = prompt("betting",this.lastBetting);
+        if (bt == null) {
+          return;
+        }
+
+        var betting = parseInt(bt);
+        if (betting == 0) {
+          return;
+        }
+
+        console.log(betting);
+        this.lastBetting = betting;
         this.players_money -= betting;
         this.betting += betting;
         switch (this.game_status) {

@@ -240,7 +240,7 @@
                         </tr>
                     </tfoot>
                 </table>
-                <p>betting : {{betting}}</p>
+                <p v-if="betting > 0">betting : {{betting}}</p>
             </div>
             <h3>player</h3>
             <p>money : {{players_money}}</p>
