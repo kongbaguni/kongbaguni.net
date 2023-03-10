@@ -191,8 +191,12 @@
 
         <article id="poker">
             <header>
-                <h2>포커</h2>
+                <h2>텍사스 홀뎀</h2>
             </header>
+            <p>
+                <img v-for="card in cards" v-bind:src="card.image" width="50px" />
+            </p>
+            
             <h3>deck</h3>
             <div class="cardDeck before"> 
                 <p>
