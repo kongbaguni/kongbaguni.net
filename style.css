@@ -357,3 +357,11 @@ div.cardDeck.before img{
 div.cardDeck table th:empty {
     background: #00000077;
 }
+
+table.keypad td.on {
+    background-color: yellow;
+}
+
+table.keypad td {
+    text-align: center;
+}

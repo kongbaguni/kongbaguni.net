@@ -121,9 +121,47 @@ var app4 = new Vue({
       numbers:[],
       game_data:[],
       input_number:"",
-      game_start:true
+      game_start:true,
+      
+      select_idx:0,
+      input_numbers:[null,null,null],
     },
-    methods : {
+
+    methods : {      
+      numberClick:function(number) {
+        this.input_numbers[this.select_idx] = number;
+        console.log("number : " + number + " select_idx " + this.select_idx); 
+        this.select_idx ++;
+        if(this.select_idx >2) {
+          this.select_idx = 0;
+        }
+      },
+
+      selectInputIdx:function(idx) {
+        console.log("selectInputIdx : "+idx);
+        this.select_idx = idx;
+      },
+
+      enter: function() {
+        if(this.numbers.length == 0) {
+          this.numbers = this.makeNumbers();
+        }
+        var n = this.input_numbers;
+        if (n[0] == null || n[1] == null || n[2] == null) {
+          return 
+        }
+        this.input_number = ""+n[0]+n[1]+n[2];
+        var result = this.checkGame();
+        console.log(result);
+        console.log(baseballGame.numbers);
+        this.game_data.push(
+          {
+            count:this.game_data.length + 1,
+            input:this.input_number, 
+            result:result
+          }
+        );
+      },
       inputChange : function (event) {
         if(this.numbers.length == 0) {
           this.numbers = this.makeNumbers();
@@ -203,6 +241,7 @@ var app4 = new Vue({
 
   })
 
+ 
   /** 포커 */
   var poker = new Vue ({
     el:'#poker',

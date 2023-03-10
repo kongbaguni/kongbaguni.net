@@ -133,13 +133,53 @@
                         <td>{{data.result.strike}} 스트라이크 {{data.result.ball}} 볼</td>
                     </tr>
                 </tbody>
-                <tfoot v-if="game_start">
+            </table>
+            <table class = "keypad">
+                <thead>
                     <tr>
-                        <td colspan="3">
-                            <input type = "number" inputmode="decimal"  v-model="input_number" @input="inputChange($event)" />
-                        </td>
+                        <td v-on:click="selectInputIdx(0)">{{input_numbers[0]}}</td>
+                        <td v-on:click="selectInputIdx(1)">{{input_numbers[1]}}</td>
+                        <td v-on:click="selectInputIdx(2)">{{input_numbers[2]}}</td>
+                    </tr>    
+                    <tr v-if="select_idx==0">
+                        <td class="on" v-on:click="selectInputIdx(0)"></td>
+                        <td class="off" v-on:click="selectInputIdx(1)"></td>
+                        <td class="off" v-on:click="selectInputIdx(2)"></td>
+                    </tr>    
+                    <tr v-if="select_idx==1">
+                        <td class="off" v-on:click="selectInputIdx(0)"></td>
+                        <td class="on" v-on:click="selectInputIdx(1)"></td>
+                        <td class="off" v-on:click="selectInputIdx(2)"></td>
+                    </tr>    
+                    <tr v-if="select_idx==2">
+                        <td class="off" v-on:click="selectInputIdx(0)"></td>
+                        <td class="off" v-on:click="selectInputIdx(1)"></td>
+                        <td class="on" v-on:click="selectInputIdx(2)"></td>
+                    </tr>    
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><button v-on:click="numberClick(7)">7</button></td>
+                        <td><button v-on:click="numberClick(8)">8</button></td>
+                        <td><button v-on:click="numberClick(9)">9</button></td>
                     </tr>
-                </tfoot>
+                    <tr>
+                        <td><button v-on:click="numberClick(4)">4</button></td>
+                        <td><button v-on:click="numberClick(5)">5</button></td>
+                        <td><button v-on:click="numberClick(6)">6</button></td>
+                    </tr>
+                    <tr>
+                        <td><button v-on:click="numberClick(1)">1</button></td>
+                        <td><button v-on:click="numberClick(2)">2</button></td>
+                        <td><button v-on:click="numberClick(3)">3</button></td>
+                    </tr>
+                    <tr>
+                        <td><button v-on:click="numberClick(0)">0</button></td>
+                        <td colspan="2"><button v-on:click="enter">제출</button></td>
+                    </tr>
+
+                </tbody>
+
             </table>
             <p v-if="!game_start">
                 <button v-on:click = "new_game">
