@@ -344,6 +344,14 @@ div.cardDeck {
     min-height: 90px;
     overflow: auto;
 }
+p.gameResult {    
+    margin: 10px;
+    padding: 5px;    
+    background-color: #00000044;
+    z-index: 10;
+    color:green;
+    border: 2px solid green;
+}
 
 
 div.cardDeck.before p {

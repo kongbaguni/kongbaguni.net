@@ -203,9 +203,12 @@
                 <img v-for="card in deck" src="./images/poker/back.svg" alt="card" width="50px" />
                 </p>
             </div>
-            <p>game status : {{game_status}}</p>
+            <p class="gameResult"> 
+                game status : <b>{{game_status}}</b> <br />
+                <b>{{game_result}}</b>
+            </p>    
             <h3>dealer</h3>
-            <p>{{dealer_hand.title}}</p>            
+            <p><b>{{dealer_hand.title}}</b></p>            
             <div class="cardDeck">
                 <p v-if="dealer_open == false">
                 <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="50px" />
@@ -240,11 +243,11 @@
                         </tr>
                     </tfoot>
                 </table>
-                <p v-if="betting > 0">betting : {{betting}}</p>
+                <p v-if="betting > 0">betting : <b>{{betting}}</b></p>
             </div>
             <h3>player</h3>
-            <p>money : {{players_money}}</p>
-            <p>{{player_hand.title}}</p>
+            <p>money : <b>{{players_money}}</b></p>
+            <p><b>{{player_hand.title}}</b></p>
             <div class="cardDeck">
                 <p>
                     <img v-for="card in player_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
@@ -252,9 +255,6 @@
                 </p>                
 
             </div>
-            <p>
-                {{game_result}}
-            </p>            
             <p>
                 <button v-if="game_status == 'ready'" v-on:click="preflop">Start</button>                
                 <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click="bettingMoney"> betting </button>
