@@ -136,10 +136,10 @@
             </table>
             <table class = "keypad">
                 <thead>
-                    <tr>
-                        <td v-on:click="selectInputIdx(0)">{{input_numbers[0]}}</td>
-                        <td v-on:click="selectInputIdx(1)">{{input_numbers[1]}}</td>
-                        <td v-on:click="selectInputIdx(2)">{{input_numbers[2]}}</td>
+                    <tr class="input">
+                        <td><button v-on:click="selectInputIdx(0)" title="야구게임 첫번째 입력 포커스 선택">{{input_numbers[0]}}</button></td>
+                        <td><button v-on:click="selectInputIdx(1)" title="야구게임 두번째 입력 포커스 선택">{{input_numbers[1]}}</button></td>
+                        <td><button v-on:click="selectInputIdx(2)" title="야구게임 세번째 입력 포커스 선택">{{input_numbers[2]}}</button></td>
                     </tr>    
                     <tr v-if="select_idx==0">
                         <td class="on" v-on:click="selectInputIdx(0)"></td>
@@ -175,7 +175,7 @@
                     </tr>
                     <tr>
                         <td><button v-on:click="numberClick(0)">0</button></td>
-                        <td colspan="2"><button v-on:click="enter">제출</button></td>
+                        <td colspan="2"><button v-on:click="enter" class="enter">제출</button></td>
                     </tr>
 
                 </tbody>

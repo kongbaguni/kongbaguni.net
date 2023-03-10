@@ -365,3 +365,20 @@ table.keypad td.on {
 table.keypad td {
     text-align: center;
 }
+table.keypad thead tr.input button {
+    background-color: #00000077;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+}
+table.keypad tbody button {
+    background-color: #ff669977;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+}
+table.keypad tbody button.enter {
+    width: 110px;
+}
