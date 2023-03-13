@@ -63,39 +63,56 @@ const poker = new Vue({
           loadCount:0
     },
     methods : {
-        loadImage : function() {
-            if (this.loadCount == 53) {
+        loadBackImage: function() {
+            this.backImg.onload  = function() {
+                poker.ctx.drawImage(poker.backImg,265,10,40,80);
+                poker.loadCount ++;
+            }                                
+        },
+        
+        loadCardImage : function(idx) {            
+            if (idx == 52) {
                 return ;
             }
-            this.loadCount = 0;
-            this.backImg.src = "./images/poker/back.svg";
-            this.backImg.onload  = function() {
-                poker.ctx.drawImage(poker.backImg,10,10,40,80);
-                poker.loadCount ++;
-            }
-            for(var i=0; i<this.cards.length; i++) {
-                const card = this.cards[i];
-                const img = card.img;
-                img.src = card.image;
-                const x = i * 5;
-                img.onload = function() {                    
-                    poker.ctx.drawImage(img,x + 10,10,40,80);   
-                    poker.loadCount ++;
-                    console.log("load : " + card.desc + " " + card.image + " i:" + i + " loadCount:" + poker.loadCount);
-                    if (poker.loadCount == 53) {
-                        for(var j=0;j<poker.cards; j++) {                            
-                            const dx = j * 5 + 10;
-                            poker.ctx.drawImage(poker.cards[j].img, dx, 10, 40, 80);
-                        }
-                    }                    
-                }                
+            this.loadCount ++;
+            this.backImg.src = "./images/poker/back.svg";            
+            const card = this.cards[idx];
+            const img = card.img;
+            img.src = card.image;
+            const x = idx * 5;
+            img.onload = function() {                    
+                poker.ctx.drawImage(img,x + 10,10,40,80);                   
+                console.log("load : " + card.desc + " " + card.image + " i:" + idx + " loadCount:" + poker.loadCount);
+                poker.loadCardImage(idx + 1);
+            }                
+        }
+    },
+    
+    mounted() {
+        const canvas = document.getElementById('poker_canvas');
+        this.ctx = canvas.getContext('2d');           
+        this.loadBackImage();
+        this.loadCardImage(0);
+    }    
+})
+
+var holdem = new Vue({
+    el:'#holdem',
+    data : {
+        ctx : null,
+        deck : []
+    },
+    methods:{
+        shuffleCard : function() {
+            var copyarr = Array.from(poker.cards);
+            while (copyarr.length > 0) {
+              shuffle(copyarr);
+              this.deck.unshift(copyarr.pop());          
             }
         }
     },
     mounted() {
-        const canvas = document.getElementById('poker_canvas');
-        this.ctx = canvas.getContext('2d');        
-        this.loadImage();
+        const canvas = document.getElementById("holdem_canvas");
+        this.ctx = canvas.getContext('2d');
     }
-    
-})
+});
