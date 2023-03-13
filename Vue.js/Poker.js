@@ -82,7 +82,13 @@ const poker = new Vue({
                     poker.ctx.drawImage(img,x + 10,10,40,80);   
                     poker.loadCount ++;
                     console.log("load : " + card.desc + " " + card.image + " i:" + i + " loadCount:" + poker.loadCount);
-                }
+                    if (poker.loadCount == 53) {
+                        for(var j=0;j<poker.cards; j++) {                            
+                            const dx = j * 5 + 10;
+                            poker.ctx.drawImage(poker.cards[j].img, dx, 10, 40, 80);
+                        }
+                    }
+                }                
             }
         }
     },
