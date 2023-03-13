@@ -87,7 +87,7 @@ const poker = new Vue({
                             const dx = j * 5 + 10;
                             poker.ctx.drawImage(poker.cards[j].img, dx, 10, 40, 80);
                         }
-                    }
+                    }                    
                 }                
             }
         }
