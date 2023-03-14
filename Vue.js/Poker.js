@@ -1,3 +1,4 @@
+
 const poker = new Vue({
     el:'#poker',
     data:{
@@ -73,6 +74,7 @@ const poker = new Vue({
         
         loadCardImage : function(idx) {            
             if (idx == 52) {
+                console.log("load finish");
                 this.loadFinish = true;
                 return ;
             }
@@ -82,11 +84,30 @@ const poker = new Vue({
             const img = card.img;
             img.src = card.image;
             const x = idx * 5;
-            img.onload = function() {                    
+            img.onload = function() {       
                 poker.ctx.drawImage(img,x + 10,10,40,80);                   
                 console.log("load : " + card.desc + " " + card.image + " i:" + idx + " loadCount:" + poker.loadCount);
                 poker.loadCardImage(idx + 1);
+                poker.draw();
             }                
+        },
+
+        draw() {
+            this.ctx.font = "30px serif";
+            if (this.loadFinish == true) {
+                this.ctx.clearRect(0,0,1000,1000);
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillText("loading completed", 10, 50);
+            } else {
+                this.ctx.fillStyle = "orange";
+                this.ctx.fillText("now loading...", 10, 50);
+
+            }
+        }
+    },
+    watch :{
+        loadFinish(a,b) {
+            this.draw();
         }
     },
     mounted() {
@@ -94,7 +115,7 @@ const poker = new Vue({
         this.ctx = canvas.getContext('2d');           
         this.loadBackImage();
         this.loadCardImage(0);
-    }    
+    }   
     
 })
 
@@ -137,13 +158,14 @@ var holdem = new Vue({
                 if (this.game_status == 'showdown') {
                     dImg = this.dealer_deck[i].img;
                 }
-                this.ctx.drawImage(dImg, i*65 + 10, 50, 60, 100);
+                this.ctx.drawImage(dImg, i*85 + 10, 50, 90, 130);
             }
 
             for(var i=0; i<this.community_deck.length; i++) {
                 var card_img = this.community_deck[i].img;
                 switch (this.game_status) {
                     case "preflop":
+                    case "preflop_anime":
                         card_img = img;
                         break;
                     case "flop":
@@ -159,11 +181,11 @@ var holdem = new Vue({
                     default:
                         break;
                 }
-                this.ctx.drawImage(card_img, i*65 + 10, 175, 60, 100);
+                this.ctx.drawImage(card_img, i*55 + 10, 200, 90, 130);
             }
             for(var i=0; i<this.player_deck.length; i++) {
                 const pimg = this.player_deck[i].img;
-                this.ctx.drawImage(pimg, i*65 + 10, 300, 60, 100);
+                this.ctx.drawImage(pimg, i*85 + 10, 350, 90, 130);
             }
 
         },
@@ -171,17 +193,34 @@ var holdem = new Vue({
             if(this.game_status != 'ready') {
                 return;
             }
+            this.game_status = 'preflop_anime'
             if (this.deck.length < 12) {
                 this.shuffleCard();
             }
-            this.dealer_deck.push(this.deck.pop());
-            this.dealer_deck.push(this.deck.pop());
-            this.player_deck.push(this.deck.pop());
-            this.player_deck.push(this.deck.pop());
+            setTimeout(function() {
+                holdem.dealer_deck.push(holdem.deck.pop());
+            },1000)
+            setTimeout(function() {
+                holdem.dealer_deck.push(holdem.deck.pop());
+            },1500)
+
+            setTimeout(function() {
+                holdem.player_deck.push(holdem.deck.pop());
+            },2000)
+            
+            setTimeout(function() {
+                holdem.player_deck.push(holdem.deck.pop());
+            },2500)
+            
             for (var i=0;i<5;i++) {
-                this.community_deck.push(this.deck.pop());
+                setTimeout(function() {
+                    holdem.community_deck.push(holdem.deck.pop());
+                }, i * 250);
             }
-            this.game_status = 'preflop';
+
+            setTimeout(function() {
+                holdem.game_status = 'preflop'
+            },3000)           
         },
         flop : function() {
             if (this.game_status != 'preflop') {
