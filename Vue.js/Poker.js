@@ -243,23 +243,23 @@ var holdem = new Vue({
             }
             setTimeout(function() {
                 holdem.dealer_deck.push(holdem.deck.pop());
-            },1000)
+            },300)
             setTimeout(function() {
                 holdem.dealer_deck.push(holdem.deck.pop());
-            },1500)
+            },400)
 
             setTimeout(function() {
                 holdem.player_deck.push(holdem.deck.pop());
-            },2000)
+            },600)
             
             setTimeout(function() {
                 holdem.player_deck.push(holdem.deck.pop());
-            },2500)
+            },700)
             
             for (var i=0;i<5;i++) {
                 setTimeout(function() {
                     holdem.community_deck.push(holdem.deck.pop());
-                }, i * 250);
+                }, i * 100 + 1500);
             }
 
             setTimeout(function() {
