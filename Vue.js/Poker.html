@@ -24,6 +24,14 @@
         </article>
         <article id = "holdem">
             <header><h2>Holdem</h2></header>     
+            <p v-if="isInitCard() == true">
+                <button v-if="game_status == 'ready'" v-on:click = "preflop">preflop</button>  
+                <button v-if="game_status == 'preflop'" v-on:click = "flop">flop</button>              
+                <button v-if="game_status == 'flop'" v-on:click = "turn">turn</button>              
+                <button v-if="game_status == 'turn'" v-on:click = "river">river</button>    
+                <button v-if="game_status == 'river'" v-on:click = "showdown">showdown</button>    
+                <button v-if="game_status != 'ready'" v-on:click = "reset">reset</button>    
+            </p>
             <canvas id="holdem_canvas" width="347px" height="500px"></canvas>            
         </article>
     </body>

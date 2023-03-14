@@ -3,6 +3,7 @@ const poker = new Vue({
     data:{
         ctx:null,
         backImg: new Image(),
+        loadFinish : false ,
         cards:[
             {type:"S", value:"A", image:"./images/poker/SA.svg", desc:"SA", point:14, typepoint:4, img : new Image()},
             {type:"S", value:"2", image:"./images/poker/S2.svg", desc:"S2", point:2, typepoint:4, img : new Image()},
@@ -72,6 +73,7 @@ const poker = new Vue({
         
         loadCardImage : function(idx) {            
             if (idx == 52) {
+                this.loadFinish = true;
                 return ;
             }
             this.loadCount ++;
@@ -87,29 +89,138 @@ const poker = new Vue({
             }                
         }
     },
-    
     mounted() {
         const canvas = document.getElementById('poker_canvas');
         this.ctx = canvas.getContext('2d');           
         this.loadBackImage();
         this.loadCardImage(0);
     }    
+    
 })
 
 var holdem = new Vue({
     el:'#holdem',
     data : {
+        game_status : 'ready',
         ctx : null,
-        deck : []
+        deck : [],
+        dealer_deck : [],
+        player_deck : [],
+        community_deck : []
     },
+
     methods:{
-        shuffleCard : function() {
+        isInitCard : function() {
+            return poker.loadFinish;
+        },
+        shuffleCard : function() {        
+            if(poker.loadFinish == false) {
+                return 
+            }
+            this.deck = [];
             var copyarr = Array.from(poker.cards);
             while (copyarr.length > 0) {
               shuffle(copyarr);
               this.deck.unshift(copyarr.pop());          
             }
+        },
+        draw : function() {
+            this.ctx.clearRect(0,0,1000, 1000);
+            var img = poker.backImg;
+            console.log(img);        
+            for(var i=0;i<this.deck.length; i++) {                
+                this.ctx.drawImage(img, i*2 + 10,10,20,30);
+            }     
+            
+            for(var i=0; i<this.dealer_deck.length; i++) {
+                var dImg = img;
+                if (this.game_status == 'showdown') {
+                    dImg = this.dealer_deck[i].img;
+                }
+                this.ctx.drawImage(dImg, i*65 + 10, 50, 60, 100);
+            }
+
+            for(var i=0; i<this.community_deck.length; i++) {
+                var card_img = this.community_deck[i].img;
+                switch (this.game_status) {
+                    case "preflop":
+                        card_img = img;
+                        break;
+                    case "flop":
+                        if(i >= 3) {
+                            card_img = img;
+                        }
+                        break;
+                    case "turn":
+                        if(i >= 4) {
+                            card_img = img;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                this.ctx.drawImage(card_img, i*65 + 10, 175, 60, 100);
+            }
+            for(var i=0; i<this.player_deck.length; i++) {
+                const pimg = this.player_deck[i].img;
+                this.ctx.drawImage(pimg, i*65 + 10, 300, 60, 100);
+            }
+
+        },
+        preflop : function() {
+            if(this.game_status != 'ready') {
+                return;
+            }
+            if (this.deck.length < 12) {
+                this.shuffleCard();
+            }
+            this.dealer_deck.push(this.deck.pop());
+            this.dealer_deck.push(this.deck.pop());
+            this.player_deck.push(this.deck.pop());
+            this.player_deck.push(this.deck.pop());
+            for (var i=0;i<5;i++) {
+                this.community_deck.push(this.deck.pop());
+            }
+            this.game_status = 'preflop';
+        },
+        flop : function() {
+            if (this.game_status != 'preflop') {
+                return;
+            }
+            this.game_status = 'flop';
+        },
+        turn : function() {
+            if (this.game_status != 'flop') {
+                return;
+            }
+            this.game_status = 'turn';
+        },
+        river : function() {
+            if (this.game_status != 'turn') {
+                return;
+            }
+            this.game_status = 'river';
+        },
+        showdown : function() {
+            if(this.game_status != 'river') {
+                return;
+            }
+            this.game_status = 'showdown';
+        },
+        reset : function() {
+            this.game_status = 'ready';
+            this.community_deck = [];
+            this.dealer_deck = [];
+            this.player_deck = [];
         }
+    },
+    watch : {
+      deck(oldDeck, newDeck) {
+        this.draw();
+      },
+      game_status(old_status,new_status) {
+        this.draw();
+      }
     },
     mounted() {
         const canvas = document.getElementById("holdem_canvas");
