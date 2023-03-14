@@ -7,6 +7,7 @@ const poker = new Vue({
         ctx:null,
         backImg: new Image(),
         loadFinish : false ,
+        loadcount : 0,
         cards:[
             {type:"S", value:"A", image:"./images/poker/SA.svg", desc:"SA", point:14, typepoint:4, img : new Image()},
             {type:"S", value:"2", image:"./images/poker/S2.svg", desc:"S2", point:2, typepoint:4, img : new Image()},
@@ -76,8 +77,7 @@ const poker = new Vue({
         
         loadCardImage : function(idx) {            
             if (idx == 52) {
-                console.log("load finish");
-                this.loadFinish = true;
+                console.log("load finish");                
                 return ;
             }
             this.loadCount ++;
@@ -90,6 +90,10 @@ const poker = new Vue({
                 poker.ctx.drawImage(img,x + 10,10,40,80);                   
                 console.log("load : " + card.desc + " " + card.image + " i:" + idx + " loadCount:" + poker.loadCount);
                 poker.draw();
+                poker.loadcount ++;
+                if(poker.loadcount == 52) {
+                    poker.loadFinish = true;
+                }
             }                
             this.loadCardImage(idx + 1);
         },
