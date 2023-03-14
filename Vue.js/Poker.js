@@ -89,9 +89,9 @@ const poker = new Vue({
             img.onload = function() {       
                 poker.ctx.drawImage(img,x + 10,10,40,80);                   
                 console.log("load : " + card.desc + " " + card.image + " i:" + idx + " loadCount:" + poker.loadCount);
-                poker.loadCardImage(idx + 1);
                 poker.draw();
             }                
+            this.loadCardImage(idx + 1);
         },
 
         draw() {
