@@ -166,12 +166,16 @@ var holdem = new Vue({
                 if (this.game_status == 'showdown') {
                     dImg = this.dealer_deck[i].img;
                 }
-                this.ctx.drawImage(dImg, i*95 + 10, 50, 90, 130);
+                this.ctx.drawImage(dImg, i*95 + 10, 45, 90, 130);
             }
 
             if(this.dealer_hand != null) {
                 this.ctx.fillStyle = "yellow";
-                this.ctx.fillText(this.dealer_hand.title,10,190);
+                this.ctx.fillText(this.dealer_hand.title,10,185);
+                for (var i=0; i <this.dealer_hand.cidx.length; i++) {
+                    const x = this.dealer_hand.cidx[i];
+                    this.ctx.fillRect(x*55+10,190,5,5);                    
+                }
             }
 
             for(var i=0; i<this.community_deck.length; i++) {
@@ -201,6 +205,11 @@ var holdem = new Vue({
                 this.ctx.drawImage(pimg, i*95 + 10, 350, 90, 130);
             }
             if(this.player_hand != null) {
+                for (var i=0; i <this.player_hand.cidx.length; i++) {
+                    const x = this.player_hand.cidx[i];
+                    this.ctx.fillStyle = "yellow";
+                    this.ctx.fillRect(x*55 + 10,335,5,5);                    
+                }
                 this.ctx.fillStyle = "yellow";
                 this.ctx.fillText(this.player_hand.title,10,490);
             }
