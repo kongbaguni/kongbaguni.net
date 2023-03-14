@@ -159,7 +159,9 @@ var holdem = new Vue({
             console.log(img);        
             for(var i=0;i<this.deck.length; i++) {                
                 this.ctx.drawImage(img, i*2 + 10,10,20,30);
-            }     
+            }
+            this.ctx.fillStyle = 'white';     
+            this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
             
             for(var i=0; i<this.dealer_deck.length; i++) {
                 var dImg = img;
@@ -405,12 +407,14 @@ var holdem_manager = new Vue({
             // 포커 판정
             if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {                
                 if (ranks[0] === ranks[3]) {
+                    heightCard = cards[0];
                     kiker = cards[4];
                 }
                 if (ranks[1] === ranks[4]) {
+                    heightCard = cards[1];
                     kiker = cards[0];
                 }
-                return {title : "Four of a Kind", rank:7, cidx: cidx, kiker:kiker, hcard:null};
+                return {title : "Four of a Kind", rank:7, cidx: cidx, kiker:kiker, hcard:heightCard};
             }
           
             // 풀하우스 판정
@@ -443,12 +447,14 @@ var holdem_manager = new Vue({
             // 쓰리카인드 판정
             if (ranks[0] === ranks[2] || ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
                 if(ranks[0] === ranks[2]) {
+                    heightCard = cards[0];
                     kiker = cards[3];
                 }
                 if(ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
+                    heightCard = cards[2];
                     kiker = cards[0];
                 }
-              return {title : "Three of a Kind", rank : 3, cidx: cidx,kiker:kiker, hcard:null};
+              return {title : "Three of a Kind", rank : 3, cidx: cidx,kiker:kiker, hcard:heightCard};
             }
           
             // 투페어 판정
@@ -459,7 +465,8 @@ var holdem_manager = new Vue({
                 pairs++;
                 pairRanks.push(ranks[i]);
               }
-            }            
+            }   
+            var pairedCard = [];         
             for(var j=0; j<cards.length; j++) {
                 var count=0;
                 for(var i=0; i<pairRanks.length; i++) {
@@ -470,15 +477,27 @@ var holdem_manager = new Vue({
                 if(count == 0 && kiker == null) {
                     kiker = cards[j];
                 }
-            }
+                if(count > 0) {
+                    pairedCard.push(cards[j]);
+                }
+            }            
+            pairedCard.sort(function(a,b) {
+                if(a.point < b.point) {
+                    return 1;
+                }
+                if(a.point > b.point) {
+                    return -1;
+                }
+                return 0;
+            });
             
             if (pairs === 2) {
-              return {title : "Two Pair", rank : 2, cidx: cidx,kiker:kiker, hcard:null};
+              return {title : "Two Pair", rank : 2, cidx: cidx,kiker:kiker, hcard:pairedCard[0]};
             }
           
             // 원 페어 판정
             if (pairs === 1) {
-              return {title : "One Pair", rank : 1, cidx: cidx,kiker:kiker, hcard:null};
+              return {title : "One Pair", rank : 1, cidx: cidx,kiker:kiker, hcard:pairedCard[0]};
             }
           
             // 하이카드 판정
