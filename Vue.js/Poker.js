@@ -176,6 +176,11 @@ var holdem = new Vue({
                     const x = this.dealer_hand.cidx[i];
                     this.ctx.fillRect(x*55+10,190,5,5);                    
                 }
+                if(this.dealer_hand.kiker != null) {
+                    this.ctx.fillText("kiker",200,45)
+                    this.ctx.drawImage(this.dealer_hand.kiker.img, 200,50,40,70);
+                }
+
             }
 
             for(var i=0; i<this.community_deck.length; i++) {
@@ -212,8 +217,12 @@ var holdem = new Vue({
                 }
                 this.ctx.fillStyle = "yellow";
                 this.ctx.fillText(this.player_hand.title,10,490);
+                if(this.player_hand.kiker != null) {
+                    this.ctx.fillText("kiker",200,350)
+                    this.ctx.drawImage(this.player_hand.kiker.img, 200,355,40,70);
+                }
             }
-
+            
         },
         preflop : function() {
             if(this.game_status != 'ready') {
@@ -371,25 +380,47 @@ var holdem = new Vue({
 var holdem_manager = new Vue({
     methods: {
         evaluatePokerHand : function(cards,cidx) {
+            var kiker = null;
+            // 가장 높은 카드 
+            var heightCard = null;
             // 카드 무늬와 숫자를 분리해서 저장
             const suits = cards.map(card => card.type);
             const ranks = cards.map(card => card.point);                          
             ranks.sort();
             console.log("ranks ------");
             console.log(ranks);
+
+            cards.sort(function(a,b) {
+                if(a.point < b.point) {
+                    return 1;
+                }
+                if(a.point > b.point) {
+                    return -1;
+                }
+                return 0;
+            });
+            heightCard = cards[0];
+            console.log(kiker);
+
             // 포커 판정
-            if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {
-                return {title : "Four of a Kind", rank:7, cidx: cidx};
+            if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {                
+                if (ranks[0] === ranks[3]) {
+                    kiker = cards[4];
+                }
+                if (ranks[1] === ranks[4]) {
+                    kiker = cards[0];
+                }
+                return {title : "Four of a Kind", rank:7, cidx: cidx, kiker:kiker, hcard:null};
             }
           
             // 풀하우스 판정
             if ((ranks[0] === ranks[1] && ranks[2] === ranks[4]) || (ranks[0] === ranks[2] && ranks[3] === ranks[4])) {
-              return {title: "Full House", rank:6, cidx: cidx};
+              return {title: "Full House", rank:6, cidx: cidx, kiker:null, hcard:heightCard};
             }
           
             // 플러시 판정
             if (suits.every(suit => suit === suits[0])) {
-              return {title: "Flush" , rank:5, cidx: cidx};
+              return {title: "Flush" , rank:5, cidx: cidx, kiker:null, hcard:heightCard};
             }
           
             // 스트레이트 판정
@@ -401,37 +432,57 @@ var holdem_manager = new Vue({
               }
             }
             if (straight) {
-              return {title : "Straight", rank : 4, cidx: cidx};
+              return {title : "Straight", rank : 4, cidx: cidx,kiker:null, hcard:heightCard};
             }
           
             // 스트레이트 플러시 판정
             if (straight && suits.every(suit => suit === suits[0])) {
-              return {title : "Straight Flush", rank : 8, cidx: cidx};
+              return {title : "Straight Flush", rank : 8, cidx: cidx,kiker:null, hcard:heightCard};
             }
           
             // 쓰리카인드 판정
             if (ranks[0] === ranks[2] || ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
-              return {title : "Three of a Kind", rank : 3, cidx: cidx};
+                if(ranks[0] === ranks[2]) {
+                    kiker = cards[3];
+                }
+                if(ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
+                    kiker = cards[0];
+                }
+              return {title : "Three of a Kind", rank : 3, cidx: cidx,kiker:kiker, hcard:null};
             }
           
             // 투페어 판정
+            var pairRanks = [];
             let pairs = 0;
             for (let i = 0; i < ranks.length - 1; i++) {
               if (ranks[i] === ranks[i + 1]) {
                 pairs++;
+                pairRanks.push(ranks[i]);
               }
+            }            
+            for(var j=0; j<cards.length; j++) {
+                var count=0;
+                for(var i=0; i<pairRanks.length; i++) {
+                    if(cards[j].point == pairRanks[i]) {
+                        count++;
+                    }
+                }
+                if(count == 0 && kiker == null) {
+                    kiker = cards[j];
+                }
             }
+            
             if (pairs === 2) {
-              return {title : "Two Pair", rank : 2, cidx: cidx};
+              return {title : "Two Pair", rank : 2, cidx: cidx,kiker:kiker, hcard:null};
             }
           
             // 원 페어 판정
             if (pairs === 1) {
-              return {title : "One Pair", rank : 1, cidx: cidx};
+              return {title : "One Pair", rank : 1, cidx: cidx,kiker:kiker, hcard:null};
             }
           
             // 하이카드 판정
-            return {title : "High Card", rank: 0, cidx: cidx};
+            return {title : "High Card", rank: 0, cidx: cidx,kiker:null, hcard:heightCard};
           },   
           
           getHighHand : function(hands) {
@@ -442,6 +493,18 @@ var holdem_manager = new Vue({
               console.log("getHighHand for "+i + " " + hands[i].desc);
               if (hands[i].rank > hand.rank) {
                 hand = hands[i];
+              }
+              if(hands[i].rank === hand.rank) {
+                if(hands[i].hcard != null && hand.hcard != null) {
+                    if(hands[i].hcard.point > hand.hcard.point) {
+                        hand = hands[i];
+                    }
+                }
+                if(hands[i].kiker != null && hand.kiker != null) {
+                    if(hands[i].kiker.point > hand.kiker.point) {
+                        hand = hands[i];
+                    }
+                }
               }
             }
             return hand
