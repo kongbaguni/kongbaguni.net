@@ -92,7 +92,9 @@ const poker = new Vue({
                 poker.draw();
                 poker.loadcount ++;
                 if(poker.loadcount == 52) {
-                    poker.loadFinish = true;
+                    setTimeout(() => {
+                        poker.loadFinish = true;    
+                    }, 500);                    
                 }
             }                
             this.loadCardImage(idx + 1);
