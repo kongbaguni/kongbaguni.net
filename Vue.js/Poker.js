@@ -180,7 +180,7 @@ var holdem = new Vue({
                 }
                 if(this.dealer_hand.kiker != null) {
                     this.ctx.fillText("kiker",200,45)
-                    this.ctx.drawImage(this.dealer_hand.kiker.img, 200,50,40,70);
+                    this.ctx.drawImage(this.dealer_hand.kiker.img, 200,50,50,70);
                 }
 
             }
@@ -221,7 +221,7 @@ var holdem = new Vue({
                 this.ctx.fillText(this.player_hand.title,10,490);
                 if(this.player_hand.kiker != null) {
                     this.ctx.fillText("kiker",200,350)
-                    this.ctx.drawImage(this.player_hand.kiker.img, 200,355,40,70);
+                    this.ctx.drawImage(this.player_hand.kiker.img, 200,355,50,70);
                 }
             }
             
