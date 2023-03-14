@@ -132,6 +132,7 @@ var holdem = new Vue({
     data : {
         game_status : 'ready',
         ctx : null,
+        game_result : null,
         deck : [],
         dealer_deck : [],
         player_deck : [],
@@ -155,6 +156,7 @@ var holdem = new Vue({
         },
         draw : function() {
             this.ctx.clearRect(0,0,1000, 1000);
+            this.ctx.font = "10px serif";
             var img = poker.backImg;
             console.log(img);        
             for(var i=0;i<this.deck.length; i++) {                
@@ -179,10 +181,9 @@ var holdem = new Vue({
                     this.ctx.fillRect(x*55+10,190,5,5);                    
                 }
                 if(this.dealer_hand.kiker != null) {
-                    this.ctx.fillText("kiker",200,45)
+                    this.ctx.fillText("kiker",200,45);
                     this.ctx.drawImage(this.dealer_hand.kiker.img, 200,50,50,70);
                 }
-
             }
 
             for(var i=0; i<this.community_deck.length; i++) {
@@ -224,7 +225,13 @@ var holdem = new Vue({
                     this.ctx.drawImage(this.player_hand.kiker.img, 200,355,50,70);
                 }
             }
-            
+            if(this.game_result != null) {
+                this.ctx.font = "30px serif";
+                this.ctx.fillText(this.game_result, 20,280);
+                this.strokeStyle = "black";                
+                this.ctx.strokeText(this.game_result, 20,280);
+            }
+
         },
         preflop : function() {
             if(this.game_status != 'ready') {
@@ -285,7 +292,8 @@ var holdem = new Vue({
                 return;
             }
             this.checkDelarHand();
-            this.game_status = 'showdown';            
+            this.game_result = this.checkGameResult();
+            this.game_status = 'showdown';   
         },
         reset : function() {
             this.game_status = 'ready';
@@ -294,6 +302,7 @@ var holdem = new Vue({
             this.player_deck = [];
             this.player_hand = null;
             this.dealer_hand = null;
+            this.game_result = null;
         },
 
         getCCardForHandCheck : function() {
@@ -363,12 +372,41 @@ var holdem = new Vue({
             this.player_hand = holdem_manager.getHighHand(handResuts);
             console.log(handResuts)
           },
+          checkGameResult : function() {
+            if (this.dealer_hand == null) {
+                return null;
+            }
+            var d = this.dealer_hand;
+            var p = this.player_hand;
+            if(p.rank > d.rank) {
+                return "WIN";
+            }
+            if(p.rank == d.rank) {
+                if(p.hcard.point > d.hcard.point) {
+                    return "WIN";
+                }
+                if(p.hcard.point == d.hcard.point) {
+                    if(p.kiker != null && d.kiker != null) {
+                        if(p.kiker.point > d.kiker.point) {
+                            return "WIN"
+                        }
+                        if(p.kiker.point == d.kiker.point) {
+                            return "TIED"
+                        }
+                    }
+                }
+            }
+            return "LOSE"
+          }
     },
     watch : {
       deck(oldDeck, newDeck) {
         this.draw();
       },
       game_status(old_status,new_status) {
+        this.draw();
+      },
+      game_result(a,b) {
         this.draw();
       }
     },
