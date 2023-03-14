@@ -160,7 +160,7 @@ var holdem = new Vue({
                 if (this.game_status == 'showdown') {
                     dImg = this.dealer_deck[i].img;
                 }
-                this.ctx.drawImage(dImg, i*85 + 10, 50, 90, 130);
+                this.ctx.drawImage(dImg, i*95 + 10, 50, 90, 130);
             }
 
             if(this.dealer_hand != null) {
@@ -192,7 +192,7 @@ var holdem = new Vue({
             }
             for(var i=0; i<this.player_deck.length; i++) {
                 const pimg = this.player_deck[i].img;
-                this.ctx.drawImage(pimg, i*85 + 10, 350, 90, 130);
+                this.ctx.drawImage(pimg, i*95 + 10, 350, 90, 130);
             }
             if(this.player_hand != null) {
                 this.ctx.fillStyle = "yellow";
@@ -283,7 +283,7 @@ var holdem = new Vue({
                 cidxs = ["012","014","024","034","124","134","234","013","023","123"];
                 break;
             }
-            switch (cd.length) {
+            switch (this.game_status) {
               case 'river':
                 ccards.push([cd[0],cd[1],cd[4]]);
                 ccards.push([cd[0],cd[2],cd[4]]);
@@ -330,6 +330,7 @@ var holdem = new Vue({
               for (var j=0; j<cc.cards[i].length; j++) {
                 arr.push(cc.cards[i][j]);
               }
+              console.log("check_"+i)
               console.log(arr);
               handResuts.push(holdem_manager.evaluatePokerHand(arr,cc.idxs[i]));                    
             }
