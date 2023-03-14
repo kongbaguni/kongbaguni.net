@@ -2,6 +2,8 @@
 const poker = new Vue({
     el:'#poker',
     data:{
+        player_hand:null,
+        dealer_hand:null,
         ctx:null,
         backImg: new Image(),
         loadFinish : false ,
@@ -161,6 +163,11 @@ var holdem = new Vue({
                 this.ctx.drawImage(dImg, i*85 + 10, 50, 90, 130);
             }
 
+            if(this.dealer_hand != null) {
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillText(this.dealer_hand.title,10,190);
+            }
+
             for(var i=0; i<this.community_deck.length; i++) {
                 var card_img = this.community_deck[i].img;
                 switch (this.game_status) {
@@ -186,6 +193,10 @@ var holdem = new Vue({
             for(var i=0; i<this.player_deck.length; i++) {
                 const pimg = this.player_deck[i].img;
                 this.ctx.drawImage(pimg, i*85 + 10, 350, 90, 130);
+            }
+            if(this.player_hand != null) {
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillText(this.player_hand.title,10,490);
             }
 
         },
@@ -227,31 +238,104 @@ var holdem = new Vue({
                 return;
             }
             this.game_status = 'flop';
+            this.checkPlayerHand();
         },
         turn : function() {
             if (this.game_status != 'flop') {
                 return;
             }
             this.game_status = 'turn';
+            this.checkPlayerHand();
         },
         river : function() {
             if (this.game_status != 'turn') {
                 return;
             }
             this.game_status = 'river';
+            this.checkPlayerHand();
         },
         showdown : function() {
             if(this.game_status != 'river') {
                 return;
             }
-            this.game_status = 'showdown';
+            this.checkDelarHand();
+            this.game_status = 'showdown';            
         },
         reset : function() {
             this.game_status = 'ready';
             this.community_deck = [];
             this.dealer_deck = [];
             this.player_deck = [];
-        }
+            this.player_hand = null;
+            this.dealer_hand = null;
+        },
+
+        getCCardForHandCheck : function() {
+            var cd = this.community_deck;
+            console.log("checkPlayerHand");
+            var ccards = [[cd[0],cd[1],cd[2]]];
+            var cidxs = ["012"];
+            switch (this.game_status) {
+              case 'turn':
+                cidxs = ["012","013","023","123"];
+                break;
+              case 'river':
+                cidxs = ["012","014","024","034","124","134","234","013","023","123"];
+                break;
+            }
+            switch (cd.length) {
+              case 'river':
+                ccards.push([cd[0],cd[1],cd[4]]);
+                ccards.push([cd[0],cd[2],cd[4]]);
+                ccards.push([cd[0],cd[3],cd[4]]);
+                ccards.push([cd[1],cd[2],cd[4]]);
+                ccards.push([cd[1],cd[3],cd[4]]);
+                ccards.push([cd[2],cd[3],cd[4]]);
+              case 'turn':
+                ccards.push([cd[0],cd[1],cd[3]]);
+                ccards.push([cd[0],cd[2],cd[3]]);
+                ccards.push([cd[1],cd[2],cd[3]]);
+            }
+            console.log("커뮤니티드 "+cd.length+"개 : "+cidxs.length + " "+ccards.length);
+            console.log(cidxs);
+            console.log("_----------_")
+            return {cards:ccards, idxs:cidxs};
+          },
+          checkDelarHand : function() {
+            if (this.community_deck.length < 3) {
+              return 
+            }
+            var cc = this.getCCardForHandCheck();
+            var handResuts = [];
+            for(var i=0; i<cc.cards.length; i++) {
+              var arr = [this.dealer_deck[0],this.dealer_deck[1]];
+              for (var j=0; j<cc.cards[i].length; j++) {
+                arr.push(cc.cards[i][j]);
+              }
+              console.log(arr);
+              handResuts.push(holdem_manager.evaluatePokerHand(arr,cc.idxs[i]));                    
+            }
+            this.dealer_hand = holdem_manager.getHighHand(handResuts);
+            console.log(handResuts)
+          },
+
+        checkPlayerHand: function() {
+            if (this.community_deck.length < 3) {
+              return 
+            }
+            var cc = this.getCCardForHandCheck();
+            var handResuts = [];
+            for(var i=0; i<cc.cards.length; i++) {
+              var arr = [this.player_deck[0],this.player_deck[1]];
+              for (var j=0; j<cc.cards[i].length; j++) {
+                arr.push(cc.cards[i][j]);
+              }
+              console.log(arr);
+              handResuts.push(holdem_manager.evaluatePokerHand(arr,cc.idxs[i]));                    
+            }
+            this.player_hand = holdem_manager.getHighHand(handResuts);
+            console.log(handResuts)
+          },
     },
     watch : {
       deck(oldDeck, newDeck) {
@@ -266,3 +350,85 @@ var holdem = new Vue({
         this.ctx = canvas.getContext('2d');
     }
 });
+
+
+var holdem_manager = new Vue({
+    methods: {
+        evaluatePokerHand : function(cards,cidx) {
+            // 카드 무늬와 숫자를 분리해서 저장
+            const suits = cards.map(card => card.type);
+            const ranks = cards.map(card => card.point);                          
+            ranks.sort();
+            console.log("ranks ------");
+            console.log(ranks);
+            // 포커 판정
+            if (ranks[0] === ranks[3] || ranks[1] === ranks[4]) {
+                return {title : "Four of a Kind", rank:7, cidx: cidx};
+            }
+          
+            // 풀하우스 판정
+            if ((ranks[0] === ranks[1] && ranks[2] === ranks[4]) || (ranks[0] === ranks[2] && ranks[3] === ranks[4])) {
+              return {title: "Full House", rank:6, cidx: cidx};
+            }
+          
+            // 플러시 판정
+            if (suits.every(suit => suit === suits[0])) {
+              return {title: "Flush" , rank:5, cidx: cidx};
+            }
+          
+            // 스트레이트 판정
+            let straight = true;
+            for (let i = 0; i < ranks.length - 1; i++) {
+              if (ranks[i + 1] - ranks[i] !== 1) {
+                straight = false;
+                break;
+              }
+            }
+            if (straight) {
+              return {title : "Straight", rank : 4, cidx: cidx};
+            }
+          
+            // 스트레이트 플러시 판정
+            if (straight && suits.every(suit => suit === suits[0])) {
+              return {title : "Straight Flush", rank : 8, cidx: cidx};
+            }
+          
+            // 쓰리카인드 판정
+            if (ranks[0] === ranks[2] || ranks[1] === ranks[3] || ranks[2] === ranks[4]) {
+              return {title : "Three of a Kind", rank : 3, cidx: cidx};
+            }
+          
+            // 투페어 판정
+            let pairs = 0;
+            for (let i = 0; i < ranks.length - 1; i++) {
+              if (ranks[i] === ranks[i + 1]) {
+                pairs++;
+              }
+            }
+            if (pairs === 2) {
+              return {title : "Two Pair", rank : 2, cidx: cidx};
+            }
+          
+            // 원 페어 판정
+            if (pairs === 1) {
+              return {title : "One Pair", rank : 1, cidx: cidx};
+            }
+          
+            // 하이카드 판정
+            return {title : "High Card", rank: 0, cidx: cidx};
+          },   
+          
+          getHighHand : function(hands) {
+            var hand = hands[0];
+            console.log("------- getHighHand -------- ");      
+            console.log(hands);  
+            for (var i=0; i < hands.length; i++) {          
+              console.log("getHighHand for "+i + " " + hands[i].desc);
+              if (hands[i].rank > hand.rank) {
+                hand = hands[i];
+              }
+            }
+            return hand
+          }      
+    }
+})
