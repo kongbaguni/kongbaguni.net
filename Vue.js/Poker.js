@@ -716,6 +716,7 @@ var holdem_manager = new Vue({
 var blackjack = new Vue({
     el:'#blackjack',
     data:{
+        isBetting:false,
         ctx:null,
         deck:[],
         dealer_deck:[],
@@ -726,6 +727,19 @@ var blackjack = new Vue({
         game_result:null
     },
     methods: {
+        betting : function() {
+            var bettingMoney = 100;
+            if(wallet.lastTakeoutMoney != null) {
+                bettingMoney = wallet.lastTakeoutMoney;
+            }            
+
+            var newBetting = prompt("betting",bettingMoney);
+            var m = wallet.takeMoney(newBetting);
+            if(m != null) {
+                bettingBoard.betting(m,"blackjack");
+                this.isBetting = true;
+            }        
+        },
         shuffleCard : function() {     
             console.log("shuffle")   
             if(poker.loadFinish == false) {
@@ -775,14 +789,23 @@ var blackjack = new Vue({
         dealerAction : function() {
             const check = this.check(this.dealer_deck);
             this.dealer_result = check;
+            if(this.player_result.rank == 0) {
+                this.game_result = this.checkGameResult();
+                bettingBoard.processResult("blackjack",this.game_result);  
+                return;
+            }
+
             if(check.title != null) {
-                this.game_result = this.checkGameResult();          
+                this.game_result = this.checkGameResult();     
+                bettingBoard.processResult("blackjack",this.game_result);       
                 return;
             }
             if(this.player_result.point < check.point &&  check.point < 21) {
                 this.game_result = this.checkGameResult();          
+                bettingBoard.processResult("blackjack",this.game_result);  
                 return;
             }
+            
             setTimeout(() => {
                 blackjack.dealer_deck.push(this.deck.pop());
                 blackjack.dealerAction();                
@@ -845,6 +868,7 @@ var blackjack = new Vue({
         },
 
         reset : function() {
+            this.isBetting = false;
             this.dealer_deck = [];
             this.player_deck = [];
             this.game_status = 'ready';
