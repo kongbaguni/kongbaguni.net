@@ -34,6 +34,17 @@
             </p>
             <canvas id="holdem_canvas" width="347px" height="500px"></canvas>            
         </article>
+
+        <article id="blackjack">
+            <header><h2>BlackJack</h2></header>
+            <p v-if="isInitCard() == true">
+                <button v-on:click="start" v-if="game_status == 'ready'">start</button>
+                <button v-on:click="hit" v-if="game_status == 'player_turn'">hit</button>
+                <button v-on:click="stand" v-if="game_status == 'player_turn'">stand</button>
+                <button v-on:click="reset" v-if="game_status != 'ready'">reset</button>
+            </p>
+            <canvas id="blackjack_canvas" width="347px" height="250px"></canvas>            
+        </article>
     </body>
     <script src="./Poker.js"></script>
 </html>

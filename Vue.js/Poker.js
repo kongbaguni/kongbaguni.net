@@ -416,7 +416,6 @@ var holdem = new Vue({
     }
 });
 
-
 var holdem_manager = new Vue({
     methods: {
         evaluatePokerHand : function(cards,cidx) {
@@ -566,5 +565,244 @@ var holdem_manager = new Vue({
             }
             return hand
           }      
+    }
+})
+
+
+var blackjack = new Vue({
+    el:'#blackjack',
+    data:{
+        ctx:null,
+        deck:[],
+        dealer_deck:[],
+        player_deck:[],
+        game_status:'ready',
+        player_result:null,
+        dealer_result:null,
+        game_result:null
+    },
+    methods: {
+        shuffleCard : function() {     
+            console.log("shuffle")   
+            if(poker.loadFinish == false) {
+                console.log("shuffle !!")
+                return 
+            }
+            var copyarr = Array.from(poker.cards);
+            while (copyarr.length > 0) {
+              shuffle(copyarr);
+              this.deck.unshift(copyarr.pop());          
+            }
+            
+        },
+        isInitCard : function() {
+            return poker.loadFinish;
+        },
+        start: function() {
+            if(this.game_status!='ready') {
+                return ;
+            }
+
+            console.log("start");
+            if(this.deck.length == 0) {
+                console.log("shuffle?")
+                this.shuffleCard();
+            }
+            this.dealer_deck.push(this.deck.pop());
+            this.dealer_deck.push(this.deck.pop());
+            
+            this.player_deck.push(this.deck.pop());
+            this.player_deck.push(this.deck.pop());
+            this.game_status = 'player_turn';
+            this.player_result = this.check(this.player_deck);
+        },
+        hit : function () {
+            this.player_deck.push(this.deck.pop());
+            const check = this.check(this.player_deck);
+            this.player_result = check;
+            if(check.title != null) {
+                this.stand();
+            }
+        },
+        stand : function() {
+            this.game_status = "dealer_turn"
+            this.dealerAction() 
+        },
+        dealerAction : function() {
+            const check = this.check(this.dealer_deck);
+            this.dealer_result = check;
+            if(check.title != null) {
+                this.game_result = this.checkGameResult();          
+                return;
+            }
+            if(this.player_result.point < check.point &&  check.point < 21) {
+                this.game_result = this.checkGameResult();          
+                return;
+            }
+            setTimeout(() => {
+                blackjack.dealer_deck.push(this.deck.pop());
+                blackjack.dealerAction();                
+            }, 1000);
+        },
+
+        checkGameResult : function() {
+            const p = this.player_result;
+            const d = this.dealer_result;
+            if(p == null || d == null) {
+                return ;
+            }
+            // 버스트로 승패 
+            const playerBust = p.rank != null && p.rank == 0;
+            const dealerBust = d.rank != null && d.rank == 0;
+            if(playerBust && dealerBust) {
+                return "TIE";
+            }
+            if (dealerBust) {
+                return "WIN";
+            }
+            if(playerBust) {
+                return "LOSE";
+            }
+
+            const isDealer5Card = d.rank != null && d.rank == 2;
+            const isPlaer5Card = p.rank != null && p.rank == 2;
+            if(isDealer5Card && isPlaer5Card) {
+                return "TIE";
+            }
+            if(isDealer5Card) {
+                return "LOSE";
+            }
+            if(isPlaer5Card) {
+                return "WIN"
+            }
+
+            // 랭크 비교 
+            if(p.rank != null && d.rank != null) {
+                if(p.rank > d.rank) {
+                    return "WIN"
+                }
+                else if(p.rank == d.rank) {
+                    return "TIE"
+                }
+                else {
+                    return "LOSE"
+                }
+            }
+            // 포인트 비교 
+            if(p.point > d.point) {
+                return "WIN"
+            }
+            // 무승부 
+            if(p.point == d.point) {
+                return "TIE"
+            }
+            // 패배
+            return "LOSE"
+        },
+
+        reset : function() {
+            this.dealer_deck = [];
+            this.player_deck = [];
+            this.game_status = 'ready';
+            this.game_result = null;
+            this.player_result = null;
+            this.dealer_result = null;
+        },
+        draw : function() {
+            this.ctx.clearRect(0,0,1000,1000);
+            var img = poker.backImg;
+            console.log(img);        
+            for(var i=0;i<this.deck.length; i++) {                
+                this.ctx.drawImage(img, i*2 + 10,10,20,30);
+            }
+            for(var i=0;i<this.dealer_deck.length; i++) {                
+                var image = this.dealer_deck[i].img;
+                if(this.game_status != 'dealer_turn' && i == 0) {
+                    image = poker.backImg;
+                }
+                this.ctx.drawImage(image, i*50 + 10, 50, 50,70);
+            }
+            for(var i=0;i<this.player_deck.length; i++) {                
+                this.ctx.drawImage(this.player_deck[i].img, i*50 + 10, 150, 50,70);
+            }
+            if(this.game_result != null) {
+                this.ctx.font = "30px serif";
+                this.ctx.fillStyle = 'yellow';
+                this.ctx.fillText(this.game_result, 20, 145);
+            }
+            this.ctx.font = "15px serif";
+            this.ctx.fillStyle = "white";
+            if(this.player_result != null) {
+                this.ctx.fillText(this.player_result.point, this.player_deck.length * 50 + 20, 200);
+                if(this.player_result.title != null) {
+                    this.ctx.fillText(this.player_result.title, this.player_deck.length * 50 + 20, 230);
+                }
+            }
+            if(this.dealer_result != null && this.game_status == 'dealer_turn') {
+                this.ctx.fillText(this.dealer_result.point, this.dealer_deck.length * 50 + 20, 100);
+                if(this.dealer_result.title != null) {
+                    this.ctx.fillText(this.dealer_result.title, this.dealer_result.length * 50 + 20, 230);
+                }
+
+            }
+        },
+        check:function(cards) {
+            var min = 0;
+            var max = 0;
+            console.log(cards);
+            console.log(cards[0].point);
+            for(var i = 0; i < cards.length; i++) {                
+                console.log("i " + i);
+                var point = cards[i].point;
+                if(point == 14){
+                    min += 1;
+                    max += 10;
+                }
+                else if(point > 10) {
+                    min += 10;
+                    max += 10;
+                }
+                else {
+                    min += point;
+                    max += point;
+                }
+            }
+            console.log("min:" +min + " max:" + max);
+
+            var p = min;
+            if(max < 21) {
+                var p = max;
+            }
+
+            if(cards.length == 5 && p < 21) {
+                return {title :"5 CARD", rank : 2, point : p}
+            }
+
+            if (p > 21) {
+                return {title :"BURST", rank : 0, point : p}
+            }
+            if (p == 21) {
+                return {title :"BLACK JACK", rank : 1, point : p}
+            }            
+            return {title:null, rank : null, point : p}
+        }
+    }, 
+    watch : {
+        game_status(a,b) {
+            this.draw()
+        },
+        player_deck(a,b) {
+            this.draw();
+        },
+        dealer_deck(a,b) {
+            this.draw();
+        },
+        deck(a,b) {
+            this.draw();
+        }
+    },
+    mounted() {
+        const canvas = document.getElementById("blackjack_canvas");
+        this.ctx = canvas.getContext('2d');
     }
 })
