@@ -883,6 +883,8 @@ var blackjack = new Vue({
             for(var i=0;i<this.deck.length; i++) {                
                 this.ctx.drawImage(img, i*2 + 10,10,20,30);
             }
+            this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
+
             for(var i=0;i<this.dealer_deck.length; i++) {                
                 var image = this.dealer_deck[i].img;
                 if(this.game_status != 'dealer_turn' && i == 0) {
