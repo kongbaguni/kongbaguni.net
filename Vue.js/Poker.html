@@ -59,7 +59,7 @@
 
                 <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click = "betting">betting</button>
 
-                <button v-if="game_status != 'ready' && game_status != 'preflop_anime'" v-on:click = "reset">reset</button>    
+                <button v-if="game_status != 'ready' && game_status != 'preflop_anime'" v-on:click = "reset">restart</button>    
 
             </p>
             <canvas id="holdem_canvas" width="347px" height="500px"></canvas>            
@@ -71,7 +71,7 @@
                 <button v-on:click="start" v-if="game_status == 'ready'">start</button>
                 <button v-on:click="hit" v-if="game_status == 'player_turn'">hit</button>
                 <button v-on:click="stand" v-if="game_status == 'player_turn'">stand</button>
-                <button v-on:click="reset" v-if="game_status != 'ready'">reset</button>
+                <button v-on:click="reset" v-if="game_status != 'ready'">restart</button>
             </p>
             <canvas id="blackjack_canvas" width="347px" height="250px"></canvas>            
         </article>

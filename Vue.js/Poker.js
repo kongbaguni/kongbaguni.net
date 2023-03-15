@@ -448,6 +448,7 @@ var holdem = new Vue({
             this.player_hand = null;
             this.dealer_hand = null;
             this.game_result = null;
+            this.preflop();
         },
 
         getCCardForHandCheck : function()  {
@@ -934,6 +935,7 @@ var blackjack = new Vue({
             this.game_result = null;
             this.player_result = null;
             this.dealer_result = null;
+            this.start();
         },
         draw : function() {
             this.ctx.clearRect(0,0,1000,1000);
