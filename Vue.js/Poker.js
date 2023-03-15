@@ -730,20 +730,30 @@ var blackjack = new Vue({
                 this.ctx.fillStyle = 'yellow';
                 this.ctx.fillText(this.game_result, 20, 145);
             }
-            this.ctx.font = "15px serif";
             this.ctx.fillStyle = "white";
             if(this.player_result != null) {
-                this.ctx.fillText(this.player_result.point, this.player_deck.length * 50 + 20, 200);
+                this.ctx.font = "15px serif";
+                var y = 200;
+                if(this.player_result.title == null) {
+                    y += 15;
+                }
+                this.ctx.fillText(this.player_result.point, this.player_deck.length * 50 + 20, y);
                 if(this.player_result.title != null) {
-                    this.ctx.fillText(this.player_result.title, this.player_deck.length * 50 + 20, 230);
+                    this.ctx.font = "10px serif"
+                    this.ctx.fillText(this.player_result.title, this.player_deck.length * 50 + 20, 215);
                 }
             }
             if(this.dealer_result != null && this.game_status == 'dealer_turn') {
-                this.ctx.fillText(this.dealer_result.point, this.dealer_deck.length * 50 + 20, 100);
-                if(this.dealer_result.title != null) {
-                    this.ctx.fillText(this.dealer_result.title, this.dealer_result.length * 50 + 20, 230);
+                this.ctx.font = "15px serif";
+                var y = 100;
+                if(this.dealer_result.title == null) {
+                    y += 15;
                 }
-
+                this.ctx.fillText(this.dealer_result.point, this.dealer_deck.length * 50 + 20, y);
+                if(this.dealer_result.title != null) {
+                    this.ctx.font = "10px serif"
+                    this.ctx.fillText(this.dealer_result.title, this.dealer_deck.length * 50 + 20, 115);
+                }
             }
         },
         check:function(cards) {
@@ -774,7 +784,7 @@ var blackjack = new Vue({
                 var p = max;
             }
 
-            if(cards.length == 5 && p < 21) {
+            if(cards.length == 5 && p <= 21) {
                 return {title :"5 CARD", rank : 2, point : p}
             }
 
@@ -798,6 +808,12 @@ var blackjack = new Vue({
             this.draw();
         },
         deck(a,b) {
+            this.draw();
+        },
+        player_result(a,b) {
+            this.draw();
+        },
+        dealer_result(a,b) {
             this.draw();
         }
     },
