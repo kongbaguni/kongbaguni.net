@@ -1074,9 +1074,12 @@ var blackjack = new Vue({
             this.draw();
         },
         player_result(a,b) {
-            if(this.player_result.title != null) {
-                this.notNeedHit = true;
+            if(this.player_result != null) {
+                if(this.player_result.title != null) {
+                    this.notNeedHit = true;
+                }
             }
+            
             this.draw();
         },
         dealer_result(a,b) {
