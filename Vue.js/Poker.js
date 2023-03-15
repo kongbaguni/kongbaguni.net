@@ -1,24 +1,35 @@
 var bank = new Vue({
     data : {
-        account_value : 1000000
+        account_value : localStorage.getItem("bankMoney")
     },
     methods : {
+        //입금
         loan(money) {
-            account_value -= money;
+            account_value -= money;     
+            localStorage.setItem("bankMoney", this.account_value);
             return money;
         },
+        //출금
         deposit(money) {
             const m = wallet.takeMoney(money);
             if(m != null) {
                 account_value += m;
+                localStorage.setItem("bankMoney", this.account_value);
+            }
+        },
+        load(){
+            console.log("bank data load");
+            if(this.account_value == null) {
+                this.account_value = 100000000;
             }
         }
-    }
+    }   
 })
+bank.load();
 
 var wallet = new Vue({
     data : {
-        money : 40000,
+        money : localStorage.getItem("walletMoney"),
         lastTakeoutMoney : null,
     },
     methods : {
@@ -26,15 +37,24 @@ var wallet = new Vue({
             if(this.money - money > 0) {
                 this.money -= money;
                 lastTakeoutMoney = money;
+                localStorage.setItem("walletMoney",this.money);
                 return money;
             }            
             return null;
         },
         insertMoney(money) {            
             this.money = Number(this.money) + Number(money);
-        }        
+            localStorage.setItem("walletMoney",this.money);
+        },
+        load() {
+            if(this.money == null) {
+                this.money = 40000;
+            }
+        }
     }
 })
+
+wallet.load();
 
 var bettingBoard = new Vue({
     data : {
