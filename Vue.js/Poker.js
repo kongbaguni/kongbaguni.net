@@ -754,11 +754,15 @@ var blackjack = new Vue({
             }            
 
             var newBetting = prompt("betting",bettingMoney);
+            if(newBetting == null) {
+                return false;
+            }            
             var m = wallet.takeMoney(newBetting);
             if(m != null) {
                 bettingBoard.betting(m,"blackjack");
                 this.isBetting = true;
-            }        
+            }
+            return true;
         },
         shuffleCard : function() {     
             console.log("shuffle")   
@@ -795,6 +799,12 @@ var blackjack = new Vue({
             this.player_result = this.check(this.player_deck);
         },
         hit : function () {
+            if(!this.isBetting) {
+                if(this.betting()) {
+                    this.hit();
+                }
+                return;
+            }
             this.player_deck.push(this.deck.pop());
             const check = this.check(this.player_deck);
             this.player_result = check;
@@ -803,6 +813,13 @@ var blackjack = new Vue({
             }
         },
         stand : function() {
+            if(!this.isBetting) {
+                if(this.betting()) {
+                    this.stand();
+                }
+                return;
+            }
+
             this.game_status = "dealer_turn"
             this.dealerAction() 
         },
