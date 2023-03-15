@@ -767,7 +767,8 @@ var blackjack = new Vue({
         game_status:'ready',
         player_result:null,
         dealer_result:null,
-        game_result:null
+        game_result:null,
+        notNeedHit:false,
     },
     methods: {
         betting : function() {
@@ -935,6 +936,7 @@ var blackjack = new Vue({
             this.game_result = null;
             this.player_result = null;
             this.dealer_result = null;
+            this.notNeedHit = false;
             this.start();
         },
         draw : function() {
@@ -1022,13 +1024,38 @@ var blackjack = new Vue({
             }
           
             // ACE 카드의 값을 계산합니다.
-            for (let i = 0; i < numAces; i++) {
-              if (sum + 11 <= 21) {
-                sum += 11;
-              } else {
-                sum += 1;
-              }
-            }          
+            var aces = [];
+            switch (numAces) {
+                case 1:
+                    aces = [1,11];
+                    break;
+                case 2:
+                    // aces = [1+1,11+1,11+11];
+                    aces = [2,12,22];
+                    break;
+                case 3:
+                    // aces = [1+1+1,11+1+1,11+11+1,11+11+11];
+                    aces = [3,13,23,33];
+                    break;
+                case 4:
+                    // aces = [1+1+1+1,11+1+1+1,11+11+1+1,11+11+11+1, 11+11+11+11];
+                    aces = [4,14,24,34,44];
+                    break;                
+            }
+            aces.reverse();
+            console.log(aces);
+
+            for(let i = 0; i < aces.length; i++) {
+                if(sum + aces[i] <= 21) {
+                    sum += aces[i];
+                    console.log("sum : " + sum)
+                    return sum;
+                }
+            }
+            if(aces.length > 0) {
+                sum += aces[0];            
+            }
+          
             return sum;
           }
     }, 
@@ -1046,6 +1073,9 @@ var blackjack = new Vue({
             this.draw();
         },
         player_result(a,b) {
+            if(this.player_result.title != null) {
+                this.notNeedHit = true;
+            }
             this.draw();
         },
         dealer_result(a,b) {

@@ -69,7 +69,7 @@
             <header><h2>BlackJack</h2></header>
             <p v-if="isInitCard() == true">
                 <button v-on:click="start" v-if="game_status == 'ready'">start</button>
-                <button v-on:click="hit" v-if="game_status == 'player_turn'">hit</button>
+                <button v-on:click="hit" v-if="game_status == 'player_turn' && !notNeedHit">hit</button>
                 <button v-on:click="stand" v-if="game_status == 'player_turn'">stand</button>
                 <button v-on:click="reset" v-if="game_status != 'ready'">restart</button>
             </p>
