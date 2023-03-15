@@ -851,26 +851,34 @@ var blackjack = new Vue({
             const check = this.check(this.dealer_deck);
             this.dealer_result = check;
             if(this.player_result.rank == 0) {
-                this.game_result = this.checkGameResult();
-                bettingBoard.processResult("blackjack",this.game_result);  
+                this.dealerEndGame();
                 return;
             }
 
             if(check.title != null) {
-                this.game_result = this.checkGameResult();     
-                bettingBoard.processResult("blackjack",this.game_result);       
+                this.dealerEndGame();
                 return;
             }
-            if(this.player_result.point < check.point &&  check.point < 21) {
-                this.game_result = this.checkGameResult();          
-                bettingBoard.processResult("blackjack",this.game_result);  
+            if(this.player_result.point <= check.point &&  check.point < 21) {
+                this.dealerEndGame();
                 return;
+            }
+
+            if(check.point > 17) {
+                if(getRandomInt(0,10) < 3) {
+                    this.dealerEndGame();
+                    return ;    
+                }
             }
             
             setTimeout(() => {
                 blackjack.dealer_deck.push(this.deck.pop());
                 blackjack.dealerAction();                
             }, 1000);
+        },
+        dealerEndGame() {
+            this.game_result = this.checkGameResult();          
+            bettingBoard.processResult("blackjack",this.game_result);  
         },
 
         checkGameResult : function() {
