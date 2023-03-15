@@ -38,7 +38,7 @@ var wallet = new Vue({
 
 var bettingBoard = new Vue({
     data : {
-        data : {}
+        data : {"holdem":0,"blackjack":0}
     }, 
     methods : {
         betting(money, gameId) {
@@ -55,7 +55,7 @@ var bettingBoard = new Vue({
             return this.data[gameId]
         },
         removeBetting(gameId) {
-            this.data[gameId] = null;
+            this.data[gameId] = 0;
         },
         win(gameId) {
             const money = this.data[gameId] * 2;
