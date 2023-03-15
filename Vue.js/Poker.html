@@ -20,17 +20,35 @@
         <h1>Poker</h1>
         <article id = "poker">
             <header><h2>Poker</h2></header>
-            <canvas id="poker_canvas" width="347px" height="100px"></canvas>            
+            <canvas v-if="walletMode == false" id="poker_canvas" width="347px" height="100px"></canvas>
+            <table v-if="walletMode == true">
+                <thead>
+                    <tr>
+                        <td>type</td>
+                        <td>value</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>bank</td>
+                        <td>{{getBankMoney()}}</td>
+                    </tr>
+                    <tr>
+                        <td>wallet</td>
+                        <td>{{getWalletMoney()}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
         <article id = "holdem">
             <header><h2>Holdem</h2></header>     
             <p v-if="isInitCard() == true">
                 <button v-if="game_status == 'ready'" v-on:click = "preflop">preflop</button>  
-                <button v-if="game_status == 'preflop'" v-on:click = "flop">flop</button>              
-                <button v-if="game_status == 'flop'" v-on:click = "turn">turn</button>              
-                <button v-if="game_status == 'turn'" v-on:click = "river">river</button>    
-                <button v-if="game_status == 'river'" v-on:click = "showdown">showdown</button>    
+
+                <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click = "betting">betting</button>
+
                 <button v-if="game_status != 'ready'" v-on:click = "reset">reset</button>    
+
             </p>
             <canvas id="holdem_canvas" width="347px" height="500px"></canvas>            
         </article>

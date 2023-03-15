@@ -145,3 +145,23 @@ function checkGaweBaweBoh(me,com) {
 function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
 }
+
+function addCommas(num) {
+    // 입력받은 숫자를 문자열로 변환합니다.
+    let str = num.toString();
+    // 문자열의 길이가 3보다 작으면 그대로 반환합니다.
+    if (str.length < 3) {
+      return str;
+    }
+    // 문자열을 뒤에서부터 3자리씩 끊어서 배열에 저장합니다.
+    let arr = [];
+    for (let i = str.length - 1, j = 0; i >= 0; i--, j++) {
+      if (j % 3 === 0 && j !== 0) {
+        arr.push(',');
+      }
+      arr.push(str[i]);
+    }
+    // 배열을 뒤집어서 문자열로 합칩니다.
+    return arr.reverse().join('');
+}
+  

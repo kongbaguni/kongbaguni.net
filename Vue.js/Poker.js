@@ -1,7 +1,98 @@
+var bank = new Vue({
+    data : {
+        account_value : 1000000
+    },
+    methods : {
+        loan(money) {
+            account_value -= money;
+            return money;
+        },
+        deposit(money) {
+            const m = wallet.takeMoney(money);
+            if(m != null) {
+                account_value += m;
+            }
+        }
+    }
+})
+
+var wallet = new Vue({
+    data : {
+        money : 40000,
+        lastTakeoutMoney : null,
+    },
+    methods : {
+        takeMoney(money) {
+            if(this.money - money > 0) {
+                this.money -= money;
+                lastTakeoutMoney = money;
+                return money;
+            }            
+            return null;
+        },
+        insertMoney(money) {            
+            this.money = Number(this.money) + Number(money);
+        }        
+    }
+})
+
+var bettingBoard = new Vue({
+    data : {
+        data : {}
+    }, 
+    methods : {
+        betting(money, gameId) {
+            if(this.data[gameId] == null) {
+                this.data[gameId] = money;
+            } else {
+                this.data[gameId] = Number(this.data[gameId]) + Number(money);
+            }
+        },
+        getBetting(gameId) {
+            if(this.data[gameId] == null) {
+                return 0
+            }
+            return this.data[gameId]
+        },
+        removeBetting(gameId) {
+            this.data[gameId] = null;
+        },
+        win(gameId) {
+            const money = this.data[gameId] * 2;
+            wallet.insertMoney(money);
+            this.removeBetting(gameId);
+        },     
+        tie(gameId) {
+            const money = this.data[gameId];
+            wallet.insertMoney(money);
+            this.removeBetting(gameId);
+        },
+        lose(gameId) {
+            this.removeBetting(gameId);
+        },
+        processResult(gameId,result) {
+            switch(result) {
+                case "WIN":
+                    this.win(gameId);
+                    break;
+                case "LOSE":
+                    this.lose(gameId);
+                    break;
+                default:
+                    this.tie(gameId);
+                    break;
+            }
+        }
+
+    }
+})
 
 const poker = new Vue({
     el:'#poker',
     data:{
+        bank : bank,
+        wallet : wallet,
+        bettingBoard : bettingBoard,
         player_hand:null,
         dealer_hand:null,
         ctx:null,
@@ -65,9 +156,16 @@ const poker = new Vue({
             {type:"C", value:"Q", image:"./images/poker/CQ.svg", desc:"CQ", point:12, typepoint:1, img : new Image()},
             {type:"C", value:"K", image:"./images/poker/CK.svg", desc:"CK", point:13, typepoint:1, img : new Image()},
           ],
-          loadCount:0
+        loadCount:0,
+        walletMode:false,
     },
     methods : {
+        getWalletMoney : function() {            
+            return addCommas(this.wallet.money);
+        },
+        getBankMoney : function() {
+            return addCommas(this.bank.account_value);
+        },
         loadBackImage: function() {
             this.backImg.onload  = function() {
                 poker.ctx.drawImage(poker.backImg,265,10,40,80);
@@ -95,6 +193,9 @@ const poker = new Vue({
                     setTimeout(() => {
                         poker.loadFinish = true;    
                     }, 500);                    
+                    setTimeout(() => {
+                        poker.walletMode = true;
+                    }, 2000)
                 }
             }                
             this.loadCardImage(idx + 1);
@@ -294,6 +395,8 @@ var holdem = new Vue({
             this.checkDelarHand();
             this.game_result = this.checkGameResult();
             this.game_status = 'showdown';   
+
+            bettingBoard.processResult("holdem", this.game_result);
         },
         reset : function() {
             this.game_status = 'ready';
@@ -305,7 +408,7 @@ var holdem = new Vue({
             this.game_result = null;
         },
 
-        getCCardForHandCheck : function() {
+        getCCardForHandCheck : function()  {
             var cd = this.community_deck;
             console.log("checkPlayerHand");
             var ccards = [[cd[0],cd[1],cd[2]]];
@@ -397,7 +500,48 @@ var holdem = new Vue({
                 }
             }
             return "LOSE"
-          }
+          },
+        betting : function() {
+            var bettingMoney = 100;
+            if(wallet.lastTakeoutMoney != null) {
+                bettingMoney = wallet.lastTakeoutMoney;
+            }            
+
+            switch (this.game_status) {
+                case "preflop":
+                    var newBetting = prompt("betting",bettingMoney);
+                    var m = wallet.takeMoney(newBetting);
+                    if(m != null) {
+                        bettingBoard.betting(m,"holdem");
+                        this.flop();
+                    }
+                    break;
+                case "flop":
+                    var m = wallet.takeMoney(bettingMoney);
+                    if(m!= null) {
+                        bettingBoard.betting(m,"holdem");
+                        this.turn();
+                    }
+                    break;
+                case "turn":
+                    var m = wallet.takeMoney(bettingMoney);
+                    if(m!= null) {
+                        bettingBoard.betting(m,"holdem");
+                        this.river();
+                    }
+                    break;
+                case "river":
+                    var m = wallet.takeMoney(bettingMoney);
+                    if(m!= null) {
+                        bettingBoard.betting(m,"holdem");
+                        this.showdown();
+                    }
+                    break;                    
+                default:                     
+                    break;
+            }
+
+        }
     },
     watch : {
       deck(oldDeck, newDeck) {
@@ -822,3 +966,4 @@ var blackjack = new Vue({
         this.ctx = canvas.getContext('2d');
     }
 })
+
