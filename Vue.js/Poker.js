@@ -816,7 +816,7 @@ var blackjack = new Vue({
             }
 
             console.log("start");
-            if(this.deck.length == 0) {
+            if(this.deck.length < 4) {
                 console.log("shuffle?")
                 this.shuffleCard();
             }
