@@ -925,32 +925,7 @@ var blackjack = new Vue({
             }
         },
         check:function(cards) {
-            var min = 0;
-            var max = 0;
-            console.log(cards);
-            console.log(cards[0].point);
-            for(var i = 0; i < cards.length; i++) {                
-                console.log("i " + i);
-                var point = cards[i].point;
-                if(point == 14){
-                    min += 1;
-                    max += 10;
-                }
-                else if(point > 10) {
-                    min += 10;
-                    max += 10;
-                }
-                else {
-                    min += point;
-                    max += point;
-                }
-            }
-            console.log("min:" +min + " max:" + max);
-
-            var p = min;
-            if(max < 21) {
-                var p = max;
-            }
+            const p = this.calculateHand(cards);
 
             if(cards.length == 5 && p <= 21) {
                 return {title :"5 CARD", rank : 2, point : p}
@@ -963,7 +938,36 @@ var blackjack = new Vue({
                 return {title :"BLACK JACK", rank : 1, point : p}
             }            
             return {title:null, rank : null, point : p}
-        }
+        },
+        calculateHand:function(hand) {
+            let sum = 0;
+            let numAces = 0;
+          
+            // 카드를 한 장씩 처리합니다.
+            for (let i = 0; i < hand.length; i++) {
+              let card = hand[i];
+              let value = card.point;
+              if (value == 14) {
+                numAces++;
+                continue;
+              }
+              if (value > 10) {
+                sum += 10;
+              } else {
+                sum += parseInt(value);
+              }
+            }
+          
+            // ACE 카드의 값을 계산합니다.
+            for (let i = 0; i < numAces; i++) {
+              if (sum + 11 <= 21) {
+                sum += 11;
+              } else {
+                sum += 1;
+              }
+            }          
+            return sum;
+          }
     }, 
     watch : {
         game_status(a,b) {
