@@ -5,7 +5,7 @@ var bank = new Vue({
     methods : {
         //입금
         loan(money) {
-            account_value -= money;     
+            this.account_value  = Number(this.account_value) - Number(money);     
             localStorage.setItem("bankMoney", this.account_value);
             return money;
         },
@@ -13,7 +13,7 @@ var bank = new Vue({
         deposit(money) {
             const m = wallet.takeMoney(money);
             if(m != null) {
-                account_value += m;
+                this.account_value =  Number(this.account_value)  + Number(m);
                 localStorage.setItem("bankMoney", this.account_value);
             }
         },
@@ -34,12 +34,16 @@ var wallet = new Vue({
     },
     methods : {
         takeMoney(money) {
-            if(this.money - money > 0) {
-                this.money -= money;
-                lastTakeoutMoney = money;
+
+            if(Number(this.money) - Number(money) >= 0) {
+                this.money = Number(this.money) - Number(money);
+                this.lastTakeoutMoney = Number(money);
                 localStorage.setItem("walletMoney",this.money);
                 return money;
-            }            
+            }             
+            if(Number(this.money) < Number(money)) {
+                alert("lack of money");          
+            }
             return null;
         },
         insertMoney(money) {            
@@ -231,6 +235,24 @@ const poker = new Vue({
                 this.ctx.fillStyle = "orange";
                 this.ctx.fillText("now loading...", 10, 50);
 
+            }
+        },
+        outMoney() {
+            const m = prompt("출금",50000);
+            if(m != null) {
+                const value = this.bank.loan(m);
+                if(value != null) {
+                    this.wallet.insertMoney(value);
+                }
+            }
+        },
+        inputMoney() {
+            const m = prompt("입금", this.wallet.money);
+            if(m != null) {
+                const value = this.wallet.takeMoney(m);
+                if(value != null) {
+                    this.bank.deposit(value);
+                }
             }
         }
     },

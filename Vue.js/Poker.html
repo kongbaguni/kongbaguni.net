@@ -27,16 +27,20 @@
                         <tr>
                             <th>type</th>
                             <th>value</th>
+                            <th>action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>bank</td>
                             <td>{{getBankMoney()}}</td>
+                            <td><button v-on:click = "outMoney">출금</button></td>
                         </tr>
                         <tr>
                             <td>wallet</td>
                             <td>{{getWalletMoney()}}</td>
+                            <td><button v-on:click = "inputMoney">입급</button></td>
+                            
                         </tr>
                     </tbody>
                 </table>    
