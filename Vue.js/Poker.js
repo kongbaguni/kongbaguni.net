@@ -3,13 +3,15 @@ var bank = new Vue({
         account_value : localStorage.getItem("bankMoney")
     },
     methods : {
-        //입금
-        loan(money) {
-            this.account_value  = Number(this.account_value) - Number(money);     
-            localStorage.setItem("bankMoney", this.account_value);
-            return money;
-        },
         //출금
+        withdraw(money) {            
+            if(money < this.account_value) {
+                this.account_value  = Number(this.account_value) - Number(money);
+                wallet.insertMoney(money)
+                localStorage.setItem("bankMoney", this.account_value);
+            }
+        },
+        //입금
         deposit(money) {
             const m = wallet.takeMoney(money);
             if(m != null) {
@@ -17,6 +19,7 @@ var bank = new Vue({
                 localStorage.setItem("bankMoney", this.account_value);
             }
         },
+
         load(){
             console.log("bank data load");
             if(this.account_value == null) {
@@ -33,17 +36,18 @@ var wallet = new Vue({
         lastTakeoutMoney : null,
     },
     methods : {
-        takeMoney(money) {
-
-            if(Number(this.money) - Number(money) >= 0) {
-                this.money = Number(this.money) - Number(money);
-                this.lastTakeoutMoney = Number(money);
+        takeMoney(value) {
+            console.log("takeMoney");
+            var a =  Number(this.money) - Number(value);
+            console.log("money " + value + "wallet " + this.money + " : " + a);
+            if(a >= 0) {            
+                this.money = a;
+                this.lastTakeoutMoney = Number(value);
                 localStorage.setItem("walletMoney",this.money);
-                return money;
+                return value;
             }             
-            if(Number(this.money) < Number(money)) {
-                alert("lack of money");          
-            }
+            
+            alert("lack of money");                      
             return null;
         },
         insertMoney(money) {            
@@ -240,19 +244,13 @@ const poker = new Vue({
         outMoney() {
             const m = prompt("출금",50000);
             if(m != null) {
-                const value = this.bank.loan(m);
-                if(value != null) {
-                    this.wallet.insertMoney(value);
-                }
+                this.bank.withdraw(m);
             }
         },
         inputMoney() {
             const m = prompt("입금", this.wallet.money);
             if(m != null) {
-                const value = this.wallet.takeMoney(m);
-                if(value != null) {
-                    this.bank.deposit(value);
-                }
+                this.bank.deposit(m);
             }
         }
     },
