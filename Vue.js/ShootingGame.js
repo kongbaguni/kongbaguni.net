@@ -52,16 +52,8 @@ var gameManager = new Vue({
                         if(this.moveTo == null) {
                             return;
                         }
-                        if(this.moveVector == null) {                            
-                            const deltaX = this.moveTo.x - this.position.x;
-                            const deltaY = this.moveTo.y - this.position.y;
-                            const distnace = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                            // 이동 벡터 계산
-                            const directionX = deltaX / distnace;
-                            const directionY = deltaY / distnace;
-                            const mvX = directionX * this.speed;
-                            const mvY = directionY * this.speed;
-                            this.moveVector = {x : mvX, y: mvY}
+                        if(this.moveVector == null) {    
+                            this.moveVector = gameUtil.getMoveVector(this.position.x,this.position.y,this.moveTo.x, this.moveTo.y, this.speed);                                                 
                         }
                         else {
                             const a = this.position.x > this.moveTo.x - this.speed;
@@ -221,3 +213,18 @@ var game01 = new Vue({
         }, 5);
     }
 })
+
+
+var gameUtil = {
+    getMoveVector:function(x,y,moveX,moveY,speed) {
+        const deltaX = moveX - x;
+        const deltaY = moveY - y;
+        const distnace = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        // 이동 벡터 계산
+        const directionX = deltaX / distnace;
+        const directionY = deltaY / distnace;
+        const mvX = directionX * speed;
+        const mvY = directionY * speed;
+        return {x : mvX, y: mvY};
+    }
+}
