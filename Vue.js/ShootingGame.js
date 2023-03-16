@@ -56,14 +56,10 @@ var gameManager = new Vue({
                             if(this.position.y < this.moveTo.y) {
                                 this.position.y += this.speed;
                             }
-                        }                    
-                    },
-                    start : function() {
-                        setInterval(() => {
-                            this.update();
-                        }, 1);
+                        }
                     },
                     draw(ctx) {
+                        this.update();
                         ctx.strokeStyle = "red";
                         ctx.beginPath();                        
                         ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI);
@@ -71,7 +67,6 @@ var gameManager = new Vue({
                     }                  
                 }
             })
-            this.player.start();
         },
         shoot : function() {
             if(this.player == null) {
@@ -106,6 +101,24 @@ var gameManager = new Vue({
                 }            
             })
             this.playersShots.push(shot);
+        },
+
+        drawShot : function(ctx) {
+            for (var i = 0; i < this.playersShots.length; i ++) {                
+                let shot = this.playersShots[i];
+                if(shot.die) {
+                    this.playersShots.splice(i,1);
+                }
+            }
+            for (var i = 0; i < this.playersShots.length; i ++) {                
+                this.playersShots[i].draw(ctx);
+            }
+        },
+        draw: function(ctx) {
+            if (this.player != null) {
+                this.player.draw(ctx);
+            }
+            this.drawShot(ctx);
         }
     }
 })
@@ -125,14 +138,8 @@ var game01 = new Vue({
             this.interval++;
             let ctx = this.ctx;
             ctx.clearRect(0,0,1000,1000);
-            ctx.fillStyle = "white";
-            if (gameManager.player != null) {
-                gameManager.player.draw(ctx);
-            }
-            for (var i = 0; i < gameManager.playersShots.length; i ++) {
-                gameManager.playersShots[i].draw(ctx);
-            }
-
+            ctx.fillStyle = "white";            
+            gameManager.draw(ctx);
         },
         start : function() {
             gameManager.newGame();
@@ -158,6 +165,6 @@ var game01 = new Vue({
         this.ctx = canvas.getContext('2d');
         setInterval(() => {
             this.draw();
-        }, 1);
+        }, 5);
     }
 })
