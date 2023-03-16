@@ -53,9 +53,9 @@
             </div>
         </article>
         <article id = "holdem">
-            <header><h2>Holdem</h2></header>     
+            <header><h2>Holdem</h2></header> 
             <p v-if="isInitCard() == true">
-                <button v-if="game_status == 'ready'" v-on:click = "preflop">preflop</button>  
+                <button v-if="game_status == 'ready'" v-on:click = "preflop">start</button>  
                 <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click = "betting">betting</button>
                 <button v-if="game_status != 'ready' && game_status != 'preflop_anime'" v-on:click = "reset">restart</button>    
                 <span>betting : {{getBetting()}}</span>

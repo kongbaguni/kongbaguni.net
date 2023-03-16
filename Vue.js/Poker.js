@@ -313,14 +313,28 @@ var holdem = new Vue({
         },
         draw : function() {
             this.ctx.clearRect(0,0,1000, 1000);
+            if(this.deck.length == 0) {
+                console.log("TEXAS HOLDEM");
+                this.ctx.font = "30px serif";    
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillRect(0,0,1000,1000);
+                this.ctx.fillStyle = "green";
+                this.ctx.fillText("TEXAS HOLDEM", 20, 150, 375);                
+
+                this.ctx.fillStyle = "black";
+                this.ctx.font = "15px serif";    
+                this.ctx.fillText("prese start", 260, 200);
+            }
             this.ctx.font = "10px serif";
             var img = poker.backImg;
             console.log(img);        
             for(var i=0;i<this.deck.length; i++) {                
                 this.ctx.drawImage(img, i*2 + 10,10,20,30);
             }
-            this.ctx.fillStyle = 'white';     
-            this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
+            if(this.deck.length > 0) {
+                this.ctx.fillStyle = 'white';     
+                this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
+            }
             
             for(var i=0; i<this.dealer_deck.length; i++) {
                 var dImg = img;
@@ -617,6 +631,7 @@ var holdem = new Vue({
     mounted() {
         const canvas = document.getElementById("holdem_canvas");
         this.ctx = canvas.getContext('2d');
+        this.draw();
     }
 });
 
@@ -964,12 +979,28 @@ var blackjack = new Vue({
         },
         draw : function() {
             this.ctx.clearRect(0,0,1000,1000);
+
+            if(this.deck.length == 0) {
+                console.log("BLACK JACK");
+                this.ctx.font = "30px serif";    
+                this.ctx.fillStyle = "blue";
+                this.ctx.fillRect(0,0,1000,1000);
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillText("BLACK JACK", 20, 100, 375);                
+
+                this.ctx.fillStyle = "black";
+                this.ctx.font = "15px serif";    
+                this.ctx.fillText("prese start", 260, 200);
+            }
+
             var img = poker.backImg;
             console.log(img);        
             for(var i=0;i<this.deck.length; i++) {                
                 this.ctx.drawImage(img, i*2 + 10,10,20,30);
             }
-            this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
+            if(this.deck.length > 0) {
+                this.ctx.fillText("card length : " + this.deck.length, this.deck.length * 2 + 30,20);
+            }
 
             for(var i=0;i<this.dealer_deck.length; i++) {                
                 var image = this.dealer_deck[i].img;
@@ -1111,6 +1142,7 @@ var blackjack = new Vue({
     mounted() {
         const canvas = document.getElementById("blackjack_canvas");
         this.ctx = canvas.getContext('2d');
+        this.draw();
     }
 })
 
