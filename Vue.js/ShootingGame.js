@@ -62,6 +62,12 @@ var gameManager = new Vue({
                         setInterval(() => {
                             this.update();
                         }, 1);
+                    },
+                    draw(ctx) {
+                        ctx.strokeStyle = "red";
+                        ctx.beginPath();                        
+                        ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI);
+                        ctx.stroke();
                     }                  
                 }
             })
@@ -87,9 +93,7 @@ var game01 = new Vue({
             ctx.clearRect(0,0,1000,1000);
             ctx.fillStyle = "white";
             if (gameManager.player != null) {
-                const p = gameManager.player.position;
-
-                this.ctx.fillText("player " + p.x + " : " + p.y, p.x, p.y)
+                gameManager.player.draw(ctx);
             }
         },
         start : function() {
