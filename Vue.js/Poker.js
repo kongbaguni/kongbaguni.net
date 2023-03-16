@@ -243,7 +243,7 @@ const poker = new Vue({
                     }, 500);                    
                     setTimeout(() => {
                         poker.walletMode = true;
-                    }, 2000)
+                    }, 1000)
                 }
             }                
             this.loadCardImage(idx + 1);
@@ -1147,7 +1147,6 @@ var blackjack = new Vue({
         deck(a,b) {
             this.draw();
         },
-    watch : {      
         player_result(a,b) {
             if(this.player_result != null) {
                 if(this.player_result.title != null) {
