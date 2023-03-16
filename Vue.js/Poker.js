@@ -871,7 +871,7 @@ var blackjack = new Vue({
             this.player_result = this.check(this.player_deck);
         },
         hit : function () {
-            if(this.deck.count == 0) {
+            if(this.deck.count < 4) {
                 this.shuffleCard();
             }
             this.player_deck.push(this.deck.pop());
@@ -911,6 +911,9 @@ var blackjack = new Vue({
             }
             
             setTimeout(() => {
+                if(this.deck.count < 4) {
+                    this.shuffleCard();
+                }    
                 blackjack.dealer_deck.push(this.deck.pop());
                 blackjack.dealerAction();                
             }, 1000);
