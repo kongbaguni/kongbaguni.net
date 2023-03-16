@@ -25,3 +25,31 @@ span.jackpot {
     color: limegreen;
     font-size: 25px;
 }
+.control {
+    background: #00000055;
+    padding: 5px;
+    margin: 5px;
+    border: 4px double #995522;
+}
+
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.25);
+        opacity: 20;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 100;
+    }
+}
+
