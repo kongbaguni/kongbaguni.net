@@ -24,7 +24,7 @@
                 <button v-if="!isStartGame()" v-on:click = "start">new game</button>
             </p>
             <canvas id="game01_canvas" width="347px" height="500px"></canvas>
-            <div v-if="isStartGame()">
+            <div v-if="isStartGame()"  class="controller">
                 <table>
                     <tbody>
                         <tr>
@@ -38,6 +38,13 @@
                             <th><button v-on:click = "moveLeft">L</button></th>
                             <th><button v-on:click = "moveDown">D</button></th>
                             <th><button v-on:click = "moveRight">R</button></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><button v-on:click="shoot">S</button></td>
                         </tr>
                     </tbody>
                 </table>

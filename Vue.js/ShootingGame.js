@@ -1,9 +1,9 @@
 var gameManager = new Vue({
     data : {
         player : null,
-        playersShot : [],
+        playersShots : [],
         enemys : [],
-        enemysShot : []
+        enemysShots : []
     },
     methods : {
         newGame : function() {
@@ -39,7 +39,7 @@ var gameManager = new Vue({
                     },
                     moveDown : function() {
                         this.moveTo.y = this.position.y + this.movement;
-                    },
+                    },            
                     update : function() {
                         if(this.moveTo.x != null) {
                             if(this.position.x > this.moveTo.x) {
@@ -72,6 +72,40 @@ var gameManager = new Vue({
                 }
             })
             this.player.start();
+        },
+        shoot : function() {
+            if(this.player == null) {
+                return;
+            }
+            var shot = new Vue({
+                data : {
+                    position:{
+                        x : this.player.position.x,
+                        y : this.player.position.y,
+                    },
+                    speed: 1,
+                    die: false,
+                },    
+                methods : {
+                    update : function() {
+                        this.position.y -= this.speed;
+                        if(this.position.y < 0) {
+                            this.die = true;
+                        }
+                    },
+                    draw(ctx) {
+                        if(this.die) {
+                            return;
+                        }
+                        this.update();
+                        ctx.strokeStyle = "green";
+                        ctx.beginPath();                        
+                        ctx.arc(this.position.x, this.position.y, 5, 0, 2 * Math.PI);
+                        ctx.stroke();                        
+                    }
+                }            
+            })
+            this.playersShots.push(shot);
         }
     }
 })
@@ -95,6 +129,10 @@ var game01 = new Vue({
             if (gameManager.player != null) {
                 gameManager.player.draw(ctx);
             }
+            for (var i = 0; i < gameManager.playersShots.length; i ++) {
+                gameManager.playersShots[i].draw(ctx);
+            }
+
         },
         start : function() {
             gameManager.newGame();
@@ -110,6 +148,9 @@ var game01 = new Vue({
         },
         moveUp : function() {
             gameManager.player.moveUp();
+        },
+        shoot : function() {
+            gameManager.shoot();
         }
     },
     mounted() {
