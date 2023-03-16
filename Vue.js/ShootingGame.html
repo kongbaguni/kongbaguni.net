@@ -24,7 +24,7 @@
             <div class="controller">
                 <button v-if="!isStartGame()" v-on:click = "start">new game</button>
             </dic>
-            <div v-if="isStartGame()"  class="controller">
+            <div v-if="isStartGame()" class="controller">
                 <table>
                     <tbody>
                         <tr>
@@ -44,7 +44,7 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td><button v-on:click="shoot">S</button></td>
+                            <td><button v-on:click="shoot" v-bind:class="shotBtnClassName()">S</button></td>
                         </tr>
                     </tbody>
                 </table>

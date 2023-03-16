@@ -9,6 +9,7 @@ var gameManager = new Vue({
     data : {
         player : null,
         playersShots : [],
+        isShooting : false,
         enemys : [],
         enemysShots : []
     },
@@ -18,7 +19,7 @@ var gameManager = new Vue({
                 return;
             }
             this.player = new Vue({
-                data : {
+                data : {                    
                     point : 0,
                     life : 3,
                     position : {
@@ -75,6 +76,7 @@ var gameManager = new Vue({
                 }
             })
         },
+        // 플레이어 미사일 발사
         shoot : function() {
             if(this.player == null) {
                 return;
@@ -109,7 +111,7 @@ var gameManager = new Vue({
             })
             this.playersShots.push(shot);
         },
-
+        //플레이어 미사일 그리기
         drawShot : function(ctx) {
             for (var i = 0; i < this.playersShots.length; i ++) {                
                 let shot = this.playersShots[i];
@@ -121,14 +123,28 @@ var gameManager = new Vue({
                 this.playersShots[i].draw(ctx);
             }
         },
+        // 그리기
         draw: function(ctx) {
             if (this.player != null) {
                 this.player.draw(ctx);
             }
             this.drawShot(ctx);
+        },
+
+        shotIntervalPlayer() {
+            if(this.isShooting) {
+                this.shoot();
+            }
+        },
+
+        initInterval() {
+            setInterval(() => {
+                this.shotIntervalPlayer();
+            }, (500));
         }
-    }
+    },
 })
+gameManager.initInterval(); 
 
 
 var game01 = new Vue({
@@ -138,6 +154,12 @@ var game01 = new Vue({
         interval:0
     },
     methods : {
+        shotBtnClassName : function() {
+            if(gameManager.isShooting) {
+                return "ON";
+            }
+            return "OFF"
+        },
         isStartGame : function() {
             return gameManager.player != null
         },
@@ -164,7 +186,7 @@ var game01 = new Vue({
             gameManager.player.moveUp();
         },
         shoot : function() {
-            gameManager.shoot();
+            gameManager.isShooting = !gameManager.isShooting;
         }
     },
     mounted() {
