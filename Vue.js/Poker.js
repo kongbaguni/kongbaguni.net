@@ -24,7 +24,11 @@ var bank = new Vue({
             this.jackpot = Number(this.jackpot) + Number(money);
             localStorage.setItem("jackpot", this.jackpot);
         },
-
+        drawJackPot() {
+            alert("JackPod! " + addCommas(this.jackpot));
+            wallet.insertMoney(this.jackpot);
+            this.jackpot = 1000000;
+        },
         load(){
             console.log("bank data load");
             if(this.account_value == null) {
@@ -465,7 +469,11 @@ var holdem = new Vue({
             this.checkDelarHand();
             this.game_result = this.checkGameResult();
             this.game_status = 'showdown';   
-
+            if(this.game_result == "WIN") {
+                if(this.player_hand.rank == 8) {
+                    bank.drawJackPot();
+                }
+            }
             bettingBoard.processResult("holdem", this.game_result);
         },
         reset : function() {
