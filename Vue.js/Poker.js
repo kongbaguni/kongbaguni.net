@@ -1014,7 +1014,6 @@ var blackjack = new Vue({
             }
 
             var img = poker.backImg;
-            console.log(img);        
             for(var i=0;i<this.deck.length; i++) {                
                 this.ctx.drawImage(img, i*2 + 10,10,20,30);
             }
