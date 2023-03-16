@@ -1134,6 +1134,19 @@ var blackjack = new Vue({
             return {sum : sum, numAces : numAces};
           }
     }, 
+    watch : {
+        game_status(a,b) {
+            this.draw()
+        },
+        player_deck(a,b) {
+            this.draw();
+        },
+        dealer_deck(a,b) {
+            this.draw();
+        },
+        deck(a,b) {
+            this.draw();
+        },
     watch : {      
         player_result(a,b) {
             if(this.player_result != null) {
