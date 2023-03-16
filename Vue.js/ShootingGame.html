@@ -20,10 +20,10 @@
         <h2>Shooting Game</h2>
         <article id = "game01">
             <header><h2>01</h2></header>            
-            <p>
-                <button v-if="!isStartGame()" v-on:click = "start">new game</button>
-            </p>
             <canvas id="game01_canvas" width="347px" height="500px"></canvas>
+            <div class="controller">
+                <button v-if="!isStartGame()" v-on:click = "start">new game</button>
+            </dic>
             <div v-if="isStartGame()"  class="controller">
                 <table>
                     <tbody>
