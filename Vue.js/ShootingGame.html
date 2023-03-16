@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="Shooting Game" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+    
+        <link rel="stylesheet" type="text/css" href="../style.css"></link>
+        <link rel="stylesheet" type="text/css" href="./ShootingGmae.css"></link>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="../java.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <h2>Shooting Game</h2>
+        <article id = "game01">
+            <header><h2>01</h2></header>            
+            <p>
+                <button v-if="!isStartGame()" v-on:click = "start">new game</button>
+            </p>
+            <canvas id="game01_canvas" width="347px" height="500px"></canvas>
+            <div v-if="isStartGame()">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <button v-on:click = "moveUp">U</button>
+                            </th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th><button v-on:click = "moveLeft">L</button></th>
+                            <th><button v-on:click = "moveDown">D</button></th>
+                            <th><button v-on:click = "moveRight">R</button></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </body>
+    <script src="./ShootingGame.js"></script>
+</html>
