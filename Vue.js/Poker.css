@@ -15,3 +15,13 @@
     height: 250px;
     background: #00000033;
 }
+
+span.jackpot {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    display: block;
+    border: 2px solid green;
+    color: limegreen;
+    font-size: 25px;
+}

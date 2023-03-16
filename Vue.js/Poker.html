@@ -20,8 +20,9 @@
         <h1>Poker</h1>
         <article id = "poker">
             <header><h2>Poker</h2></header>
-            <canvas v-if="!walletMode" id="poker_canvas" width="347px" height="100px"></canvas>
+            <canvas v-if="!walletMode" id="poker_canvas" width="347px" height="100px"></canvas>            
             <div v-if="walletMode">
+                <span class="jackpot">{{getJackpot()}}</span>
                 <table>
                     <thead>
                         <tr>
@@ -39,8 +40,7 @@
                         <tr>
                             <td>wallet</td>
                             <td>{{getWalletMoney()}}</td>
-                            <td><button v-on:click = "inputMoney">입급</button></td>
-                            
+                            <td><button v-on:click = "inputMoney">입급</button></td>                            
                         </tr>
                     </tbody>
                 </table>    
@@ -56,12 +56,11 @@
             <header><h2>Holdem</h2></header>     
             <p v-if="isInitCard() == true">
                 <button v-if="game_status == 'ready'" v-on:click = "preflop">preflop</button>  
-
                 <button v-if="game_status == 'preflop' || game_status == 'flop' || game_status == 'turn' || game_status == 'river'" v-on:click = "betting">betting</button>
-
                 <button v-if="game_status != 'ready' && game_status != 'preflop_anime'" v-on:click = "reset">restart</button>    
-
+                <span>betting : {{getBetting()}}</span>
             </p>
+
             <canvas id="holdem_canvas" width="347px" height="500px"></canvas>            
         </article>
 
@@ -72,6 +71,7 @@
                 <button v-on:click="hit" v-if="game_status == 'player_turn' && !notNeedHit">hit</button>
                 <button v-on:click="stand" v-if="game_status == 'player_turn'">stand</button>
                 <button v-on:click="reset" v-if="game_status != 'ready'">restart</button>
+                <span>betting : {{getBetting()}}</span>
             </p>
             <canvas id="blackjack_canvas" width="347px" height="250px"></canvas>            
         </article>

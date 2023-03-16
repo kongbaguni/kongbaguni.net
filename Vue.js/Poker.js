@@ -1,6 +1,7 @@
 var bank = new Vue({
     data : {
-        account_value : localStorage.getItem("bankMoney")
+        account_value : localStorage.getItem("bankMoney"),
+        jackpot : localStorage.getItem("jackpot")
     },
     methods : {
         //출금
@@ -19,11 +20,18 @@ var bank = new Vue({
                 localStorage.setItem("bankMoney", this.account_value);
             }
         },
+        addJackpot(money) {
+            this.jackpot = Number(this.jackpot) + Number(money);
+            localStorage.setItem("jackpot", this.jackpot);
+        },
 
         load(){
             console.log("bank data load");
             if(this.account_value == null) {
                 this.account_value = 100000000;
+            }
+            if(this.jackpot == null) {
+                this.jackpot = 1000000;
             }
         }
     }   
@@ -96,7 +104,9 @@ var bettingBoard = new Vue({
             this.removeBetting(gameId);
         },
         lose(gameId) {
+            const money = this.data[gameId];
             this.removeBetting(gameId);
+            bank.addJackpot(money);
         },
         processResult(gameId,result) {
             switch(result) {
@@ -188,6 +198,12 @@ const poker = new Vue({
         walletMode:false,
     },
     methods : {
+        getJackpot() {
+            if(this.bank.jackpot == null) {
+                return 0;
+            }
+            return addCommas(this.bank.jackpot);
+        },
         getWalletMoney : function() {            
             return addCommas(this.wallet.money);
         },
@@ -582,6 +598,9 @@ var holdem = new Vue({
                     break;
             }
 
+        },
+        getBetting() {
+            return bettingBoard.getBetting("holdem")
         }
     },
     watch : {
@@ -769,6 +788,9 @@ var blackjack = new Vue({
         notNeedHit:false,
     },
     methods: {
+        getBetting : function() {
+            return bettingBoard.getBetting("blackjack");
+        },
         betting : function() {
             var bettingMoney = 100;
             if(wallet.lastTakeoutMoney != null) {
@@ -815,7 +837,6 @@ var blackjack = new Vue({
 
             console.log("start");
             if(this.deck.length < 4) {
-                console.log("shuffle?")
                 this.shuffleCard();
             }
             this.dealer_deck.push(this.deck.pop());
@@ -827,6 +848,9 @@ var blackjack = new Vue({
             this.player_result = this.check(this.player_deck);
         },
         hit : function () {
+            if(this.deck.count == 0) {
+                this.shuffleCard();
+            }
             this.player_deck.push(this.deck.pop());
             const check = this.check(this.player_deck);
             this.player_result = check;
