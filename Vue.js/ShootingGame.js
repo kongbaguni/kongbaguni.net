@@ -26,43 +26,54 @@ var gameManager = new Vue({
                         x : 10,
                         y : 400
                     },
-                    moveTo : {
-                        x : null,
-                        y : null
-                    },
-                    speed : 1,
+                    moveTo : null,
+                    speed : 2,
+                    moveVector : null,
                     movement : 50
                 },
                 methods : {
                     moveLeft : function() {
-                        this.moveTo.x = this.position.x - this.movement;            
-                        console.log(this.moveTo.x);
+                        this.moveVector = null;
+                        this.moveTo = { x : this.position.x - this.movement, y : this.position.y };
                     },
                     moveRight : function() {
-                        this.moveTo.x = this.position.x + this.movement;
-                        console.log(this.moveTo.x);
+                        this.moveVector = null;
+                        this.moveTo = { x : this.position.x + this.movement, y : this.position.y };
                     },
                     moveUp : function() {
-                        this.moveTo.y = this.position.y - this.movement;
+                        this.moveVector = null;
+                        this.moveTo = { x : this.position.x , y : this.position.y - this.movement};
                     },
                     moveDown : function() {
-                        this.moveTo.y = this.position.y + this.movement;
+                        this.moveVector = null;
+                        this.moveTo = { x : this.position.x, y : this.position.y + this.movement};
                     },            
                     update : function() {
-                        if(this.moveTo.x != null) {
-                            if(this.position.x > this.moveTo.x) {
-                                this.position.x -= this.speed;
-                            }
-                            if(this.position.x < this.moveTo.x) {
-                                this.position.x += this.speed;
-                            }
-                        }    
-                        if(this.moveTo.y != null) {
-                            if(this.position.y > this.moveTo.y) {
-                                this.position.y -= this.speed;
-                            }
-                            if(this.position.y < this.moveTo.y) {
-                                this.position.y += this.speed;
+                        if(this.moveTo == null) {
+                            return;
+                        }
+                        if(this.moveVector == null) {                            
+                            const deltaX = this.moveTo.x - this.position.x;
+                            const deltaY = this.moveTo.y - this.position.y;
+                            const distnace = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                            // 이동 벡터 계산
+                            const directionX = deltaX / distnace;
+                            const directionY = deltaY / distnace;
+                            const mvX = directionX * this.speed;
+                            const mvY = directionY * this.speed;
+                            this.moveVector = {x : mvX, y: mvY}
+                        }
+                        else {
+                            const a = this.position.x > this.moveTo.x - this.speed;
+                            const b = this.position.x < this.moveTo.x + this.speed;
+                            const c = this.position.y > this.moveTo.y - this.speed;
+                            const d = this.position.y < this.moveTo.y + this.speed; 
+                            if(a & b && c & d) {
+                                this.moveVector = null;
+                                this.moveTo = null;
+                            } else {
+                                this.position.x += this.moveVector.x;
+                                this.position.y += this.moveVector.y;
                             }
                         }
                     },
@@ -140,7 +151,7 @@ var gameManager = new Vue({
         initInterval() {
             setInterval(() => {
                 this.shotIntervalPlayer();
-            }, (500));
+            }, (100));
         }
     },
 })
@@ -200,8 +211,8 @@ var game01 = new Vue({
             let y = event.changedTouches[0].clientY - rect.y;
             console.log("x : "+ x + " y :" + y);
             if(gameManager.player != null) {
-                gameManager.player.moveTo.x = x;
-                gameManager.player.moveTo.y = y;
+                gameManager.player.moveVector = null;
+                gameManager.player.moveTo = {x : x, y : y};
             }
         });
 
