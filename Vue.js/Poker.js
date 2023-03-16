@@ -915,7 +915,12 @@ var blackjack = new Vue({
             }, 1000);
         },
         dealerEndGame() {
-            this.game_result = this.checkGameResult();          
+            this.game_result = this.checkGameResult();  
+            if(this.game_result == "WIN") {
+                if(this.player_result.jackpod) {
+                    bank.drawJackPot();
+                }
+            }        
             bettingBoard.processResult("blackjack",this.game_result);  
         },
 
@@ -1052,19 +1057,20 @@ var blackjack = new Vue({
             }
         },
         check:function(cards) {
-            const p = this.calculateHand(cards);
+            const cal = this.calculateHand(cards);
+            const p = cal.sum;
 
             if(cards.length == 5 && p <= 21) {
-                return {title :"5 CARD", rank : 2, point : p}
+                return {title :"5 CARD", rank : 2, point : p, jackpod : cal.numAces == 4}
             }
 
             if (p > 21) {
-                return {title :"BURST", rank : 0, point : p}
+                return {title :"BURST", rank : 0, point : p, jackpod : false}
             }
             if (p == 21) {
-                return {title :"BLACK JACK", rank : 1, point : p}
+                return {title :"BLACK JACK", rank : 1, point : p, jackpod : false}
             }            
-            return {title:null, rank : null, point : p}
+            return {title:null, rank : null, point : p, jackpod : false}
         },
         calculateHand:function(hand) {
             let sum = 0;
@@ -1118,7 +1124,7 @@ var blackjack = new Vue({
                 sum += aces[0];            
             }
           
-            return sum;
+            return {sum : sum, numAces : numAces};
           }
     }, 
     watch : {
