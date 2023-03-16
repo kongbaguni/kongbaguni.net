@@ -640,6 +640,9 @@ var holdem = new Vue({
         const canvas = document.getElementById("holdem_canvas");
         this.ctx = canvas.getContext('2d');
         this.draw();
+    },
+    updated() {
+        this.draw();
     }
 });
 
@@ -1131,36 +1134,27 @@ var blackjack = new Vue({
             return {sum : sum, numAces : numAces};
           }
     }, 
-    watch : {
-        game_status(a,b) {
-            this.draw()
-        },
-        player_deck(a,b) {
-            this.draw();
-        },
-        dealer_deck(a,b) {
-            this.draw();
-        },
-        deck(a,b) {
-            this.draw();
-        },
+    watch : {      
         player_result(a,b) {
             if(this.player_result != null) {
                 if(this.player_result.title != null) {
                     this.notNeedHit = true;
                 }
-            }
-            
-            this.draw();
-        },
-        dealer_result(a,b) {
-            this.draw();
+            }            
         }
     },
+    updated() {
+        console.log("lifecycle test : balckjack updated()");
+        this.draw();
+    },
     mounted() {
+        console.log("lifecycle test : balckjack mounted()");
         const canvas = document.getElementById("blackjack_canvas");
         this.ctx = canvas.getContext('2d');
         this.draw();
+    },
+    unmounted() {
+        console.log("lifecycle test : balckjack unmouted()");        
     }
 })
 
