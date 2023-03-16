@@ -192,6 +192,19 @@ var game01 = new Vue({
     mounted() {
         const canvas = document.getElementById("game01_canvas");
         this.ctx = canvas.getContext('2d');
+        canvas.addEventListener("touchstart",function(event){
+            console.log(event);
+            let rect = canvas.getBoundingClientRect();
+            console.log(rect);
+            let x = event.changedTouches[0].clientX - rect.x;
+            let y = event.changedTouches[0].clientY - rect.y;
+            console.log("x : "+ x + " y :" + y);
+            if(gameManager.player != null) {
+                gameManager.player.moveTo.x = x;
+                gameManager.player.moveTo.y = y;
+            }
+        });
+
         setInterval(() => {
             this.draw();
         }, 5);
