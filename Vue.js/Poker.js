@@ -573,7 +573,7 @@ var holdem = new Vue({
                             return "WIN"
                         }
                         if(p.kiker.point == d.kiker.point) {
-                            return "TIED"
+                            return "TIE"
                         }
                     }
                 }
