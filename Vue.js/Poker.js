@@ -897,12 +897,13 @@ var blackjack = new Vue({
                 this.dealerEndGame();
                 return;
             }
+
             if(this.player_result.point <= check.point &&  check.point < 21) {
                 this.dealerEndGame();
                 return;
             }
 
-            if(check.point > 17) {
+            if(check.point > 17 && check.numAce == 0) {
                 if(getRandomInt(0,10) < 3) {
                     this.dealerEndGame();
                     return ;    
@@ -1061,16 +1062,16 @@ var blackjack = new Vue({
             const p = cal.sum;
 
             if(cards.length == 5 && p <= 21) {
-                return {title :"5 CARD", rank : 2, point : p, jackpod : cal.numAces == 4}
+                return {title :"5 CARD", rank : 2, point : p, numAce : cal.numAces ,jackpod : cal.numAces == 4}
             }
 
             if (p > 21) {
-                return {title :"BURST", rank : 0, point : p, jackpod : false}
+                return {title :"BURST", rank : 0, point : p, numAce : cal.numAces ,jackpod : false}
             }
             if (p == 21) {
-                return {title :"BLACK JACK", rank : 1, point : p, jackpod : false}
+                return {title :"BLACK JACK", rank : 1, point : p, numAce : cal.numAces ,jackpod : false}
             }            
-            return {title:null, rank : null, point : p, jackpod : false}
+            return {title:null, rank : null, point : p, numAce : cal.numAces ,jackpod : false}
         },
         calculateHand:function(hand) {
             let sum = 0;
@@ -1117,7 +1118,7 @@ var blackjack = new Vue({
                 if(sum + aces[i] <= 21) {
                     sum += aces[i];
                     console.log("sum : " + sum)
-                    return sum;
+                    return {sum : sum, numAces : numAces};
                 }
             }
             if(aces.length > 0) {
