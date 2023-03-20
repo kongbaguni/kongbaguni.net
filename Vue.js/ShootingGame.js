@@ -201,6 +201,9 @@ var gameManager = new Vue({
             }, 5000);
         }, 
         makeEnemy() {
+            if(this.player == null) {
+                return 
+            }
             let enemy = new Vue({
                 data:{
                     die : false,
