@@ -132,6 +132,15 @@ var gameManager = new Vue({
                 this.player.draw(ctx);
             }
             this.drawShot(ctx);
+            for(var i=0; i < this.enemys.length; i++) {
+                let enemy = this.enemys[i];
+                if(enemy.die) {
+                    this.enemys.splice(i,1);
+                }
+            }
+            for(var i=0; i < this.enemys.length; i++) {
+                this.enemys[i].draw(ctx);
+            }
         },
 
         shotIntervalPlayer() {
@@ -140,10 +149,77 @@ var gameManager = new Vue({
             }
         },
 
+        makeIntervalEnemy() {
+          this.makeEnemy();  
+        },
+
         initInterval() {
             setInterval(() => {
                 this.shotIntervalPlayer();
             }, (100));
+            setInterval(() => {
+                this.makeIntervalEnemy();
+            }, 5000);
+        }, 
+        makeEnemy() {
+            let enemy = new Vue({
+                data:{
+                    die : false,
+                    inAtteck : false,
+                    position:{
+                        x : getRandomInt(50,300),
+                        y : -50
+                    },
+                    HP : getRandomInt(1,50),
+                    size : 20
+                },
+                methods:{
+                    update() {
+                        if(this.HP <= 0) {
+                            this.size += 1;
+                            return 
+                        }
+                        this.position.y += 0.1;
+                        if(this.position.y > 800) {
+                            die = true;
+                        }
+                        for(var i = 0; i < gameManager.playersShots.length; i ++) {
+                            var shot = gameManager.playersShots[i];
+                            var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
+                            if(distance < 20) {
+                                this.HP -= 1;
+                                shot.die = true;
+                                if(this.HP <= 0) {
+                                    setTimeout(() => {
+                                        this.die = true;
+                                    }, 500);                  
+                                }              
+                                this.inAtteck = true;
+                                setTimeout(() => {
+                                    this.inAtteck = false;
+                                }, 500);              
+                            }
+                        }
+                    },
+                    draw(ctx) {
+                        this.update();
+                        ctx.strokeStyle = "orange";
+                        if(this.inAtteck) {
+                            ctx.strokeStyle = "red";
+                        }
+                        if(this.HP <=0) {
+                            ctx.strokeStyle = "white";
+                        }
+                        ctx.beginPath();                        
+                        ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                        ctx.stroke();
+                        if(this.HP > 0){
+                            ctx.fillText(this.HP,this.position.x - 10, this.position.y);
+                        }
+                    }
+                }
+            })
+            this.enemys.push(enemy);
         }
     },
 })
@@ -226,5 +302,10 @@ var gameUtil = {
         const mvX = directionX * speed;
         const mvY = directionY * speed;
         return {x : mvX, y: mvY};
+    },
+    getDistance:function(x1,y1,x2,y2) {
+        let distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+        return distance;
     }
+    
 }
