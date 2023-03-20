@@ -15,6 +15,15 @@ var gameManager = new Vue({
         point : 0,
     },
     methods : {
+        restart : function() {
+            this.point = 0;
+            this.enemy = [];
+            this.enemysShots = [];
+            this.player = null;
+            this.playersShots = [];
+            this.isShooting = true;
+            this.newGame();
+        },
         newGame : function() {
             if(this.player != null) {
                 return;
@@ -31,7 +40,9 @@ var gameManager = new Vue({
                     moveTo : null,
                     speed : 2,
                     moveVector : null,
-                    movement : 50
+                    movement : 50,
+                    inDamage : false,
+                    size : 10,
                 },
                 methods : {
                     moveLeft : function() {
@@ -52,6 +63,7 @@ var gameManager = new Vue({
                     },            
                     update : function() {
                         if(this.die) {
+                            this.size +=1;
                             return;
                         }
                         if(this.moveTo == null) {
@@ -77,11 +89,13 @@ var gameManager = new Vue({
                     draw(ctx) {
                         this.update();
                         ctx.strokeStyle = "white";
-                        if(this.die) {
+                        if(this.inDamage == true || this.die == true ) {
                             ctx.strokeStyle = "red";
+                            this.inDamage = false;
                         }
+                        
                         ctx.beginPath();                        
-                        ctx.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI);
+                        ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
                         ctx.stroke();     
                         
                         if(this.HP > 0) {
@@ -100,6 +114,9 @@ var gameManager = new Vue({
                    HP(a,b) {
                     if(this.HP <= 0) {
                         this.die = true;
+                    }
+                    if(a != b) {
+                        this.inDamage = true;                                              
                     }
                    } 
                 }
@@ -221,6 +238,9 @@ var gameManager = new Vue({
                             this.size += 1;
                             return 
                         }
+                        if(gameManager.player == null) {
+                            return 
+                        }
                         this.position.y += 0.1;
                         if(this.position.y > 800) {
                             die = true;
@@ -287,11 +307,19 @@ var gameManager = new Vue({
                                             this.die = true;
                                             return;
                                         }
+                                        if(gameManager.player == null) {
+                                            return;
+                                        }
                                         const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
                                         if (distance  < 10 && gameManager.player.die == false) {
                                             this.die = true;
                                             gameManager.player.HP -= 1;
-                                        }                                    
+                                        }                              
+                                        if(gameManager.player.HP <= 0) {
+                                            setTimeout(() => {
+                                                gameManager.player = null;
+                                            }, 5000);
+                                        }                                              
                                     },
                                     draw : function(ctx) {
                                         this.update();                                        
@@ -317,7 +345,8 @@ var game01 = new Vue({
     el:"#game01",
     data : {
         ctx:null,
-        interval:0
+        interval:0,
+        gameOver:false,
     },
     methods : {
         shotBtnClassName : function() {
@@ -327,7 +356,7 @@ var game01 = new Vue({
             return "OFF"
         },
         isStartGame : function() {
-            return gameManager.player != null
+            return gameManager.player != null 
         },
         draw : function() {
             this.interval++;
@@ -335,8 +364,18 @@ var game01 = new Vue({
             ctx.clearRect(0,0,1000,1000);
             ctx.fillStyle = "white";            
             gameManager.draw(ctx);
+            if(gameManager.player != null) {
+                if(gameManager.player.HP <= 0) {
+                    this.gameOver = true 
+                }
+            }
+        },
+        restart : function() {
+            this.gameOver = false ;
+            gameManager.restart();
         },
         start : function() {
+            this.gameOver = false ;
             gameManager.newGame();
         },
         moveLeft : function() {
@@ -377,6 +416,7 @@ var game01 = new Vue({
 
 var gameUtil = {
     count:0,
+    lastPlayerPosiont : { x : 0, y : 0},
     getMoveVector:function(x,y,moveX,moveY,speed) {
         const deltaX = moveX - x;
         const deltaY = moveY - y;
@@ -393,6 +433,9 @@ var gameUtil = {
         return distance;
     },
     getMisailPettern:function(position) {
+        if(gameManager.player != null) {
+            this.lastPlayerPosiont = gameManager.player.position;
+        }
         const data = [{
             color : "orange",
             vectors : [
@@ -422,7 +465,7 @@ var gameUtil = {
         {
             color: "yellow",
             vectors : [
-                this.getMoveVector(position.x,position.y, gameManager.player.position.x, gameManager.player.position.y, getRandomInt(1,3)),
+                this.getMoveVector(position.x,position.y, this.lastPlayerPosiont.x, this.lastPlayerPosiont.y, getRandomInt(1,3)),
             ]
         }            
         ]

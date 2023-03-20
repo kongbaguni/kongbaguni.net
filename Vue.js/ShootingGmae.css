@@ -21,3 +21,9 @@
     background: yellow;
     border: 2px solid yellow;
 }
+
+p.gameOver {
+    text-align: center;
+    color:lime;
+    font-size: 30px;
+}
