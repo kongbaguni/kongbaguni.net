@@ -21,11 +21,12 @@ var gameManager = new Vue({
             this.player = new Vue({
                 data : {                    
                     point : 0,
-                    life : 3,
+                    HP : 100,
                     position : {
                         x : 10,
                         y : 400
                     },
+                    die : false,
                     moveTo : null,
                     speed : 2,
                     moveVector : null,
@@ -49,6 +50,9 @@ var gameManager = new Vue({
                         this.moveTo = { x : this.position.x, y : this.position.y + this.movement};
                     },            
                     update : function() {
+                        if(this.die) {
+                            return;
+                        }
                         if(this.moveTo == null) {
                             return;
                         }
@@ -71,17 +75,41 @@ var gameManager = new Vue({
                     },
                     draw(ctx) {
                         this.update();
-                        ctx.strokeStyle = "red";
+                        ctx.strokeStyle = "white";
+                        if(this.die) {
+                            ctx.strokeStyle = "red";
+                        }
                         ctx.beginPath();                        
-                        ctx.arc(this.position.x, this.position.y, 20, 0, 2 * Math.PI);
-                        ctx.stroke();
+                        ctx.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI);
+                        ctx.stroke();     
+                        
+                        if(this.HP > 0) {
+                            const hpx = this.position.x - 10;
+                            const hpy = this.position.y + 12;
+                            const hpw = this.HP / 5;
+                            ctx.fillStyle = "red";
+                            ctx.fillRect(hpx,hpy,20,2);
+                            ctx.fillStyle = "orange";
+                            ctx.fillRect(hpx,hpy,hpw,2); 
+                                                              
+                        }
                     }                  
+                },
+                watch : {
+                   HP(a,b) {
+                    if(this.HP <= 0) {
+                        this.die = true;
+                    }
+                   } 
                 }
             })
         },
         // 플레이어 미사일 발사
         shoot : function() {
             if(this.player == null) {
+                return;
+            }
+            if(this.player.die) {
                 return;
             }
             var shot = new Vue({
@@ -105,9 +133,9 @@ var gameManager = new Vue({
                             return;
                         }
                         this.update();
-                        ctx.strokeStyle = "green";
+                        ctx.fillStyle = "green";
                         ctx.beginPath();                        
-                        ctx.arc(this.position.x, this.position.y, 5, 0, 2 * Math.PI);
+                        ctx.fillRect(this.position.x - 2.5, this.position.y - 2.5, 5,5);
                         ctx.stroke();                        
                     }
                 }            
@@ -141,6 +169,15 @@ var gameManager = new Vue({
             for(var i=0; i < this.enemys.length; i++) {
                 this.enemys[i].draw(ctx);
             }
+
+            for(var i=0; i< this.enemysShots.length; i++) {
+                if(this.enemysShots[i].die) {
+                    this.enemysShots.splice(i,1);
+                }
+            }
+            for(var i=0; i<this.enemysShots.length; i++) {
+                this.enemysShots[i].draw(ctx);
+            }        
         },
 
         shotIntervalPlayer() {
@@ -200,6 +237,9 @@ var gameManager = new Vue({
                                 }, 500);              
                             }
                         }
+                        if( Math.ceil(this.position.y) % 20 == 0) {
+                            this.makeShot();
+                        }
                     },
                     draw(ctx) {
                         this.update();
@@ -216,10 +256,60 @@ var gameManager = new Vue({
                         if(this.HP > 0){
                             ctx.fillText(this.HP,this.position.x - 10, this.position.y);
                         }
+                    },
+                    makeShot() {
+                        if(gameManager.enemysShots.length > 200) {
+                            return;
+                        }
+                        console.log("make Enemy SHot!!!");
+                        const vectors = [
+                            {x:-1,y:1},
+                            {x:0,y:1.5},
+                            {x:1,y:1},
+                            {x:-1.5,y:0},
+                            {x:1.5,y:0},
+                            {x:-1,y:-1},
+                            {x:0,y:-1.5},
+                            {x:1,y:-1},
+                        ]
+                        for(i=0; i< vectors.length; i++) {
+                            var shot = new Vue ({
+                                data : {
+                                    die : false,
+                                    position : {
+                                        x : this.position.x,
+                                        y : this.position.y
+                                    },
+                                    vector : vectors[i],
+                                },
+                                methods : {
+                                    update : function() {
+                                        this.position.x += this.vector.x;
+                                        this.position.y += this.vector.y;
+                                        if(this.position.x < -10 || this.position.x > 380 || this.position.y < -10 || this.position.y > 700) {
+                                            this.die = true;
+                                            return;
+                                        }
+                                        const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
+                                        if (distance  < 10 && gameManager.player.die == false) {
+                                            this.die = true;
+                                            gameManager.player.HP -= 1;
+                                        }                                    
+                                    },
+                                    draw : function(ctx) {
+                                        this.update();                                        
+                                        ctx.fillStyle = "orange";
+                                        ctx.fillRect(this.position.x - 2.5, this.position.y - 2.5, 5,5);
+                                    }    
+                                }
+                            })                                                                                        
+                            gameManager.enemysShots.push(shot);
+                        }
                     }
                 }
             })
             this.enemys.push(enemy);
+            
         }
     },
 })
