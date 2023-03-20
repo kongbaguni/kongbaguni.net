@@ -13,6 +13,7 @@ var gameManager = new Vue({
         enemys : [],
         enemysShots : [],
         point : 0,
+        combo : 0,
     },
     methods : {
         restart : function() {
@@ -144,6 +145,11 @@ var gameManager = new Vue({
                         this.position.y -= this.speed;
                         if(this.position.y < 0) {
                             this.die = true;
+                            gameManager.combo *= 0.5;
+                            gameManager.combo = Math.ceil(gameManager.combo);
+                            if(gameManager.combo < 0) {
+                                gameManager.combo = 0;
+                            }
                         }
                     },
                     draw(ctx) {
@@ -174,7 +180,7 @@ var gameManager = new Vue({
         },
         // 그리기
         draw: function(ctx) {
-            ctx.fillText("point : " + this.point, 5,10);
+            ctx.fillText("point : " + addCommas(this.point) + " combo : " + this.combo, 5,10);
             if (this.player != null) {
                 this.player.draw(ctx);
             }
@@ -250,12 +256,13 @@ var gameManager = new Vue({
                             var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                             if(distance < 20) {
                                 this.HP -= 1;
-                                gameManager.point += 1;
+                                gameManager.point += 1 * (gameManager.combo + 1);
                                 shot.die = true;
                                 if(this.HP <= 0) {
                                     setTimeout(() => {
                                         this.die = true;
-                                    }, 500);                  
+                                    }, 500);      
+                                    gameManager.combo += 1;            
                                 }              
                                 this.inAtteck = true;
                                 setTimeout(() => {
