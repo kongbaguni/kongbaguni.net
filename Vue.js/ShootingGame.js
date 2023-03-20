@@ -261,17 +261,8 @@ var gameManager = new Vue({
                         if(gameManager.enemysShots.length > 200) {
                             return;
                         }
-                        console.log("make Enemy SHot!!!");
-                        const vectors = [
-                            {x:-1,y:1},
-                            {x:0,y:1.5},
-                            {x:1,y:1},
-                            {x:-1.5,y:0},
-                            {x:1.5,y:0},
-                            {x:-1,y:-1},
-                            {x:0,y:-1.5},
-                            {x:1,y:-1},
-                        ]
+                        const data = gameUtil.getMisailPettern(this.position);
+                        const vectors = data.vectors;
                         for(i=0; i< vectors.length; i++) {
                             var shot = new Vue ({
                                 data : {
@@ -298,7 +289,7 @@ var gameManager = new Vue({
                                     },
                                     draw : function(ctx) {
                                         this.update();                                        
-                                        ctx.fillStyle = "orange";
+                                        ctx.fillStyle = data.color;
                                         ctx.fillRect(this.position.x - 2.5, this.position.y - 2.5, 5,5);
                                     }    
                                 }
@@ -362,12 +353,9 @@ var game01 = new Vue({
         const canvas = document.getElementById("game01_canvas");
         this.ctx = canvas.getContext('2d');
         canvas.addEventListener("touchstart",function(event){
-            console.log(event);
             let rect = canvas.getBoundingClientRect();
-            console.log(rect);
             let x = event.changedTouches[0].clientX - rect.x;
             let y = event.changedTouches[0].clientY - rect.y;
-            console.log("x : "+ x + " y :" + y);
             if(gameManager.player != null) {
                 gameManager.player.moveVector = null;
                 gameManager.player.moveTo = {x : x, y : y};
@@ -382,6 +370,7 @@ var game01 = new Vue({
 
 
 var gameUtil = {
+    count:0,
     getMoveVector:function(x,y,moveX,moveY,speed) {
         const deltaX = moveX - x;
         const deltaY = moveY - y;
@@ -396,6 +385,43 @@ var gameUtil = {
     getDistance:function(x1,y1,x2,y2) {
         let distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
         return distance;
+    },
+    getMisailPettern:function(position) {
+        const data = [{
+            color : "orange",
+            vectors : [
+                {x:-1,y:1},
+                {x:0,y:1.5},
+                {x:1,y:1},
+                {x:-1.5,y:0},
+                {x:1.5,y:0},
+                {x:-1,y:-1},
+                {x:0,y:-1.5},
+                {x:1,y:-1},
+            ],
+        }, 
+        {
+            color : "red",
+            vectors : [
+                {x:-1.5,y:-0.5},
+                {x:1.5,y:-0.5},
+                {x:-1.5,y:+0.5},
+                {x:1.5,y:+0.5},
+                {x:-0.5,y:-1.5},
+                {x:0.5,y:-1.5},
+                {x:-0.5,y:+1.5},
+                {x:0.5,y:+1.5},
+            ]            
+        },
+        {
+            color: "yellow",
+            vectors : [
+                this.getMoveVector(position.x,position.y, gameManager.player.position.x, gameManager.player.position.y, getRandomInt(1,3)),
+            ]
+        }            
+        ]
+        this.count += 0.05;
+        return data[Math.ceil(this.count) % data.length];
     }
     
 }
