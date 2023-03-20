@@ -9,9 +9,10 @@ var gameManager = new Vue({
     data : {
         player : null,
         playersShots : [],
-        isShooting : false,
+        isShooting : true,
         enemys : [],
-        enemysShots : []
+        enemysShots : [],
+        point : 0,
     },
     methods : {
         newGame : function() {
@@ -23,7 +24,7 @@ var gameManager = new Vue({
                     point : 0,
                     HP : 100,
                     position : {
-                        x : 10,
+                        x : 180,
                         y : 400
                     },
                     die : false,
@@ -156,6 +157,7 @@ var gameManager = new Vue({
         },
         // 그리기
         draw: function(ctx) {
+            ctx.fillText("point : " + this.point, 5,10);
             if (this.player != null) {
                 this.player.draw(ctx);
             }
@@ -225,6 +227,7 @@ var gameManager = new Vue({
                             var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                             if(distance < 20) {
                                 this.HP -= 1;
+                                gameManager.point += 1;
                                 shot.die = true;
                                 if(this.HP <= 0) {
                                     setTimeout(() => {
