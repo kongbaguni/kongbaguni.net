@@ -133,7 +133,7 @@ var gameManager = new Vue({
             }, (100));
             setInterval(() => {
                 this.makeIntervalEnemy();
-            }, 5000);
+            }, 2000);
         }, 
         makeEnemy() {
             if(this.player == null) {
@@ -154,6 +154,7 @@ var game01 = new Vue({
         interval:0,
         gameOver:false,
         lastTouchPoint:null,
+        mouseDown:false
     },
     methods : {
         shotBtnClassName : function() {
@@ -199,21 +200,19 @@ var game01 = new Vue({
         },
         shoot : function() {
             gameManager.isShooting = !gameManager.isShooting;
-        }
-    },
-    mounted() {
-        const canvas = document.getElementById("game01_canvas");
-        this.ctx = canvas.getContext('2d');
-        canvas.addEventListener("touchstart",function(event){
+        },
+        touchstart(touchPoint) {
+            const canvas = document.getElementById("game01_canvas");
             let rect = canvas.getBoundingClientRect();
-            let x = event.changedTouches[0].clientX - rect.x;
-            let y = event.changedTouches[0].clientY - rect.y;
+            let x = touchPoint.x - rect.x;
+            let y = touchPoint.y - rect.y;
             this.lastTouchPoint = {x : x, y : y};
-        });
-        canvas.addEventListener("touchmove",function(event) {
+        },
+        touchmove(touchPoint){
+            const canvas = document.getElementById("game01_canvas");
             let rect = canvas.getBoundingClientRect();
-            let x = event.changedTouches[0].clientX - rect.x;
-            let y = event.changedTouches[0].clientY - rect.y;
+            let x = touchPoint.x - rect.x;
+            let y = touchPoint.y - rect.y;
             if(this.lastTouchPoint!= null && gameManager.player != null) {
                 const lp =this.lastTouchPoint;
                 const nx = x - lp.x;
@@ -223,13 +222,41 @@ var game01 = new Vue({
                 gameManager.player.position.y += ny;                
             }
             this.lastTouchPoint = {x : x, y : y};
+        },
+        touchend(touchPoint) {
+            const canvas = document.getElementById("game01_canvas");
+            let rect = canvas.getBoundingClientRect();
+            let x = touchPoint.x - rect.x;
+            let y = touchPoint.y - rect.y;
+            this.lastTouchPoint = null
+        }
+    },
+    mounted() {
+        const canvas = document.getElementById("game01_canvas");
+        this.ctx = canvas.getContext('2d');
+        canvas.addEventListener("touchstart",function(event){
+            game01.touchstart({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});
+        });
+        canvas.addEventListener("touchmove",function(event) {
+            game01.touchmove({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});  
         });
         canvas.addEventListener("touchend", function(event) {
-            let rect = canvas.getBoundingClientRect();
-            let x = event.changedTouches[0].clientX - rect.x;
-            let y = event.changedTouches[0].clientY - rect.y;
-            this.lastTouchPoint = null
+            game01.touchend({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});
         });
+        canvas.addEventListener("mousedown",function(event){
+            game01.touchstart({x:event.clientX, y:event.clientY});
+            game01.mouseDown = true;
+        });
+        canvas.addEventListener("mousemove",function(event) {
+            if(game01.mouseDown) {
+                game01.touchmove({x:event.clientX, y:event.clientY});  
+            }
+        });
+        canvas.addEventListener("mouseup", function(event) {
+            game01.mouseDown = false;
+            game01.touchend({x:event.clientX, y:event.clientY});
+        });
+        
 
 
         setInterval(() => {
@@ -250,7 +277,7 @@ var gameUtil = {
                 position : targetPosition,
                 vector : {x:0,y:1},
                 size : 10,
-                speed : 0.1,
+                speed : 1,
                 fireCount : 0,
                 point : getRandomInt(10,50),
                 itemType : 0, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
@@ -272,13 +299,14 @@ var gameUtil = {
                     const pp = gameManager.player.position;
                     const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);
                     if(distance >= 150) {
-                        this.speed = 0.1;
+                        this.speed = 0.9;
                     }
                     if(this.position.y > 450 || this.position.y < 50 || this.position.x < 50 || this.position.x > 360) {
                         this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
-                    }
-                    if(distance < 80) {
                         this.speed = 1;
+                    }
+                    if(distance < 150) {
+                        this.speed = 1.5;
                         this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);                        
                     }                    
                     
@@ -308,7 +336,7 @@ var gameUtil = {
                     this.update();
                     ctx.font = (this.fireCount + 30) + "px Gill Sans";             
                     ctx.fillStyle = "blue"
-                    if(this.speed > 0.5) {
+                    if(this.speed > 1.0) {
                         ctx.fillStyle = "green";
                     }
                     ctx.fillText(text,this.position.x, this.position.y);
@@ -558,8 +586,8 @@ var gameUtil = {
         return new Vue({
             data : {                    
                 point : 0,
-                HP : 100,
-                HP_MAX : 100,
+                HP : 20,
+                HP_MAX : 20,
                 position : {
                     x : 180,
                     y : 400
@@ -634,7 +662,7 @@ var gameUtil = {
                     if(this.HP > 0) {
                         const hpx = this.position.x - 10;
                         const hpy = this.position.y + 12;
-                        const hpw = this.HP / 5;
+                        const hpw = this.HP / this.HP_MAX * 20;
                         ctx.fillStyle = "red";
                         ctx.fillRect(hpx,hpy,20,2);
                         ctx.fillStyle = "orange";
