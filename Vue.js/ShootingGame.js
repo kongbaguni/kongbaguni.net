@@ -33,6 +33,15 @@ var gameManager = new Vue({
             }
             this.player = gameUtil.makePlayer()
         },
+        powerup : function() {
+            this.player.attack += 1;
+            if(this.player.attack > this.player.attack_MAX) {
+                this.player.attack = this.player.attack_MAX;
+            }
+        },
+        powerdown : function() {
+            this.player.attack = 1;
+        },
         // 플레이어 미사일 발사
         shoot : function() {
             if(this.player == null) {
@@ -184,18 +193,12 @@ var game01 = new Vue({
             let rect = canvas.getBoundingClientRect();
             let x = event.changedTouches[0].clientX - rect.x;
             let y = event.changedTouches[0].clientY - rect.y;
-            // if(gameManager.player != null) {
-            //     gameManager.player.moveVector = null;
-            //     gameManager.player.moveTo = {x : x, y : y};
-            // }
-            console.log("touchStart x:" + x + " y:" + y);
             this.lastTouchPoint = {x : x, y : y};
         });
         canvas.addEventListener("touchmove",function(event) {
             let rect = canvas.getBoundingClientRect();
             let x = event.changedTouches[0].clientX - rect.x;
             let y = event.changedTouches[0].clientY - rect.y;
-            console.log("touchmove x:" + x + " y:" + y);
             if(this.lastTouchPoint!= null && gameManager.player != null) {
                 const lp =this.lastTouchPoint;
                 const nx = x - lp.x;
@@ -210,7 +213,6 @@ var game01 = new Vue({
             let rect = canvas.getBoundingClientRect();
             let x = event.changedTouches[0].clientX - rect.x;
             let y = event.changedTouches[0].clientY - rect.y;
-            console.log("touchend x:" + x + " y:" + y);
             this.lastTouchPoint = null
         });
 
@@ -224,6 +226,7 @@ var game01 = new Vue({
 
 var gameUtil = {
     count:0,
+    dropItemCount:0,
     lastPlayerPosiont : { x : 0, y : 0},
     makeDropItem(targetPosition) {
         var item = new Vue({
@@ -235,10 +238,17 @@ var gameUtil = {
                 speed : 0.1,
                 fireCount : 0,
                 point : getRandomInt(10,50),
+                itemType : 0, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
             },
-            methods : {
+            methods : {                
                 init() {
-                    this.update();                    
+                    gameUtil.dropItemCount ++;
+                    if(gameUtil.dropItemCount % 5 == 0 && gameManager.player.attack < gameManager.player.attack_MAX) {
+                        this.itemType = 1;                        
+                    }
+                    if(gameManager.player.HP < 10 ) {
+                        this.itemType = 2;
+                    }                    
                 },
                 update() {
                     if(gameManager.player == null) {
@@ -269,19 +279,44 @@ var gameUtil = {
                 },
 
                 draw(ctx) {
+                    var text = this.point;
+                    switch (this.itemType) {
+                        case 1:
+                            text = "P";
+                            break;
+                        case 2:
+                            text = "HP";
+                            break;
+                        default:
+                            break;                        
+                    }
                     this.update();
                     ctx.font = (this.fireCount + 30) + "px Gill Sans";             
                     ctx.fillStyle = "blue"
-                    ctx.fillText(this.point,this.position.x, this.position.y);
+                    if(this.speed > 0.5) {
+                        ctx.fillStyle = "green";
+                    }
+                    ctx.fillText(text,this.position.x, this.position.y);
                     ctx.strokeStyle = "white"        
-                    ctx.strokeText(this.point,this.position.x, this.position.y);
+                    ctx.strokeText(text,this.position.x, this.position.y);
                 }
             },
             watch : {
                 die(a,b) {
-                    if(this.die && gameManager.player != null) {                    
-                        gameManager.point += this.point;
-                        gameManager.player.healing(this.point / 5);
+                    if(this.die && gameManager.player != null) {     
+                        switch (this.itemType) {
+                            case 0:
+                                gameManager.point += this.point * (gameManager.combo + 1);
+                                break;
+                            case 1:
+                                gameManager.powerup();
+                            case 2:
+                                gameManager.player.healing();
+                            default:
+                                break;
+                        }               
+                        
+                        
                     }
                 }
 
@@ -322,7 +357,6 @@ var gameUtil = {
                     this.size = this.HP * 2
                     this.speed = 10 / this.HP
                     this.moveType = getRandomInt(0,3);
-                    console.log("enemy move type: " + this.moveType);
                     switch (this.moveType) {
                         case 0:
                             this.setPlayerTargetVector();
@@ -330,7 +364,6 @@ var gameUtil = {
                         default:
                             break;
                     } 
-                    console.log("enemy move vector : " + this.vector.x + " " + this.vector.y);
 
                 },
                 update() {
@@ -354,9 +387,9 @@ var gameUtil = {
                         var shot = gameManager.playersShots[i];
                         var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                         if(distance < this.size && shot.position.y > 0 && shot.die == false ) {
-                            this.HP -= 1;                            
-                            gameManager.point += 1 * (gameManager.combo + 1);
-                            if(this.HP == 0) {                                                                
+                            this.HP -= shot.attack;                            
+                            gameManager.point += shot.attack * (gameManager.combo + 1);
+                            if(this.HP <= 0 && shot.die == false) {                                                                
                                 gameManager.dropItems.push(gameUtil.makeDropItem(this.position));
                             }
                             shot.die = true;
@@ -522,13 +555,12 @@ var gameUtil = {
                 movement : 50,
                 inDamage : false,
                 size : 10,
+                attack : 1,
+                attack_MAX : 5,
             },
             methods : {
-                healing(point) {
-                    this.HP += point;
-                    if(this.HP > this.HP_MAX) {
-                        this.HP = this.HP_MAX;
-                    }
+                healing() {
+                    this.HP = this.HP_MAX;
                 },
                 moveLeft : function() {
                     this.moveVector = null;
@@ -614,6 +646,7 @@ var gameUtil = {
         }
         return new Vue({
             data : {
+                attack:gameManager.player.attack,
                 position:{
                     x : gameManager.player.position.x,
                     y : gameManager.player.position.y,
@@ -658,7 +691,11 @@ var gameUtil = {
                         
                     }
                     ctx.beginPath();                        
-                    ctx.fillRect(this.position.x - 2.5 - this.fireCount * 2, this.position.y - 20 + this.fireCount, 5 + this.fireCount * 4,40 - this.fireCount * 2);
+                    var fx = this.position.x - this.attack - this.fireCount * 2;
+                    var fy = this.position.y - 20 + this.fireCount;
+                    var fw = this.attack * 2 + this.fireCount * 4;
+                    var fh = 40 - this.fireCount * 2;
+                    ctx.fillRect(fx, fy,fw, fh);
                     ctx.stroke();                        
                 }
             }            
@@ -708,11 +745,37 @@ var gameUtil = {
                 {x:-0.5,y:+1.5},
                 {x:0.5,y:+1.5},
             ]            
-        },
+        },        
         {
             color: "yellow",
             vectors : [
                 this.getMoveVector(position.x,position.y, this.lastPlayerPosiont.x, this.lastPlayerPosiont.y, getRandomInt(1,3)),
+            ]
+        },
+        {
+            color : "white",
+            vectors : [
+                {x : - 1.0, y : 0.1},
+                {x : - 0.9, y : 0.15},
+                {x : - 0.8, y : 0.2},
+                {x : - 0.7, y : 0.25},
+                {x : - 0.6, y : 0.3},
+                {x : - 0.5, y : 0.35},
+                {x : - 0.4, y : 0.4},
+                {x : - 0.3, y : 0.45},
+                {x : - 0.2, y : 0.5},
+                {x : - 0.1, y : 0.55},
+                {x : 0, y : 0.6},
+                {x : 0.1, y : 0.55},
+                {x : 0.2, y : 0.5},
+                {x : 0.3, y : 0.45},
+                {x : 0.4, y : 0.4},
+                {x : 0.5, y : 0.35},
+                {x : 0.6, y : 0.3},
+                {x : 0.7, y : 0.25},
+                {x : 0.8, y : 0.2},
+                {x : 0.8, y : 0.15},
+                {x : 1.0, y : 0.1},
             ]
         }            
         ]
