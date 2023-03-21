@@ -140,11 +140,15 @@ var gameManager = new Vue({
                     },
                     speed: 10,
                     die: false,
+                    fireCount : 0,
                 },    
                 methods : {
                     update : function() {
+                        if(this.die) {                            
+                            return;
+                        }
                         this.position.y -= this.speed;
-                        if(this.position.y < 0) {
+                        if(this.position.y < -100) {
                             this.die = true;
                             gameManager.combo *= 0.5;
                             gameManager.combo = Math.ceil(gameManager.combo);
@@ -154,13 +158,27 @@ var gameManager = new Vue({
                         }
                     },
                     draw(ctx) {
-                        if(this.die) {
-                            return;
+                        if(this.die) {                            
+                            this.fireCount ++;
                         }
                         this.update();
                         ctx.fillStyle = "white";
+                        if(this.fireCount > 0) {
+                            switch (getRandomInt(0,3)) {
+                                case 0:
+                                    ctx.fillStyle = "red";
+                                    break;
+                                case 1:
+                                    ctx.fillStyle = "yellow";
+                                    break;
+                                default:
+                                    ctx.fillStyle = "black";
+                                    break
+                            }
+                            
+                        }
                         ctx.beginPath();                        
-                        ctx.fillRect(this.position.x - 2.5, this.position.y - 20, 5,40);
+                        ctx.fillRect(this.position.x - 2.5 - this.fireCount, this.position.y - 20, 5 + this.fireCount * 2,40);
                         ctx.stroke();                        
                     }
                 }            
@@ -171,7 +189,7 @@ var gameManager = new Vue({
         drawShot : function(ctx) {
             for (var i = 0; i < this.playersShots.length; i ++) {                
                 let shot = this.playersShots[i];
-                if(shot.die) {
+                if(shot.die && shot.fireCount > 20) {
                     this.playersShots.splice(i,1);
                 }
             }
@@ -256,7 +274,7 @@ var gameManager = new Vue({
                         for(var i = 0; i < gameManager.playersShots.length; i ++) {
                             var shot = gameManager.playersShots[i];
                             var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
-                            if(distance < 20) {
+                            if(distance < 20 && shot.position.y > 0 && shot.die == false ) {
                                 this.HP -= 1;
                                 gameManager.point += 1 * (gameManager.combo + 1);
                                 shot.die = true;
