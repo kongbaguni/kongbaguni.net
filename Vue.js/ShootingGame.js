@@ -235,13 +235,13 @@ var game01 = new Vue({
         const canvas = document.getElementById("game01_canvas");
         this.ctx = canvas.getContext('2d');
         canvas.addEventListener("touchstart",function(event){
-            game01.touchstart({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});
+            game01.touchstart({x:event.changedTouches[0].clientX,y:event.changedTouches[0].clientY});
         });
         canvas.addEventListener("touchmove",function(event) {
-            game01.touchmove({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});  
+            game01.touchmove({x:event.changedTouches[0].clientX,y:event.changedTouches[0].clientY});  
         });
         canvas.addEventListener("touchend", function(event) {
-            game01.touchend({x:event.changedTouches[0].clientY,y:event.changedTouches[0].clientX});
+            game01.touchend({x:event.changedTouches[0].clientX,y:event.changedTouches[0].clientY});
         });
         canvas.addEventListener("mousedown",function(event){
             game01.touchstart({x:event.clientX, y:event.clientY});
