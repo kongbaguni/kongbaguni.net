@@ -12,6 +12,7 @@ var gameManager = new Vue({
         isShooting : true,
         enemys : [],
         enemysShots : [],
+        dropItems : [],
         point : 0,
         combo : 0,
         enemyShotCount : 0,
@@ -44,7 +45,8 @@ var gameManager = new Vue({
         },
         // 그리기
         draw: function(ctx) {
-            ctx.fillText("point : " + addCommas(this.point) + " combo : " + this.combo, 5,10);
+            ctx.font = "20px Gill Sans"; 
+            ctx.fillText("point : " + addCommas(this.point) + " combo : " + this.combo, 5,20);
             if (this.player != null) {
                 this.player.draw(ctx);
             }
@@ -68,6 +70,17 @@ var gameManager = new Vue({
             }
             for(var i=0; i < this.enemys.length; i++) {
                 this.enemys[i].draw(ctx);
+            }
+
+            //아이템 그리기 
+            for(var i=0; i<this.dropItems.length; i++) {
+                let item = this.dropItems[i];
+                if(item.die && item.fireCount > 10) {
+                    this.dropItems.splice(i,1);
+                }
+            }
+            for(var i=0; i<this.dropItems.length; i++) {
+                this.dropItems[i].draw(ctx);
             }
 
             for(var i=0; i< this.enemysShots.length; i++) {
@@ -186,6 +199,71 @@ var game01 = new Vue({
 var gameUtil = {
     count:0,
     lastPlayerPosiont : { x : 0, y : 0},
+    makeDropItem(targetPosition) {
+        var item = new Vue({
+            data : {
+                die : false,
+                position : targetPosition,
+                vector : {x:0,y:1},
+                size : 10,
+                speed : 0.1,
+                fireCount : 0,
+                point : getRandomInt(10,50),
+            },
+            methods : {
+                init() {
+                    this.update();                    
+                },
+                update() {
+                    if(gameManager.player == null) {
+                        return;
+                    }
+                    const pp = gameManager.player.position;
+                    const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);
+                    if(distance >= 150) {
+                        this.speed = 0.1;
+                    }
+                    if(this.position.y > 450 || this.position.y < 50 || this.position.x < 50 || this.position.x > 360) {
+                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
+                    }
+                    if(distance < 80) {
+                        this.speed = 1;
+                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);                        
+                    }                    
+                    
+                    if(distance < 10) {                        
+                        this.die = true;
+                    }                    
+                    if(!this.die) {
+                        this.position.x += this.vector.x * this.speed;
+                        this.position.y += this.vector.y * this.speed;    
+                    } else {
+                        this.fireCount ++;
+                    }
+                },
+
+                draw(ctx) {
+                    this.update();
+                    ctx.font = (this.fireCount + 30) + "px Gill Sans";             
+                    ctx.fillStyle = "blue"
+                    ctx.fillText(this.point,this.position.x, this.position.y);
+                    ctx.strokeStyle = "white"        
+                    ctx.strokeText(this.point,this.position.x, this.position.y);
+                }
+            },
+            watch : {
+                die(a,b) {
+                    if(this.die && gameManager.player != null) {                    
+                        gameManager.point += this.point;
+                        gameManager.player.healing(this.point / 5);
+                    }
+                }
+
+            }
+        })
+        item.init();
+        return item;
+    },
     // 적 생성 
     makeEnemy() {
        var enemy = new Vue({
@@ -197,6 +275,7 @@ var gameUtil = {
                     y : -50
                 },
                 HP : getRandomInt(5,50),
+                HP_MAX : 0,
                 size : 20,
                 misailPettrnNumber : getRandomInt(0,4),
                 vector : {
@@ -213,6 +292,7 @@ var gameUtil = {
                     this.vector = gameUtil.getMoveVector(this.position.x,this.position.y,px, py, 1);
                 },
                 init(){
+                    this.HP_MAX = this.HP;
                     this.size = this.HP * 2
                     this.speed = 10 / this.HP
                     this.moveType = getRandomInt(0,3);
@@ -248,9 +328,13 @@ var gameUtil = {
                         var shot = gameManager.playersShots[i];
                         var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                         if(distance < this.size && shot.position.y > 0 && shot.die == false ) {
-                            this.HP -= 1;
+                            this.HP -= 1;                            
                             gameManager.point += 1 * (gameManager.combo + 1);
+                            if(this.HP == 0) {                                                                
+                                gameManager.dropItems.push(gameUtil.makeDropItem(this.position));
+                            }
                             shot.die = true;
+
                             if(this.HP <= 0) {
                                 setTimeout(() => {
                                     this.die = true;
@@ -279,9 +363,20 @@ var gameUtil = {
                     ctx.beginPath();                        
                     ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
                     ctx.stroke();
+
                     if(this.HP > 0){
+                        ctx.fillStyle = "white";
+                        ctx.font = "30px Gill Sans"; 
                         ctx.fillText(this.HP,this.position.x - 10, this.position.y);
+                        ctx.fillStyle = "red";
+                        const hpx =  this.position.x - this.size;
+                        const hpy =  this.position.y + this.size + 5;
+                        const hpw = this.size * 2 * (this.HP / this.HP_MAX);
+                        ctx.fillRect(hpx,hpy, this.size * 2, 3)
+                        ctx.fillStyle = "green";
+                        ctx.fillRect(hpx,hpy, hpw,3);
                     }
+                    
                 },
                 // 적군 미사일 생성
                 makeShot() {
@@ -321,6 +416,10 @@ var gameUtil = {
                                     if (distance  < 10 && gameManager.player.die == false && this.die == false ) {
                                         this.die = true;
                                         gameManager.player.HP -= 1;
+                                        gameManager.combo -= 1;
+                                        if(gameManager.combo < 0) {
+                                            gameManager.combo = 0;
+                                        }
                                     }                              
                                     if(gameManager.player.HP <= 0) {
                                         setTimeout(() => {
@@ -385,6 +484,7 @@ var gameUtil = {
             data : {                    
                 point : 0,
                 HP : 100,
+                HP_MAX : 100,
                 position : {
                     x : 180,
                     y : 400
@@ -398,6 +498,12 @@ var gameUtil = {
                 size : 10,
             },
             methods : {
+                healing(point) {
+                    this.HP += point;
+                    if(this.HP > this.HP_MAX) {
+                        this.HP = this.HP_MAX;
+                    }
+                },
                 moveLeft : function() {
                     this.moveVector = null;
                     this.moveTo = { x : this.position.x - this.movement, y : this.position.y };
@@ -503,11 +609,6 @@ var gameUtil = {
                     this.position.x += this.vector.x * this.speed;
                     if(this.position.y < -100) {
                         this.die = true;
-                        gameManager.combo *= 0.5;
-                        gameManager.combo = Math.ceil(gameManager.combo);
-                        if(gameManager.combo < 0) {
-                            gameManager.combo = 0;
-                        }
                     }
                 },
                 draw(ctx) {
