@@ -22,8 +22,32 @@
     border: 2px solid yellow;
 }
 
+div.controller table {
+    opacity: 0.2;
+}
+
 p.gameOver {
     text-align: center;
     color:lime;
     font-size: 30px;
+    width: 340px;
+    top:400px;
+}
+
+div.gamebox {    
+    position: relative;
+    width: 370px;
+    height:500px;
+}
+div.gamebox > * {
+    position: absolute;
+}
+
+div.controller {
+    top:350px;
+    text-align: center;
+}
+div.controller > button {
+    width: 310px;
+    margin: 20px;
 }

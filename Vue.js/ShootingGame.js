@@ -14,6 +14,7 @@ var gameManager = new Vue({
         enemysShots : [],
         point : 0,
         combo : 0,
+        enemyShotCount : 0,
     },
     methods : {
         restart : function() {
@@ -137,7 +138,7 @@ var gameManager = new Vue({
                         x : this.player.position.x,
                         y : this.player.position.y,
                     },
-                    speed: 1,
+                    speed: 10,
                     die: false,
                 },    
                 methods : {
@@ -157,9 +158,9 @@ var gameManager = new Vue({
                             return;
                         }
                         this.update();
-                        ctx.fillStyle = "green";
+                        ctx.fillStyle = "white";
                         ctx.beginPath();                        
-                        ctx.fillRect(this.position.x - 2.5, this.position.y - 2.5, 5,5);
+                        ctx.fillRect(this.position.x - 2.5, this.position.y - 20, 5,40);
                         ctx.stroke();                        
                     }
                 }            
@@ -236,7 +237,8 @@ var gameManager = new Vue({
                         y : -50
                     },
                     HP : getRandomInt(1,50),
-                    size : 20
+                    size : 20,
+                    misailPettrnNumber : getRandomInt(0,4)
                 },
                 methods:{
                     update() {
@@ -270,7 +272,7 @@ var gameManager = new Vue({
                                 }, 500);              
                             }
                         }
-                        if( Math.ceil(this.position.y) % 20 == 0) {
+                        if( Math.ceil(this.position.y) % 150 < 15) {
                             this.makeShot();
                         }
                     },
@@ -294,7 +296,8 @@ var gameManager = new Vue({
                         if(gameManager.enemysShots.length > 200) {
                             return;
                         }
-                        const data = gameUtil.getMisailPettern(this.position);
+                        this.enemyShotCount += 1;
+                        const data = gameUtil.getMisailPettern(this.position,this.misailPettrnNumber);
                         const vectors = data.vectors;
                         for(i=0; i< vectors.length; i++) {
                             var shot = new Vue ({
@@ -439,7 +442,7 @@ var gameUtil = {
         let distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
         return distance;
     },
-    getMisailPettern:function(position) {
+    getMisailPettern:function(position, index) {
         if(gameManager.player != null) {
             this.lastPlayerPosiont = gameManager.player.position;
         }
@@ -476,8 +479,12 @@ var gameUtil = {
             ]
         }            
         ]
-        this.count += 0.05;
+        if(index < data.length) {
+            return data[index];
+        }
+        this.count += 0.5;
         return data[Math.ceil(this.count) % data.length];
+        return data[index];
     }
     
 }
