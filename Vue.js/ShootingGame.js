@@ -702,13 +702,20 @@ var gameUtil = {
                         }
                         
                     }
-                    ctx.beginPath();                        
                     var fx = this.position.x - this.attack - this.fireCount * 2;
                     var fy = this.position.y - 20 + this.fireCount;
+
                     var fw = this.attack * 2 + this.fireCount * 4;
                     var fh = 40 - this.fireCount * 2;
-                    ctx.fillRect(fx, fy,fw, fh);
-                    ctx.stroke();                        
+                    if(this.fireCount > 0) {
+                        ctx.fillRect(fx, fy,fw, fh);
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo(fx,fy);
+                        ctx.lineTo(fx + this.vector.x * 30,fy + this.vector.y * 30);
+                        ctx.stroke();                            
+                    }
+
                 }
             }            
         })        
