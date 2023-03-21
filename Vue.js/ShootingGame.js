@@ -50,7 +50,22 @@ var gameManager = new Vue({
             if(this.player.die) {
                 return;
             }
-            this.playersShots.push(gameUtil.makePlayerShot());
+            const playerVectors = [
+                {x:0,y:-1}, // 1
+                {x:-0.5,y:-0.9},
+                {x:0.5,y:-0.9}, // 2
+                {x:-1.5,y:-0.8},
+                {x:1.5,y:-0.8}, // 3
+                {x:-2,y:-0.7},
+                {x:2,y:-0.7}, // 4
+                {x:-2.5,y:-0.6},
+                {x:2.5,y:-0.6}, // 5
+            ]
+            const vc = [1,3,5,7,9];
+            for(i=0; i<vc[this.player.attack-1]; i++) {
+                this.playersShots.push(gameUtil.makePlayerShot(playerVectors[i]));
+            }
+            
         },
         // 그리기
         draw: function(ctx) {
@@ -640,7 +655,7 @@ var gameUtil = {
         })
     },
     // 플레이어의 미사일 생성
-    makePlayerShot() {
+    makePlayerShot(vector) {
         if(gameManager.player == null) {
             return null;
         }
@@ -651,10 +666,7 @@ var gameUtil = {
                     x : gameManager.player.position.x,
                     y : gameManager.player.position.y,
                 },
-                vector: {
-                    x:0,
-                    y:-1
-                },
+                vector: vector,
                 speed: 10,
                 die: false,
                 fireCount : 0,
