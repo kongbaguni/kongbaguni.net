@@ -129,6 +129,7 @@ var game01 = new Vue({
         ctx:null,
         interval:0,
         gameOver:false,
+        lastTouchPoint:null,
     },
     methods : {
         shotBtnClassName : function() {
@@ -183,11 +184,36 @@ var game01 = new Vue({
             let rect = canvas.getBoundingClientRect();
             let x = event.changedTouches[0].clientX - rect.x;
             let y = event.changedTouches[0].clientY - rect.y;
-            if(gameManager.player != null) {
-                gameManager.player.moveVector = null;
-                gameManager.player.moveTo = {x : x, y : y};
-            }
+            // if(gameManager.player != null) {
+            //     gameManager.player.moveVector = null;
+            //     gameManager.player.moveTo = {x : x, y : y};
+            // }
+            console.log("touchStart x:" + x + " y:" + y);
+            this.lastTouchPoint = {x : x, y : y};
         });
+        canvas.addEventListener("touchmove",function(event) {
+            let rect = canvas.getBoundingClientRect();
+            let x = event.changedTouches[0].clientX - rect.x;
+            let y = event.changedTouches[0].clientY - rect.y;
+            console.log("touchmove x:" + x + " y:" + y);
+            if(this.lastTouchPoint!= null && gameManager.player != null) {
+                const lp =this.lastTouchPoint;
+                const nx = x - lp.x;
+                const ny = y - lp.y;
+
+                gameManager.player.position.x += nx;
+                gameManager.player.position.y += ny;                
+            }
+            this.lastTouchPoint = {x : x, y : y};
+        });
+        canvas.addEventListener("touchend", function(event) {
+            let rect = canvas.getBoundingClientRect();
+            let x = event.changedTouches[0].clientX - rect.x;
+            let y = event.changedTouches[0].clientY - rect.y;
+            console.log("touchend x:" + x + " y:" + y);
+            this.lastTouchPoint = null
+        });
+
 
         setInterval(() => {
             this.draw();
