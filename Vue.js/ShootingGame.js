@@ -52,14 +52,14 @@ var gameManager = new Vue({
             }
             const playerVectors = [
                 {x:0,y:-1}, // 1
-                {x:-0.5,y:-0.9},
-                {x:0.5,y:-0.9}, // 2
-                {x:-1.5,y:-0.8},
-                {x:1.5,y:-0.8}, // 3
-                {x:-2,y:-0.7},
-                {x:2,y:-0.7}, // 4
-                {x:-2.5,y:-0.6},
-                {x:2.5,y:-0.6}, // 5
+                {x:-0.1,y:-0.9},
+                {x:0.1,y:-0.9}, // 2
+                {x:-0.2,y:-0.8},
+                {x:0.2,y:-0.8}, // 3
+                {x:-0.3,y:-0.7},
+                {x:0.3,y:-0.7}, // 4
+                {x:-0.4,y:-0.6},
+                {x:0.4,y:-0.6}, // 5
             ]
             const vc = [1,3,5,7,9];
             for(i=0; i<vc[this.player.attack-1]; i++) {
@@ -402,8 +402,8 @@ var gameUtil = {
                         var shot = gameManager.playersShots[i];
                         var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                         if(distance < this.size && shot.position.y > 0 && shot.die == false ) {
-                            this.HP -= shot.attack;                            
-                            gameManager.point += shot.attack * (gameManager.combo + 1);
+                            this.HP -= 1;                            
+                            gameManager.point += 1 * (gameManager.combo + 1);
                             if(this.HP <= 0 && shot.die == false) {                                                                
                                 gameManager.dropItems.push(gameUtil.makeDropItem(this.position));
                             }
