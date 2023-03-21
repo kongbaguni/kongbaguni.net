@@ -64,7 +64,7 @@ var gameManager = new Vue({
             // 적 미사일 그리기 
             for(var i=0; i < this.enemys.length; i++) {
                 let enemy = this.enemys[i];
-                if(enemy.die && enemy.fireCount > 20) {
+                if(enemy.die) {
                     this.enemys.splice(i,1);
                 }
             }
@@ -344,7 +344,7 @@ var gameUtil = {
                     this.position.y += this.vector.y * this.speed / 2;
                     this.position.x += this.vector.x * this.speed / 2;
                     if(this.position.y > 800) {
-                        die = true;
+                        this.die = true;                        
                     }
                     if(this.position.y < 400 && this.die == false && this.moveType == 0) {
                         this.setPlayerTargetVector();
@@ -455,7 +455,7 @@ var gameUtil = {
                                 },
                                 draw : function(ctx) {
                                     if(this.die) {
-                                        this.fireCount += 0.5;
+                                        this.fireCount += 1;
                                     }
                                     this.update();                                        
                                     
