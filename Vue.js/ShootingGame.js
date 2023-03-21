@@ -491,6 +491,7 @@ var gameUtil = {
                                         this.die = true;
                                         gameManager.player.HP -= 1;
                                         gameManager.combo -= 1;
+                                        gameManager.player.attack = 1;
                                         if(gameManager.combo < 0) {
                                             gameManager.combo = 0;
                                         }
