@@ -3,6 +3,7 @@ document.documentElement.addEventListener('touchstart', function (event) {
         event.preventDefault(); 
     }
 }, false);
+const screenSize = {w : 347, h: 500};
 
 var imageLoader = new Vue({
     el : "#imageLoader",
@@ -93,6 +94,12 @@ var gameManager = new Vue({
         damagedCount : 0,
     },
     methods : {
+        addCombo : function() {
+            this.combo += 1;
+            if(this.combo > 100) {
+                this.combo = 100;
+            }
+        },
         addPoint : function(point) {
             const value = point * (this.combo +1);
             this.point += value
@@ -152,25 +159,6 @@ var gameManager = new Vue({
             if(this.player != null){
                 this.timeline ++;
             }
-            const pText = addCommas(this.point); 
-            ctx.font = "30px Gill Sans"; 
-            ctx.fillStyle = "white";
-            ctx.fillText(pText,5,20);
-            ctx.strokeStyle = "red";
-            ctx.strokeText(pText,5,20);
-            if(this.combo > 0) {
-                ctx.font = "15px Gill Sans"; 
-                ctx.fillStyle = "orange";
-                ctx.fillText("x" + this.combo, 5 + pText.length * 15,20 );
-                ctx.strokeStyle = "white";
-                ctx.strokeText("x" + this.combo, 5+ pText.length * 15,20);    
-            }
-
-            if(gameManager.lastAddedPoint != null) {                
-                ctx.font = "10px Gill Sans"; 
-                ctx.fillStyle = "yellow";
-                ctx.fillText("+"+gameManager.lastAddedPoint,8,30);
-            }
             if (this.player != null) {
                 this.player.draw(ctx);
             }
@@ -218,6 +206,27 @@ var gameManager = new Vue({
             if(this.player != null) {
                 this.makeEnemy();       
             }
+            // point 그리기
+            const pText = addCommas(this.point); 
+            ctx.font = "30px Gill Sans"; 
+            ctx.fillStyle = "white";
+            ctx.fillText(pText,5,20);
+            ctx.strokeStyle = "red";
+            ctx.strokeText(pText,5,20);
+            if(this.combo > 0) {
+                ctx.font = "15px Gill Sans"; 
+                ctx.fillStyle = "orange";
+                ctx.fillText("x" + this.combo, 5 + pText.length * 15,20 );
+                ctx.strokeStyle = "white";
+                ctx.strokeText("x" + this.combo, 5+ pText.length * 15,20);    
+            }
+
+            if(gameManager.lastAddedPoint != null) {                
+                ctx.font = "10px Gill Sans"; 
+                ctx.fillStyle = "yellow";
+                ctx.fillText("+"+gameManager.lastAddedPoint, 5+ pText.length * 15 ,30);
+            }
+
         },
 
         shotIntervalPlayer() {
@@ -302,9 +311,39 @@ var gameManager = new Vue({
                     speed : 0.2,
                     size : 50
                 },// 1
-            ]            
+            ]   
+            c = [
+                {
+                    shottype : 4,
+                    x : 100,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 5,
+                    size : 30
+                },// 1
+                {
+                    shottype : 3,
+                    x : 150,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 5,
+                    size : 30
+                },// 1
+                {
+                    shottype : 3,
+                    x : 200,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 5,
+                    size : 30
+                },// 1
+            ]         
 
             const enemydata = {
+                50 : c[0], 
+                100 : c[1], 
+                150 : c[2], 
+
                 100 : a[0],
                 200 : a[1],
                 300 : a[2],
@@ -332,7 +371,11 @@ var gameManager = new Vue({
                 4300 : a[2],
                 4500 : a[3],
                 4600 : a[4],
-                4700 : a[5],            }
+                4700 : a[5],
+                4800 : c[0], 
+                4850 : c[1], 
+                4900 : c[2], 
+             }
 
             if(this.player == null) {
                 return 
@@ -477,6 +520,21 @@ var gameUtil = {
     count:0,
     dropItemCount:0,
     lastPlayerPosiont : { x : 0, y : 0},
+    isScreenOut(x,y,targetSize) {
+        if(y > screenSize.h + targetSize) {
+            return true 
+        }
+        if(x > screenSize.w + targetSize) {
+            return true 
+        }
+        if(x < -targetSize) {
+            return true 
+        }
+        if(y < -targetSize) {
+            return true 
+        }
+        return false 
+    },
     makeDropItem(targetPosition, point, itemType) {
         var item = new Vue({
             data : {
@@ -498,19 +556,18 @@ var gameUtil = {
                         return;
                     }
                     const pp = gameManager.player.position;
-                    const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);
+                    const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);                    
+
+                    if(gameUtil.isScreenOut(this.position.x, this.position.y,-50)) {
+                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
+                    }
                     if(distance >= 150) {
                         this.speed = 0.9;
-                    }
-                    if(this.position.y > 450 || this.position.y < 50 || this.position.x < 50 || this.position.x > 360) {
-                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
-                        this.speed = 1;
                     }
                     if(distance < 150) {
                         this.speed = 1.5;
                         this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);                        
-                    }                    
-                    
+                    }                                        
                     if(distance < 10) {                        
                         this.die = true;
                     }                    
@@ -580,6 +637,7 @@ var gameUtil = {
          */
        var enemy = new Vue({
             data:{
+                screenOut : false,
                 die : false,
                 inAtteck : false,
                 position:{
@@ -596,6 +654,7 @@ var gameUtil = {
                 },
                 speed : data.speed,
                 moveType : data.movetype,
+                shotCount : 0,
             },
             methods:{
                 setPlayerTargetVector()  {
@@ -625,6 +684,7 @@ var gameUtil = {
                     if(gameManager.player == null) {
                         return 
                     }
+                    this.shotCount ++;
                     this.position.y += this.vector.y * this.speed / 2;
                     this.position.x += this.vector.x * this.speed / 2;
                     if(this.position.y > 800) {
@@ -654,8 +714,8 @@ var gameUtil = {
                             if(this.HP <= 0) {
                                 setTimeout(() => {
                                     this.die = true;
-                                }, 500);      
-                                gameManager.combo += 1;            
+                                }, 500);                                      
+                                gameManager.addCombo();
                             }              
                             this.inAtteck = true;
                             setTimeout(() => {
@@ -663,7 +723,7 @@ var gameUtil = {
                             }, 500);              
                         }
                     }
-                    if( Math.ceil(this.position.y) % 50 < 10) {
+                    if( this.shotCount % 150  < 90) {
                         this.makeShot();
                     }
                 },
@@ -720,8 +780,9 @@ var gameUtil = {
                                     }
                                     this.position.x += this.vector.x;
                                     this.position.y += this.vector.y;
-                                    if(this.position.x < -100 || this.position.x > 400 || this.position.y < -100 || this.position.y > 700) {
+                                    if(gameUtil.isScreenOut(this.position.x, this.position.y,20)) {
                                         this.die = true;
+                                        this.screenOut = true;
                                         return;
                                     }
                                     if(gameManager.player == null) {
@@ -731,12 +792,7 @@ var gameUtil = {
                                     const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
                                     if (distance  < 5 && gameManager.player.die == false && this.die == false ) {
                                         this.die = true;
-                                        gameManager.player.HP -= 1;
-                                        gameManager.combo -= 1;
-                                        gameManager.player.attack = 1;
-                                        if(gameManager.combo < 0) {
-                                            gameManager.combo = 0;
-                                        }
+                                        gameManager.player.damage(1);
                                     }                              
                                     if(gameManager.player.HP <= 0) {
                                         setTimeout(() => {
@@ -748,7 +804,11 @@ var gameUtil = {
                                     if(this.die) {
                                         this.fireCount += 1;
                                     }
-                                    this.update();                                        
+                                    this.update();   
+                                    
+                                    if(this.screenOut) {
+                                        return ;
+                                    }                                     
                                     ctx.fillStyle = "white";
                                     if(this.fireCount > 0) {
                                         switch (getRandomInt(0,3)) {
@@ -820,6 +880,15 @@ var gameUtil = {
                 attack_MAX : 5,
             },
             methods : {
+                //피탄 
+                damage(point) {
+                    this.HP -= point;
+                    gameManager.combo = Math.ceil(gameManager.combo/2);
+
+                    gameManager.damagedCount += 1;
+                    attack = 1;
+                },
+                //HP회복
                 healing() {
                     this.HP = this.HP_MAX;
                 },
@@ -868,9 +937,8 @@ var gameUtil = {
                         const enemy = gameManager.enemys[i];
                         const distance = gameUtil.getDistance(this.position.x,this.position.y,enemy.position.x,enemy.position.y);
                         if(distance < 5 + enemy.size) {
-                            enemy.HP -= 1;                            
-                            this.vector.x = -this.vector.x;
-                            this.vector.y = -this.vector.y;                                                        
+                            enemy.HP -= 1;  
+                            gameManager.addPoint(1);                          
                         }
                     }
                 },
