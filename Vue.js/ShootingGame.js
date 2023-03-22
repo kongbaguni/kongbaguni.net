@@ -15,6 +15,9 @@ var imageLoader = new Vue({
             { src : "./images/shootinggame/shot03.svg", key : "shot03" , image : new Image()},
             { src : "./images/shootinggame/shot04.svg", key : "shot04" , image : new Image()},
             { src : "./images/shootinggame/shot05.svg", key : "shot05" , image : new Image()},
+            { src : "./images/shootinggame/enemy01.svg", key : "enemy01" , image : new Image()},
+            { src : "./images/shootinggame/enemy02.svg", key : "enemy02" , image : new Image()},
+            { src : "./images/shootinggame/enemy03.svg", key : "enemy03" , image : new Image()},
         ],
         keys : [],
         images : {},
@@ -246,6 +249,7 @@ var gameManager = new Vue({
         makeEnemy() {
             const a = [
                 {
+                    imageKey : "enemy01",
                     shottype : 0,
                     x : 50,
                     movetype : 0,
@@ -254,6 +258,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 0
                 {
+                    imageKey : "enemy01",
                     shottype : 1,
                     x : 40,
                     movetype : 0,
@@ -262,6 +267,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 1
                 {
+                    imageKey : "enemy01",
                     shottype : 2,
                     x : 30,
                     movetype : 0,
@@ -270,6 +276,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 1
                 {
+                    imageKey : "enemy01",
                     shottype : 0,
                     x : 260,
                     movetype : 0,
@@ -278,6 +285,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 0
                 {
+                    imageKey : "enemy01",
                     shottype : 1,
                     x : 270,
                     movetype : 0,
@@ -286,6 +294,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 1
                 {
+                    imageKey : "enemy01",
                     shottype : 2,
                     x : 280,
                     movetype : 0,
@@ -296,6 +305,7 @@ var gameManager = new Vue({
             ];
             b = [
                 {
+                    imageKey : "enemy02",
                     shottype : 3,
                     x : 150,
                     movetype : 1,
@@ -304,6 +314,7 @@ var gameManager = new Vue({
                     size : 50
                 },// 1
                 {
+                    imageKey : "enemy02",
                     shottype : 4,
                     x : 280,
                     movetype : 1,
@@ -314,6 +325,7 @@ var gameManager = new Vue({
             ]   
             c = [
                 {
+                    imageKey : "enemy03",
                     shottype : 4,
                     x : 100,
                     movetype : 0,
@@ -322,6 +334,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 1
                 {
+                    imageKey : "enemy03",
                     shottype : 3,
                     x : 150,
                     movetype : 0,
@@ -330,6 +343,7 @@ var gameManager = new Vue({
                     size : 30
                 },// 1
                 {
+                    imageKey : "enemy03",
                     shottype : 3,
                     x : 200,
                     movetype : 0,
@@ -723,8 +737,10 @@ var gameUtil = {
                             }, 500);              
                         }
                     }
-                    if( this.shotCount % 150  < 90) {
-                        this.makeShot();
+                    if( this.shotCount % 100  < 50) {
+                        if(this.shotCount % 10 == 0) {
+                            this.makeShot();
+                        }
                     }
                 },
                 draw(ctx) {
@@ -738,6 +754,10 @@ var gameUtil = {
                     }
                     ctx.beginPath();                        
                     ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                    const image = imageLoader.getImage(data.imageKey);
+                    if(image != null && this.HP > 0) {                
+                        ctx.drawImage(image,this.position.x - this.size , this.position.y - this.size , this.size * 2, this.size * 2);
+                    }
                     ctx.stroke();
 
                     if(this.HP > 0){
@@ -756,7 +776,7 @@ var gameUtil = {
                 },
                 // 적군 미사일 생성
                 makeShot() {
-                    if(gameManager.enemysShots.length > 1000) {
+                    if(gameManager.enemysShots.length > 10000) {
                         return;
                     }
                     this.enemyShotCount += 1;
