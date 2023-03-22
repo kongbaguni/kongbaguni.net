@@ -18,38 +18,20 @@
 
     <body>
         <h1>Shooting Game</h1>
+        <div v-if="!loadFinish" id = "imageLoader" v-bind:class = "getClassName()">
+            <p class = "title">Now Loading...</p>
+            <canvas id="imageLoading_canvas" width="347px" height="100px"></canvas>                    
+        </div>
+
         <div id = "game01">
             <div class="gamebox">
                 <canvas id="game01_canvas" width="347px" height="500px"></canvas>
                 <p v-if="gameOver" class = "gameOver">GAME OVER</p>
+
                 <div class="controller">
                     <button v-if="!isStartGame() && !gameOver" v-on:click = "start">new game</button>
-                </dic>
-                <!-- div v-if="isStartGame() && !gameOver" class="controller">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    <button v-on:click = "moveUp">U</button>
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <th><button v-on:click = "moveLeft">L</button></th>
-                                <th><button v-on:click = "moveDown">D</button></th>
-                                <th><button v-on:click = "moveRight">R</button></th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><button v-on:click="shoot" v-bind:class="shotBtnClassName()">S</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div -->
+                </dic>   
+             
             </div>
         </div>
     </body>

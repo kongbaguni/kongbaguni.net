@@ -4,6 +4,78 @@ document.documentElement.addEventListener('touchstart', function (event) {
     }
 }, false);
 
+var imageLoader = new Vue({
+    el : "#imageLoader",
+    data : {
+        ctx : null,
+        imageDatas : [
+            { src : "./images/shootinggame/shot01.svg", key : "shot01" , image : new Image()},
+            { src : "./images/shootinggame/shot02.svg", key : "shot02" , image : new Image()},
+            { src : "./images/shootinggame/shot03.svg", key : "shot03" , image : new Image()},
+            { src : "./images/shootinggame/shot04.svg", key : "shot04" , image : new Image()},
+            { src : "./images/shootinggame/shot05.svg", key : "shot05" , image : new Image()},
+        ],
+        keys : [],
+        images : {},
+        needLoadingImageCount : 0,
+        loadFinishCount : 0,    
+        loadFinish : false 
+    },
+    methods : {
+        getImage : function(key) {
+            return this.images[key];
+        },
+        getClassName : function() {
+            if(this.needLoadingImageCount > this.loadFinishCount) {
+                return "on";
+            }
+            return "off";
+        }, 
+        draw : function() {
+            let ctx = this.ctx;
+            ctx.clearRect(0,0,1000,1000);
+            ctx.font = "30px Gill Sans";             
+            ctx.fillStyle = "white";
+            for(var i=0; i<this.keys.length; i++) {
+                const key = this.keys[i];
+                const img = this.images[key];
+                ctx.drawImage(img,15*i + 10,10,10,10);
+            }
+        }
+    }, 
+    
+    mounted() {
+        const canvas = document.getElementById("imageLoading_canvas");
+        this.ctx = canvas.getContext('2d');
+
+        this.needLoadingImageCount = this.imageDatas.length;
+        var imgCount = this.imageDatas.length;
+
+        for (var i = 0; i<this.imageDatas.length; i ++) {
+            var data = this.imageDatas[i];
+            var image = data.image;
+            this.keys.push(data.key);            
+            image.src = data.src;
+            this.images[data.key] = image;
+            image.onload  = function() {
+                imageLoader.ctx.drawImage(image,50,50,0,0);
+                imageLoader.loadFinishCount ++;
+                if(imageLoader.loadFinishCount == imgCount) {
+                    console.log("loading finish")
+                    setTimeout(() => {
+                        imageLoader.loadFinish = true;    
+                    }, 1000);                    
+                }
+            }  
+        }
+        setInterval(() => {
+            this.draw();
+        }, 100);
+    }
+
+})
+
+
 
 var gameManager = new Vue({
     data : {
@@ -16,9 +88,16 @@ var gameManager = new Vue({
         point : 0,
         combo : 0,
         enemyShotCount : 0,
-        timeline : 0
+        timeline : 0,
+        lastAddedPoint : null, 
+        damagedCount : 0,
     },
     methods : {
+        addPoint : function(point) {
+            const value = point * (this.combo +1);
+            this.point += value
+            return value;
+        },
         restart : function() {
             this.point = 0;
             this.enemy = [];
@@ -73,8 +152,25 @@ var gameManager = new Vue({
             if(this.player != null){
                 this.timeline ++;
             }
-            ctx.font = "20px Gill Sans"; 
-            ctx.fillText("point : " + addCommas(this.point) + " combo : " + this.combo, 5,20);
+            const pText = addCommas(this.point); 
+            ctx.font = "30px Gill Sans"; 
+            ctx.fillStyle = "white";
+            ctx.fillText(pText,5,20);
+            ctx.strokeStyle = "red";
+            ctx.strokeText(pText,5,20);
+            if(this.combo > 0) {
+                ctx.font = "15px Gill Sans"; 
+                ctx.fillStyle = "orange";
+                ctx.fillText("x" + this.combo, 5 + pText.length * 15,20 );
+                ctx.strokeStyle = "white";
+                ctx.strokeText("x" + this.combo, 5+ pText.length * 15,20);    
+            }
+
+            if(gameManager.lastAddedPoint != null) {                
+                ctx.font = "10px Gill Sans"; 
+                ctx.fillStyle = "yellow";
+                ctx.fillText("+"+gameManager.lastAddedPoint,8,30);
+            }
             if (this.player != null) {
                 this.player.draw(ctx);
             }
@@ -206,8 +302,7 @@ var gameManager = new Vue({
                     speed : 0.2,
                     size : 50
                 },// 1
- 
-            ]
+            ]            
 
             const enemydata = {
                 100 : a[0],
@@ -382,7 +477,7 @@ var gameUtil = {
     count:0,
     dropItemCount:0,
     lastPlayerPosiont : { x : 0, y : 0},
-    makeDropItem(targetPosition) {
+    makeDropItem(targetPosition, point, itemType) {
         var item = new Vue({
             data : {
                 die : false,
@@ -391,18 +486,12 @@ var gameUtil = {
                 size : 10,
                 speed : 1,
                 fireCount : 0,
-                point : getRandomInt(10,50),
-                itemType : 0, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
+                point : point,
+                itemType : itemType, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
             },
             methods : {                
                 init() {
                     gameUtil.dropItemCount ++;
-                    if(gameUtil.dropItemCount % 5 == 0 && gameManager.player.attack < gameManager.player.attack_MAX) {
-                        this.itemType = 1;                        
-                    }
-                    if(gameManager.player.HP < 10 ) {
-                        this.itemType = 2;
-                    }                    
                 },
                 update() {
                     if(gameManager.player == null) {
@@ -461,17 +550,15 @@ var gameUtil = {
                     if(this.die && gameManager.player != null) {     
                         switch (this.itemType) {
                             case 0:
-                                gameManager.point += this.point * (gameManager.combo + 1);
+                                gameManager.lastAddedPoint = gameManager.addPoint(this.point);
                                 break;
                             case 1:
-                                gameManager.powerup();
+                                gameManager.powerup();                                
                             case 2:
                                 gameManager.player.healing();
                             default:
                                 break;
                         }               
-                        
-                        
                     }
                 }
 
@@ -551,10 +638,16 @@ var gameUtil = {
                         var shot = gameManager.playersShots[i];
                         var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
                         if(distance < this.size && shot.position.y > 0 && shot.die == false ) {
-                            this.HP -= 1;                            
-                            gameManager.point += 1 * (gameManager.combo + 1);
+                            this.HP -= 1;    
+                            gameManager.addPoint(1);                        
                             if(this.HP <= 0 && shot.die == false) {                                                                
-                                gameManager.dropItems.push(gameUtil.makeDropItem(this.position));
+                                gameManager.dropItems.push(gameUtil.makeDropItem(this.position,this.HP_MAX,0));
+                                if(gameUtil.dropItemCount % 10 == 0) {
+                                    gameManager.dropItems.push(gameUtil.makeDropItem({x:this.position.x, y:this.position.y - 20},0,1));
+                                }
+                                if(gameManager.player.HP < 5 && gameUtil.dropItemCount % 30 < 5) {
+                                    gameManager.dropItems.push(gameUtil.makeDropItem({x:this.position.x, y:this.position.y - 20},0,2));
+                                }
                             }
                             shot.die = true;
 
@@ -656,8 +749,7 @@ var gameUtil = {
                                         this.fireCount += 1;
                                     }
                                     this.update();                                        
-                                    
-                                    ctx.fillStyle = data.color;
+                                    ctx.fillStyle = "white";
                                     if(this.fireCount > 0) {
                                         switch (getRandomInt(0,3)) {
                                             case 0:
@@ -681,7 +773,7 @@ var gameUtil = {
                                     let h = 5 - newHeight * 2;
 
                                     
-                                    ctx.fillRect(x, y, w, h); 
+                                    // ctx.fillRect(x, y, w, h); 
                                     if(this.die) {
                                         ctx.fillRect(
                                             this.position.x + 2.5 + newHeight,
@@ -689,6 +781,10 @@ var gameUtil = {
                                             5 - newHeight * 2,
                                             5 + this.fireCount * 5                                        
                                         )
+                                    } else {
+                                        let imgKey = data.imageKey;
+                                        let image = imageLoader.getImage(imgKey);    
+                                        ctx.drawImage(image,this.position.x - 5, this.position.y - 5, 10,10);
                                     }
                                     
                                 }    
@@ -765,6 +861,16 @@ var gameUtil = {
                         } else {
                             this.position.x += this.moveVector.x;
                             this.position.y += this.moveVector.y;
+                        }
+                    }
+                    // 플레이어와 적기의 충돌검사 
+                    for(var i=0; i<gameManager.enemys.length; i++) {
+                        const enemy = gameManager.enemys[i];
+                        const distance = gameUtil.getDistance(this.position.x,this.position.y,enemy.position.x,enemy.position.y);
+                        if(distance < 5 + enemy.size) {
+                            enemy.HP -= 1;                            
+                            this.vector.x = -this.vector.x;
+                            this.vector.y = -this.vector.y;                                                        
                         }
                     }
                 },
@@ -897,7 +1003,7 @@ var gameUtil = {
             this.lastPlayerPosiont = gameManager.player.position;
         }
         const data = [{
-            color : "orange",
+            imageKey : "shot01",
             vectors : [
                 {x:-1,y:1},
                 {x:0,y:1.5},
@@ -910,7 +1016,7 @@ var gameUtil = {
             ],
         }, // 0
         {
-            color : "red",
+            imageKey : "shot02",
             vectors : [
                 {x:-1.5,y:-0.5},
                 {x:1.5,y:-0.5},
@@ -923,13 +1029,13 @@ var gameUtil = {
             ]            
         },  // 1      
         {
-            color: "yellow",
+            imageKey : "shot03",
             vectors : [
                 this.getMoveVector(position.x,position.y, this.lastPlayerPosiont.x, this.lastPlayerPosiont.y, getRandomInt(1,3)),
             ]
         }, // 2
         {
-            color : "white",
+            imageKey : "shot04",
             vectors : [
                 {x : - 1.0, y : 0.1},
                 {x : - 0.9, y : 0.15},
@@ -955,7 +1061,7 @@ var gameUtil = {
             ]
         }, // 3 
         {
-            color : "yellow",
+            imageKey : "shot05",
             vectors : [
                 {x : -1.9, y:0.1},
                 {x : -1.85, y:0.15},
@@ -1022,3 +1128,6 @@ var gameUtil = {
     }
     
 }
+
+
+
