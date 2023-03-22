@@ -139,9 +139,9 @@ var gameManager = new Vue({
         }, 
 
         makeEnemy() {
-            const enemys = [
+            const a = [
                 {
-                    shottype : 0,
+                    shottype : 4,
                     x : 50,
                     movetype : 0,
                     HP : 10,
@@ -188,21 +188,42 @@ var gameManager = new Vue({
                     speed : 1,
                     size : 30
                 },// 1
+            ];
+            b = [
+                {
+                    shottype : 3,
+                    x : 150,
+                    movetype : 1,
+                    HP : 100,
+                    speed : 0.15,
+                    size : 100
+                },// 1
+                {
+                    shottype : 3,
+                    x : 280,
+                    movetype : 1,
+                    HP : 100,
+                    speed : 0.2,
+                    size : 100
+                },// 1
+ 
             ]
 
             const enemydata = {
-                100 : enemys[0],
-                200 : enemys[1],
-                300 : enemys[2],
-                500 : enemys[3],
-                600 : enemys[4],
-                700 : enemys[5],
-                1100 : enemys[0],
-                1200 : enemys[1],
-                1300 : enemys[2],
-                1500 : enemys[3],
-                1600 : enemys[4],
-                1700 : enemys[5]
+                100 : a[0],
+                200 : a[1],
+                300 : a[2],
+                500 : a[3],
+                600 : a[4],
+                700 : a[5],
+                1100 : a[0],
+                1200 : a[1],
+                1300 : a[2],
+                1500 : a[3],
+                1600 : a[4],
+                1700 : a[5],
+                2000 : b[0],
+                2100 : b[1]
             }
 
             if(this.player == null) {
@@ -563,7 +584,7 @@ var gameUtil = {
                 },
                 // 적군 미사일 생성
                 makeShot() {
-                    if(gameManager.enemysShots.length > 200) {
+                    if(gameManager.enemysShots.length > 1000) {
                         return;
                     }
                     this.enemyShotCount += 1;
@@ -596,7 +617,7 @@ var gameUtil = {
                                     }
                                     // 적군 미사일과 플레이어의 충돌검사 
                                     const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
-                                    if (distance  < 10 && gameManager.player.die == false && this.die == false ) {
+                                    if (distance  < 5 && gameManager.player.die == false && this.die == false ) {
                                         this.die = true;
                                         gameManager.player.HP -= 1;
                                         gameManager.combo -= 1;
@@ -738,6 +759,10 @@ var gameUtil = {
                     
                     ctx.beginPath();                        
                     ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                    ctx.stroke(); 
+                    ctx.strokeStyle = "red";    
+                    ctx.beginPath();                        
+                    ctx.arc(this.position.x, this.position.y, 5, 0, 2 * Math.PI);
                     ctx.stroke();     
                     
                     if(this.HP > 0) {
@@ -861,7 +886,7 @@ var gameUtil = {
                 {x:0,y:-1.5},
                 {x:1,y:-1},
             ],
-        }, 
+        }, // 0
         {
             color : "red",
             vectors : [
@@ -874,13 +899,13 @@ var gameUtil = {
                 {x:-0.5,y:+1.5},
                 {x:0.5,y:+1.5},
             ]            
-        },        
+        },  // 1      
         {
             color: "yellow",
             vectors : [
                 this.getMoveVector(position.x,position.y, this.lastPlayerPosiont.x, this.lastPlayerPosiont.y, getRandomInt(1,3)),
             ]
-        },
+        }, // 2
         {
             color : "white",
             vectors : [
@@ -906,13 +931,71 @@ var gameUtil = {
                 {x : 0.8, y : 0.15},
                 {x : 1.0, y : 0.1},
             ]
-        }            
+        }, // 3 
+        {
+            color : "yellow",
+            vectors : [
+                {x : -1.9, y:0.1},
+                {x : -1.85, y:0.15},
+                {x : -1.8, y:0.2},
+                {x : -1.75, y:0.25},
+                {x : -1.7, y:0.3},
+                {x : -1.65, y:0.35},
+                {x : -1.6, y:0.4},
+                {x : -1.55, y:0.45},
+                {x : -1.5, y:0.5},
+                {x : -1.45, y:0.55},
+                {x : -1.4, y:0.6},
+                {x : -1.35, y:0.65},
+                {x : -1.3, y:0.7},
+                {x : -1.25, y:0.75},
+                {x : -1.2, y:0.8},
+                {x : -1.15, y:0.85},
+                {x : -1.1, y:0.9},
+                {x : -1.05, y:0.95},
+                {x : -0.45, y:1.55},
+                {x : -0.4, y:1.6},
+                {x : -0.35, y:1.65},
+                {x : -0.3, y:1.7},
+                {x : -0.25, y:1.75},
+                {x : -0.2, y:1.8},
+                {x : -0.15, y:1.85},
+                {x : -0.1, y:1.9},
+                {x : -0.0, y:2},
+                {x : 0.9, y:0.1},
+                {x : 0.9, y:0.1},
+                {x : 1.9, y:0.1},
+                {x : 1.85, y:0.15},
+                {x : 1.8, y:0.2},
+                {x : 1.75, y:0.25},
+                {x : 1.7, y:0.3},
+                {x : 1.65, y:0.35},
+                {x : 1.6, y:0.4},
+                {x : 1.55, y:0.45},
+                {x : 1.5, y:0.5},
+                {x : 1.45, y:0.55},
+                {x : 1.4, y:0.6},
+                {x : 1.35, y:0.65},
+                {x : 1.3, y:0.7},
+                {x : 1.25, y:0.75},
+                {x : 1.2, y:0.8},
+                {x : 1.15, y:0.85},
+                {x : 1.1, y:0.9},
+                {x : 1.05, y:0.95},
+                {x : 0.45, y:1.55},
+                {x : 0.4, y:1.6},
+                {x : 0.35, y:1.65},
+                {x : 0.3, y:1.7},
+                {x : 0.25, y:1.75},
+                {x : 0.2, y:1.8},
+                {x : 0.15, y:1.85},
+                {x : 0.1, y:1.9},
+                {x : 0.0, y:2},
+                {x : 0.9, y:0.1},
+                {x : 0.9, y:0.1},
+            ]
+        } ,//4
         ]
-        if(index < data.length) {
-            return data[index];
-        }
-        this.count += 0.5;
-        return data[Math.ceil(this.count) % data.length];
         return data[index];
     }
     
