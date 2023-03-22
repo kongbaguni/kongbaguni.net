@@ -687,7 +687,7 @@ var gameUtil = {
                     this.shotCount ++;
                     this.position.y += this.vector.y * this.speed / 2;
                     this.position.x += this.vector.x * this.speed / 2;
-                    if(this.position.y > 800) {
+                    if(gameUtil.isScreenOut(this.position.x, this.position.y, this.size * 2)) {
                         this.die = true;                        
                     }
                     if(this.position.y < 400 && this.die == false && this.moveType == 0) {
@@ -805,7 +805,7 @@ var gameUtil = {
                                         this.fireCount += 1;
                                     }
                                     this.update();   
-                                    
+
                                     if(this.screenOut) {
                                         return ;
                                     }                                     
