@@ -106,6 +106,7 @@ var gameManager = new Vue({
         addPoint : function(point) {
             const value = point * (this.combo +1);
             this.point += value
+            gameManager.lastAddedPoint = value;
             return value;
         },
         restart : function() {
@@ -621,7 +622,7 @@ var gameUtil = {
                     if(this.die && gameManager.player != null) {     
                         switch (this.itemType) {
                             case 0:
-                                gameManager.lastAddedPoint = gameManager.addPoint(this.point);
+                                gameManager.addPoint(this.point);
                                 break;
                             case 1:
                                 gameManager.powerup();                                
