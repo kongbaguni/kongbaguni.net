@@ -16,6 +16,7 @@ var gameManager = new Vue({
         point : 0,
         combo : 0,
         enemyShotCount : 0,
+        timeline : 0
     },
     methods : {
         restart : function() {
@@ -69,6 +70,9 @@ var gameManager = new Vue({
         },
         // 그리기
         draw: function(ctx) {
+            if(this.player != null){
+                this.timeline ++;
+            }
             ctx.font = "20px Gill Sans"; 
             ctx.fillText("point : " + addCommas(this.point) + " combo : " + this.combo, 5,20);
             if (this.player != null) {
@@ -114,7 +118,10 @@ var gameManager = new Vue({
             }
             for(var i=0; i<this.enemysShots.length; i++) {
                 this.enemysShots[i].draw(ctx);
-            }        
+            } 
+            if(this.player != null) {
+                this.makeEnemy();       
+            }
         },
 
         shotIntervalPlayer() {
@@ -123,24 +130,89 @@ var gameManager = new Vue({
             }
         },
 
-        makeIntervalEnemy() {
-          this.makeEnemy();  
-        },
+       
 
         initInterval() {
             setInterval(() => {
                 this.shotIntervalPlayer();
             }, (100));
-            setInterval(() => {
-                this.makeIntervalEnemy();
-            }, 2000);
         }, 
+
         makeEnemy() {
+            const enemys = [
+                {
+                    shottype : 0,
+                    x : 50,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 0.8,
+                    size : 30
+                },// 0
+                {
+                    shottype : 1,
+                    x : 40,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 0.9,
+                    size : 30
+                },// 1
+                {
+                    shottype : 2,
+                    x : 30,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 1,
+                    size : 30
+                },// 1
+                {
+                    shottype : 0,
+                    x : 260,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 0.8,
+                    size : 30
+                },// 0
+                {
+                    shottype : 1,
+                    x : 270,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 0.9,
+                    size : 30
+                },// 1
+                {
+                    shottype : 2,
+                    x : 280,
+                    movetype : 0,
+                    HP : 10,
+                    speed : 1,
+                    size : 30
+                },// 1
+            ]
+
+            const enemydata = {
+                100 : enemys[0],
+                200 : enemys[1],
+                300 : enemys[2],
+                500 : enemys[3],
+                600 : enemys[4],
+                700 : enemys[5],
+                1100 : enemys[0],
+                1200 : enemys[1],
+                1300 : enemys[2],
+                1500 : enemys[3],
+                1600 : enemys[4],
+                1700 : enemys[5]
+            }
+
             if(this.player == null) {
                 return 
-            }            
-            this.enemys.push(gameUtil.makeEnemy());
-            
+            }       
+            var enemy = enemydata[this.timeline];
+            if(enemy != null) {
+                console.log(enemy);
+                this.enemys.push(gameUtil.makeEnemy(enemy));
+            }     
         }
     },
 })
@@ -369,25 +441,34 @@ var gameUtil = {
         return item;
     },
     // 적 생성 
-    makeEnemy() {
+    makeEnemy(data) {
+        /**
+         * {
+         * shottype : 0 // 에너미 미사일타입 (0~4)
+         * x : 0 // 등장 위치 
+         * movetype : 0 // 이동방법 1 : 직진 0 : 플레이어 추적 
+         * HP : 100 // HP
+         * speed : 이동속도
+         * }
+         */
        var enemy = new Vue({
             data:{
                 die : false,
                 inAtteck : false,
                 position:{
-                    x : getRandomInt(50,300),
+                    x : data.x,
                     y : -50
                 },
-                HP : getRandomInt(5,50),
+                HP : data.HP,
                 HP_MAX : 0,
-                size : 20,
-                misailPettrnNumber : getRandomInt(0,4),
+                size : data.size,
+                misailPettrnNumber : data.shottype,
                 vector : {
                     x : 0,
                     y : 1
                 },
-                speed : 1,
-                moveType : 0,
+                speed : data.speed,
+                moveType : data.movetype,
             },
             methods:{
                 setPlayerTargetVector()  {
@@ -397,9 +478,9 @@ var gameUtil = {
                 },
                 init(){
                     this.HP_MAX = this.HP;
-                    this.size = this.HP * 2
-                    this.speed = 10 / this.HP
-                    this.moveType = getRandomInt(0,3);
+                    if(this.size == null) {
+                        this.size = this.HP * 2
+                    }
                     switch (this.moveType) {
                         case 0:
                             this.setPlayerTargetVector();
