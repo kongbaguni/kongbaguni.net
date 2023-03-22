@@ -141,10 +141,10 @@ var gameManager = new Vue({
         makeEnemy() {
             const a = [
                 {
-                    shottype : 4,
+                    shottype : 0,
                     x : 50,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 0.8,
                     size : 30
                 },// 0
@@ -152,7 +152,7 @@ var gameManager = new Vue({
                     shottype : 1,
                     x : 40,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 0.9,
                     size : 30
                 },// 1
@@ -160,7 +160,7 @@ var gameManager = new Vue({
                     shottype : 2,
                     x : 30,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 1,
                     size : 30
                 },// 1
@@ -168,7 +168,7 @@ var gameManager = new Vue({
                     shottype : 0,
                     x : 260,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 0.8,
                     size : 30
                 },// 0
@@ -176,7 +176,7 @@ var gameManager = new Vue({
                     shottype : 1,
                     x : 270,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 0.9,
                     size : 30
                 },// 1
@@ -184,7 +184,7 @@ var gameManager = new Vue({
                     shottype : 2,
                     x : 280,
                     movetype : 0,
-                    HP : 10,
+                    HP : 3,
                     speed : 1,
                     size : 30
                 },// 1
@@ -194,17 +194,17 @@ var gameManager = new Vue({
                     shottype : 3,
                     x : 150,
                     movetype : 1,
-                    HP : 100,
+                    HP : 50,
                     speed : 0.15,
-                    size : 100
+                    size : 50
                 },// 1
                 {
-                    shottype : 3,
+                    shottype : 4,
                     x : 280,
                     movetype : 1,
-                    HP : 100,
+                    HP : 50,
                     speed : 0.2,
-                    size : 100
+                    size : 50
                 },// 1
  
             ]
@@ -223,8 +223,21 @@ var gameManager = new Vue({
                 1600 : a[4],
                 1700 : a[5],
                 2000 : b[0],
-                2100 : b[1]
-            }
+                2100 : b[1],
+                2200 : b[0],
+                2300 : b[1],
+                3100 : a[0],
+                3200 : a[1],
+                3300 : a[2],
+                3500 : a[3],
+                3600 : a[4],
+                3700 : a[5],
+                4100 : a[0],
+                4200 : a[1],
+                4300 : a[2],
+                4500 : a[3],
+                4600 : a[4],
+                4700 : a[5],            }
 
             if(this.player == null) {
                 return 
@@ -302,6 +315,12 @@ var game01 = new Vue({
             this.lastTouchPoint = {x : x, y : y};
         },
         touchmove(touchPoint){
+            if(gameManager.player == null) {
+                return;
+            }
+            if(gameManager.player.die) {
+                return;
+            }
             const canvas = document.getElementById("game01_canvas");
             let rect = canvas.getBoundingClientRect();
             let x = touchPoint.x - rect.x;
@@ -551,7 +570,7 @@ var gameUtil = {
                             }, 500);              
                         }
                     }
-                    if( Math.ceil(this.position.y) % 150 < 15) {
+                    if( Math.ceil(this.position.y) % 50 < 10) {
                         this.makeShot();
                     }
                 },
@@ -822,21 +841,24 @@ var gameUtil = {
                         this.fireCount ++;
                     }
                     this.update();
-                    ctx.fillStyle = "white";
-                    if(this.fireCount > 0) {
-                        switch (getRandomInt(0,3)) {
-                            case 0:
-                                ctx.fillStyle = "red";
-                                break;
-                            case 1:
-                                ctx.fillStyle = "yellow";
-                                break;
-                            default:
-                                ctx.fillStyle = "black";
-                                break
-                        }
-                        
+                    var rcolor1 = "red";
+                    var rcolor2 = "white"
+                    switch (getRandomInt(0,3)) {
+                        case 0:
+                            rcolor1 = "red";
+                            rcolor2 = "white";
+                            break;
+                        case 1:
+                            rcolor1 = "yellow";
+                            rcolor2 = "lime"
+                            break;
+                        default:
+                            rcolor1 = "black";
+                            rcolor2 = "yellow"
+                            break
                     }
+                    ctx.fillStyle = rcolor1;
+                    ctx.strokeStyle = rcolor2;
                     var fx = this.position.x - this.attack - this.fireCount * 2;
                     var fy = this.position.y - 20 + this.fireCount;
 
