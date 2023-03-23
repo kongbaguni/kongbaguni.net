@@ -133,31 +133,7 @@ var gameManager = new Vue({
         powerdown : function() {
             this.player.attack = 1;
         },
-        // 플레이어 미사일 발사
-        shoot : function() {
-            if(this.player == null) {
-                return;
-            }
-            if(this.player.die) {
-                return;
-            }
-            const playerVectors = [
-                {x:0,y:-1}, // 1
-                {x:-0.05,y:-0.95},
-                {x:0.05,y:-0.95}, // 2
-                {x:-0.1,y:-0.9},
-                {x:0.1,y:-0.9}, // 3
-                {x:-0.15,y:-0.95},
-                {x:0.15,y:-0.95}, // 4
-                {x:-0.2,y:-0.8},
-                {x:0.2,y:-0.8}, // 5
-            ]
-            const vc = [1,3,5,7,9];
-            for(i=0; i<vc[this.player.attack-1]; i++) {
-                this.playersShots.push(gameUtil.makePlayerShot(playerVectors[i]));
-            }
-            
-        },
+        
         // 그리기
         draw: function(ctx) {
             if(this.player != null){
@@ -233,34 +209,22 @@ var gameManager = new Vue({
 
         },
 
-        shotIntervalPlayer() {
-            if(this.isShooting) {
-                this.shoot();
-            }
-        },
-
-       
-
-        initInterval() {
-            setInterval(() => {
-                this.shotIntervalPlayer();
-            }, (100));
-        }, 
+      
 
         makeEnemy() {
             const a = [
                 {
                     imageKey : "enemy01",
-                    shottype : 0,
+                    shottype : [0,1],
                     x : 50,
                     movetype : 0,
                     HP : 3,
                     speed : 0.8,
-                    size : 30
+                    size : 30,                    
                 },// 0
                 {
                     imageKey : "enemy01",
-                    shottype : 1,
+                    shottype : [1,2,2],
                     x : 40,
                     movetype : 0,
                     HP : 3,
@@ -269,7 +233,7 @@ var gameManager = new Vue({
                 },// 1
                 {
                     imageKey : "enemy01",
-                    shottype : 2,
+                    shottype : [0,2,2,2],
                     x : 30,
                     movetype : 0,
                     HP : 3,
@@ -278,7 +242,7 @@ var gameManager = new Vue({
                 },// 1
                 {
                     imageKey : "enemy01",
-                    shottype : 0,
+                    shottype : [0,1,1],
                     x : 260,
                     movetype : 0,
                     HP : 3,
@@ -287,7 +251,7 @@ var gameManager = new Vue({
                 },// 0
                 {
                     imageKey : "enemy01",
-                    shottype : 1,
+                    shottype : [1,0,0,0],
                     x : 270,
                     movetype : 0,
                     HP : 3,
@@ -296,7 +260,7 @@ var gameManager = new Vue({
                 },// 1
                 {
                     imageKey : "enemy01",
-                    shottype : 2,
+                    shottype : [0,2,2,2],
                     x : 280,
                     movetype : 0,
                     HP : 3,
@@ -307,52 +271,105 @@ var gameManager = new Vue({
             b = [
                 {
                     imageKey : "enemy02",
-                    shottype : 3,
+                    shottype : [3],
                     x : 150,
                     movetype : 1,
                     HP : 50,
-                    speed : 0.15,
+                    speed : 0.7,
                     size : 50
                 },// 1
                 {
                     imageKey : "enemy02",
-                    shottype : 4,
+                    shottype : [4],
                     x : 280,
                     movetype : 1,
                     HP : 50,
-                    speed : 0.2,
+                    speed : 0.7,
                     size : 50
                 },// 1
             ]   
             c = [
                 {
                     imageKey : "enemy03",
-                    shottype : 4,
+                    shottype : [4],
                     x : 100,
                     movetype : 0,
                     HP : 10,
-                    speed : 5,
+                    speed : 3,
                     size : 30
                 },// 1
                 {
                     imageKey : "enemy03",
-                    shottype : 3,
+                    shottype : [3,2],
                     x : 150,
                     movetype : 0,
                     HP : 10,
-                    speed : 5,
+                    speed : 3,
                     size : 30
                 },// 1
                 {
                     imageKey : "enemy03",
-                    shottype : 3,
+                    shottype : [3,2],
                     x : 200,
                     movetype : 0,
                     HP : 10,
-                    speed : 5,
+                    speed : 3,
                     size : 30
                 },// 1
-            ]         
+            ]    
+            boss = [
+                {
+                    imageKey : "enemy03",
+                    shottype : [0,0,1,1,1,1,2,2,3,3,3],
+                    x : 150,
+                    movetype : 0,
+                    HP : 500,
+                    speed : 2,
+                    size : 100,
+                    ylimit : 150
+                },// 1
+                {
+                    imageKey : "enemy01",
+                    shottype : [0,0,0,0,3,4],
+                    x : 50,
+                    movetype : 0,
+                    HP : 500,
+                    speed : 1,
+                    size : 40,
+                    ylimit : 50
+                },// 1
+                {
+                    imageKey : "enemy01",
+                    shottype : [0,0,0,0,3,4],
+                    x : 300,
+                    movetype : 0,
+                    HP : 500,
+                    speed : 1,
+                    size : 40,
+                    ylimit : 50
+                },// 1
+                {
+                    imageKey : "enemy02",
+                    shottype : [0,0,0,0,2,2],
+                    x : 50,
+                    movetype : 0,
+                    HP : 500,
+                    speed : 1,
+                    size : 40,
+                    ylimit : 250
+                },// 1
+                {
+                    imageKey : "enemy02",
+                    shottype : [0,0,0,0,2,2],
+                    x : 300,
+                    movetype : 0,
+                    HP : 500,
+                    speed : 1,
+                    size : 40,
+                    ylimit : 250
+                },// 1
+
+            ]     
 
             const enemydata = {
                 50 : c[0], 
@@ -390,6 +407,11 @@ var gameManager = new Vue({
                 4800 : c[0], 
                 4850 : c[1], 
                 4900 : c[2], 
+                5110 : boss[0],
+                5112 : boss[1],
+                5113 : boss[2],
+                5114 : boss[3],
+                5115 : boss[4],
              }
 
             if(this.player == null) {
@@ -403,7 +425,6 @@ var gameManager = new Vue({
         }
     },
 })
-gameManager.initInterval(); 
 
 
 var game01 = new Vue({
@@ -526,7 +547,7 @@ var game01 = new Vue({
 
         setInterval(() => {
             this.draw();
-        }, 5);
+        }, 16.6);
     }
 })
 
@@ -669,7 +690,7 @@ var gameUtil = {
                 },
                 speed : data.speed,
                 moveType : data.movetype,
-                shotCount : 0,
+                shotCount : 0,                
             },
             methods:{
                 setPlayerTargetVector()  {
@@ -699,7 +720,7 @@ var gameUtil = {
                     if(gameManager.player == null) {
                         return 
                     }
-                    this.shotCount ++;
+                    
                     this.position.y += this.vector.y * this.speed / 2;
                     this.position.x += this.vector.x * this.speed / 2;
                     if(gameUtil.isScreenOut(this.position.x, this.position.y, this.size * 2)) {
@@ -708,6 +729,14 @@ var gameUtil = {
                     if(this.position.y < 400 && this.die == false && this.moveType == 0) {
                         this.setPlayerTargetVector();
                     }
+                    if(data.ylimit != null) {
+                        if(this.position.y >= data.ylimit) {
+                            console.log("boss stop");
+                            this.speed = 0;
+                            this.setPlayerTargetVector();    
+                        }
+                    }
+                    
                     // 플레이어 샷과 적기의 충돌검사
                     for(var i = 0; i < gameManager.playersShots.length; i ++) {
                         var shot = gameManager.playersShots[i];
@@ -738,8 +767,8 @@ var gameUtil = {
                             }, 500);              
                         }
                     }
-                    if( this.shotCount % 100  < 50) {
-                        if(this.shotCount % 10 == 0) {
+                    if( gameManager.timeline % 100  < 50) {
+                        if(gameManager.timeline % 10 == 0) {
                             this.makeShot();
                         }
                     }
@@ -777,11 +806,13 @@ var gameUtil = {
                 },
                 // 적군 미사일 생성
                 makeShot() {
+                    this.shotCount ++;
                     if(gameManager.enemysShots.length > 10000) {
                         return;
                     }
                     this.enemyShotCount += 1;
-                    const data = gameUtil.getMisailPettern(this.position,this.misailPettrnNumber);
+                    const idx = this.shotCount % this.misailPettrnNumber.length;
+                    const data = gameUtil.getMisailPettern(this.position,this.misailPettrnNumber[idx]);
                     const vectors = data.vectors;
                     for(i=0; i< vectors.length; i++) {
                         var shot = new Vue ({
@@ -901,6 +932,28 @@ var gameUtil = {
                 attack_MAX : 5,
             },
             methods : {
+                // 플레이어 미사일 발사
+                shoot : function() {
+                    if(this.die) {
+                        return;
+                    }
+                    const playerVectors = [
+                        {x:0,y:-1}, // 1
+                        {x:-0.05,y:-0.95},
+                        {x:0.05,y:-0.95}, // 2
+                        {x:-0.1,y:-0.9},
+                        {x:0.1,y:-0.9}, // 3
+                        {x:-0.15,y:-0.95},
+                        {x:0.15,y:-0.95}, // 4
+                        {x:-0.2,y:-0.8},
+                        {x:0.2,y:-0.8}, // 5
+                    ]
+                    const vc = [1,3,5,7,9];
+                    for(i=0; i<vc[this.attack-1]; i++) {
+                        gameManager.playersShots.push(gameUtil.makePlayerShot(playerVectors[i]));
+                    }
+                    
+                },
                 //피탄 
                 damage(point) {
                     this.HP -= point;
@@ -933,6 +986,9 @@ var gameUtil = {
                     if(this.die) {
                         this.size +=1;
                         return;
+                    }
+                    if(gameManager.timeline % 5 == 0) {
+                        this.shoot();
                     }
                     if(this.moveTo == null) {
                         return;
