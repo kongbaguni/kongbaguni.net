@@ -139,20 +139,6 @@ var gameManager = new Vue({
             if(this.player != null){
                 this.timeline ++;
             }
-            if (this.player != null) {
-                this.player.draw(ctx);
-            }
-            // 플레이어 미사일 그리기 
-            for (var i = 0; i < this.playersShots.length; i ++) {                
-                let shot = this.playersShots[i];
-                if(shot.die && shot.fireCount > 20) {
-                    this.playersShots.splice(i,1);
-                }
-            }
-            for (var i = 0; i < this.playersShots.length; i ++) {                
-                this.playersShots[i].draw(ctx);
-            }
-
             // 적 미사일 그리기 
             for(var i=0; i < this.enemys.length; i++) {
                 let enemy = this.enemys[i];
@@ -162,6 +148,17 @@ var gameManager = new Vue({
             }
             for(var i=0; i < this.enemys.length; i++) {
                 this.enemys[i].draw(ctx);
+            }
+
+            // 플레이어 미사일 그리기 
+            for (var i = 0; i < this.playersShots.length; i ++) {                
+                let shot = this.playersShots[i];
+                if(shot.die && shot.fireCount > 20) {
+                    this.playersShots.splice(i,1);
+                }
+            }
+            for (var i = 0; i < this.playersShots.length; i ++) {                
+                this.playersShots[i].draw(ctx);
             }
 
             //아이템 그리기 
@@ -186,27 +183,65 @@ var gameManager = new Vue({
             if(this.player != null) {
                 this.makeEnemy();       
             }
+
+            const gameOver = this.timeline > 5200 && this.enemys.length == 0;
             // point 그리기
-            const pText = addCommas(this.point); 
-            ctx.font = "30px Gill Sans"; 
-            ctx.fillStyle = "white";
-            ctx.fillText(pText,5,20);
-            ctx.strokeStyle = "red";
-            ctx.strokeText(pText,5,20);
-            if(this.combo > 0) {
-                ctx.font = "15px Gill Sans"; 
+            if(!gameOver) {
+                const pText = addCommas(this.point); 
+                ctx.font = "30px Gill Sans"; 
+                ctx.fillStyle = "white";
+                ctx.fillText(pText,5,20);
+                ctx.strokeStyle = "red";
+                ctx.strokeText(pText,5,20);
+                if(this.combo > 0) {
+                    ctx.font = "15px Gill Sans"; 
+                    ctx.fillStyle = "orange";
+                    ctx.fillText("x" + this.combo, 5 + pText.length * 15,20 );
+                    ctx.strokeStyle = "white";
+                    ctx.strokeText("x" + this.combo, 5+ pText.length * 15,20);    
+                }
+    
+                if(gameManager.lastAddedPoint != null) {                
+                    ctx.font = "10px Gill Sans"; 
+                    ctx.fillStyle = "yellow";
+                    ctx.fillText("+"+gameManager.lastAddedPoint, 5+ pText.length * 15 ,30);
+                }    
+                // 플레이어 그리기 
+                if (this.player != null) {
+                    this.player.draw(ctx);
+                }                
+            }
+            else {
+                // 플레이어 그리기 
+                if (this.player != null) {
+                    this.player.draw(ctx);
+                }
+
+                var ty = 30;
+                ctx.font = "30px gill sans";
                 ctx.fillStyle = "orange";
-                ctx.fillText("x" + this.combo, 5 + pText.length * 15,20 );
-                ctx.strokeStyle = "white";
-                ctx.strokeText("x" + this.combo, 5+ pText.length * 15,20);    
-            }
+                ctx.fillText("GAME OVER", 5,ty);
+                ty += 40;
 
-            if(gameManager.lastAddedPoint != null) {                
-                ctx.font = "10px Gill Sans"; 
-                ctx.fillStyle = "yellow";
-                ctx.fillText("+"+gameManager.lastAddedPoint, 5+ pText.length * 15 ,30);
-            }
+                ctx.font = "20px gill sans";
+                ctx.fillStyle = "white";
+                var point = this.point;
+                if (this.damagedCount == 0) {
+                    ctx.fillText("No Miss Bonus : " + addCommas(10000) ,5, ty);
+                    point +=  10000;
+                    ty += 30;
+                }
+                ctx.fillText("Combo : " + this.combo , 5, ty);
+                ty += 30;
+                if(this.combo > 0) {
+                    point += 1000 * this.combo;
+                    ctx.fillText("Combo Bonus : " + addCommas(this.combo * 1000) , 5, ty);
+                    ty += 30;
+                }
 
+                ctx.fillText("total : " + addCommas(point), 5, ty);                
+            }
+            
         },
 
       
@@ -504,8 +539,13 @@ var game01 = new Vue({
                 const nx = x - lp.x;
                 const ny = y - lp.y;
 
-                gameManager.player.position.x += nx;
-                gameManager.player.position.y += ny;                
+                const newx = gameManager.player.position.x + nx;
+                const newy = gameManager.player.position.y + ny;                
+                if (gameUtil.isScreenOut(newx,newy,-10) == false) {                    
+                    gameManager.player.position = {x : newx, y : newy};
+                } else {
+                    console.log("screen out");
+                }
             }
             this.lastTouchPoint = {x : x, y : y};
         },
@@ -741,6 +781,7 @@ var gameUtil = {
                     for(var i = 0; i < gameManager.playersShots.length; i ++) {
                         var shot = gameManager.playersShots[i];
                         var distance = gameUtil.getDistance(this.position.x,this.position.y,shot.position.x,shot.position.y);
+                        
                         if(distance < this.size && shot.position.y > 0 && shot.die == false ) {
                             this.HP -= 1;    
                             gameManager.addPoint(1);                        
