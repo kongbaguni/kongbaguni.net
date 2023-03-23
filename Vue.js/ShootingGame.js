@@ -10,6 +10,7 @@ var imageLoader = new Vue({
     data : {
         ctx : null,
         imageDatas : [
+            { src : "./images/shootinggame/bg.svg", key : "bg" , image : new Image()},
             { src : "./images/shootinggame/shot01_1.svg", key : "shot01_1" , image : new Image()},
             { src : "./images/shootinggame/shot01_2.svg", key : "shot01_2" , image : new Image()},
             { src : "./images/shootinggame/shot01_3.svg", key : "shot01_3" , image : new Image()},
@@ -28,6 +29,9 @@ var imageLoader = new Vue({
             { src : "./images/shootinggame/enemy04_2.svg", key : "enemy04_2" , image : new Image()},
             { src : "./images/shootinggame/enemy04_3.svg", key : "enemy04_3" , image : new Image()},
             { src : "./images/shootinggame/enemy05.svg", key : "enemy05" , image : new Image()},
+            { src : "./images/shootinggame/player_1.svg", key : "player_1" , image : new Image()},
+            { src : "./images/shootinggame/player_2.svg", key : "player_2" , image : new Image()},
+            { src : "./images/shootinggame/player_3.svg", key : "player_3" , image : new Image()},
         ],
         keys : [],
         images : {},
@@ -152,6 +156,10 @@ var gameManager = new Vue({
         
         // 그리기
         draw: function(ctx) {
+            // 배경 그리기
+            const bg = imageLoader.getImage("bg");
+            ctx.drawImage(bg,0,-5000 + gameManager.timeline * 0.5 , 370,5000); 
+            
             if(this.player != null){
                 this.timeline ++;
             }
@@ -204,11 +212,13 @@ var gameManager = new Vue({
             // point 그리기
             if(!gameOver) {
                 const pText = addCommas(this.point); 
-                ctx.font = "30px Gill Sans"; 
-                ctx.fillStyle = "white";
-                ctx.fillText(pText,5,20);
-                ctx.strokeStyle = "red";
-                ctx.strokeText(pText,5,20);
+                if(this.point > 0) {                    
+                    ctx.font = "30px Gill Sans"; 
+                    ctx.fillStyle = "white";
+                    ctx.fillText(pText,5,25);
+                    ctx.strokeStyle = "red";
+                    ctx.strokeText(pText,5,25);    
+                }
                 if(this.combo > 0) {
                     ctx.font = "15px Gill Sans"; 
                     ctx.fillStyle = "orange";
@@ -874,14 +884,14 @@ var gameUtil = {
                     if(this.HP <=0) {
                         ctx.strokeStyle = "white";
                     }
-                    ctx.beginPath();                        
-                    ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                    // ctx.beginPath();                        
+                    // ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                    // ctx.stroke();
                     const imgidx = gameManager.timeline % data.imageKey.length;
                     const image = imageLoader.getImage(data.imageKey[imgidx]);
                     if(image != null && this.HP > 0) {                
                         ctx.drawImage(image,this.position.x - this.size , this.position.y - this.size , this.size * 2, this.size * 2);
                     }
-                    ctx.stroke();
 
                     if(this.HP > 0){
                         ctx.fillStyle = "white";
@@ -1024,9 +1034,10 @@ var gameUtil = {
                 moveVector : null,
                 movement : 50,
                 inDamage : false,
-                size : 10,
+                size : 20,
                 attack : 1,
                 attack_MAX : 5,
+                damagePrintCount : 0,
             },
             methods : {
                 // 플레이어 미사일 발사
@@ -1118,20 +1129,37 @@ var gameUtil = {
                 },
                 draw(ctx) {
                     this.update();
+                    var imageNames = ["player_1","player_2"];
                     ctx.strokeStyle = "white";
-                    if(this.inDamage == true || this.die == true ) {
+                    if(this.inDamage == true || this.die == true || this.damagePrintCount > 0 ) {                        
+                        this.damagePrintCount ++;
                         ctx.strokeStyle = "red";
-                        this.inDamage = false;
+                        imageNames = ["player_3"];                        
+                        this.inDamage = false;                        
+                        if(this.damagePrintCount > 50) {
+                            this.damagePrintCount = 0;
+                        }
+                    }
+                    if(this.damagePrintCount > 0) {
+                        this.damagePrintCount++;
+                    }
+
+                    const idx = gameManager.timeline % imageNames.length;
+                    const image = imageLoader.getImage(imageNames[idx]);
+                    if(this.die == false) {
+                        if(image != null) {
+                            ctx.drawImage(image,this.position.x - this.size, this.position.y - this.size, this.size*2,this.size*2);
+                        }    
+                    } else {
+                        ctx.beginPath();                        
+                        ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
+                        ctx.stroke(); 
                     }
                     
-                    ctx.beginPath();                        
-                    ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
-                    ctx.stroke(); 
                     ctx.strokeStyle = "red";    
                     ctx.beginPath();                        
                     ctx.arc(this.position.x, this.position.y, 5, 0, 2 * Math.PI);
                     ctx.stroke();     
-                    
                     if(this.HP > 0) {
                         const hpx = this.position.x - 10;
                         const hpy = this.position.y + 12;
@@ -1310,9 +1338,9 @@ var gameUtil = {
                 {x : -1.8, y:0.2},
                 {x : -1.75, y:0.25},
                 {x : -1.7, y:0.3},
-                {x : -1.65, y:0.35},
-                {x : -1.6, y:0.4},
-                {x : -1.55, y:0.45},
+                // {x : -1.65, y:0.35},
+                // {x : -1.6, y:0.4},
+                // {x : -1.55, y:0.45},
                 {x : -1.5, y:0.5},
                 {x : -1.45, y:0.55},
                 {x : -1.4, y:0.6},
@@ -1330,18 +1358,16 @@ var gameUtil = {
                 {x : -0.25, y:1.75},
                 {x : -0.2, y:1.8},
                 {x : -0.15, y:1.85},
-                {x : -0.1, y:1.9},
-                {x : -0.0, y:2},
-                {x : 0.9, y:0.1},
-                {x : 0.9, y:0.1},
+                // {x : -0.1, y:1.9},
+                // {x : -0.0, y:2},
                 {x : 1.9, y:0.1},
                 {x : 1.85, y:0.15},
                 {x : 1.8, y:0.2},
                 {x : 1.75, y:0.25},
                 {x : 1.7, y:0.3},
-                {x : 1.65, y:0.35},
-                {x : 1.6, y:0.4},
-                {x : 1.55, y:0.45},
+                // {x : 1.65, y:0.35},
+                // {x : 1.6, y:0.4},
+                // {x : 1.55, y:0.45},
                 {x : 1.5, y:0.5},
                 {x : 1.45, y:0.55},
                 {x : 1.4, y:0.6},
@@ -1359,10 +1385,8 @@ var gameUtil = {
                 {x : 0.25, y:1.75},
                 {x : 0.2, y:1.8},
                 {x : 0.15, y:1.85},
-                {x : 0.1, y:1.9},
-                {x : 0.0, y:2},
-                {x : 0.9, y:0.1},
-                {x : 0.9, y:0.1},
+                // {x : 0.1, y:1.9},
+                // {x : 0.0, y:2},
             ]
         } ,//4
         ]

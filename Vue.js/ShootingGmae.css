@@ -2,6 +2,9 @@
     background: darkgray;
     border: 1px solid #fff;
 }
+#game01_canvas {
+    border: 1px solid #368;
+}
 .controller {
     text-align: center;
 }
@@ -55,8 +58,8 @@ div.controller > button {
 #imageLoader {
     position: absolute;
     display: block;
-    width: 100%;
-    height: 700px;
+    width: 347px;
+    height: 500px;
     z-index: 100;    
     background-color: cadetblue;
     margin: 0px;
