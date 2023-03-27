@@ -218,8 +218,16 @@ var gameUtil = new Vue ({
                             }, 500);              
                         }
                     }
-                    if( gameManager.timeline % 100 < 30) {
-                        this.makeShot();
+                    if(data.shotInterval != null) {
+                        if( gameManager.timeline % data.shotInterval.interval < data.shotInterval.range) {
+                            this.makeShot();
+                        }    
+
+                    }
+                    else {
+                        if( gameManager.timeline % 100 < 30) {
+                            this.makeShot();
+                        }    
                     }
                 },
                 draw(ctx) {

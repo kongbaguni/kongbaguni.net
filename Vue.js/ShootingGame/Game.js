@@ -181,7 +181,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 0.8,
-                    size : 30,                    
+                    size : 30,   
+                    shotInterval : {interval: 100, range:20}                 
                 },// 0
                 {
                     imageKey : ["enemy01"],
@@ -190,7 +191,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 0.9,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy01"],
@@ -199,7 +201,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 1,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy01"],
@@ -208,7 +211,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 0.8,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 0
                 {
                     imageKey : ["enemy01"],
@@ -217,7 +221,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 0.9,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy01"],
@@ -226,7 +231,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 3,
                     speed : 1,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
             ];
             b = [
@@ -237,7 +243,8 @@ var gameManager = new Vue({
                     movetype : 1,
                     HP : 50,
                     speed : 0.7,
-                    size : 50
+                    size : 50,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy02"],
@@ -246,7 +253,8 @@ var gameManager = new Vue({
                     movetype : 1,
                     HP : 50,
                     speed : 0.7,
-                    size : 50
+                    size : 50,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
             ];
             c = [
@@ -257,7 +265,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 10,
                     speed : 3,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy03"],
@@ -266,7 +275,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 10,
                     speed : 3,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
                 {
                     imageKey : ["enemy03"],
@@ -275,7 +285,8 @@ var gameManager = new Vue({
                     movetype : 0,
                     HP : 10,
                     speed : 3,
-                    size : 30
+                    size : 30,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
             ];   
             boss = [
@@ -284,10 +295,11 @@ var gameManager = new Vue({
                     shottype : [0,0,1,1,1,1,2,2,3,3,3,5,5],
                     x : 150,
                     movetype : 0,
-                    HP : 500,
+                    HP : 1000,
                     speed : 2,
                     size : 100,
-                    ylimit : 150
+                    ylimit : 150,
+                    shotInterval : {interval: 80, range:30}                 
                 },// 1
                 {
                     imageKey : ["enemy01"],
@@ -297,7 +309,8 @@ var gameManager = new Vue({
                     HP : 500,
                     speed : 1,
                     size : 40,
-                    ylimit : 50
+                    ylimit : 50,
+                    shotInterval : {interval: 80, range:30}                 
                 },// 1
                 {
                     imageKey : ["enemy01"],
@@ -307,7 +320,8 @@ var gameManager = new Vue({
                     HP : 500,
                     speed : 1,
                     size : 40,
-                    ylimit : 50
+                    ylimit : 50,
+                    shotInterval : {interval: 80, range:30}                 
                 },// 1
                 {
                     imageKey : ["enemy02"],
@@ -317,7 +331,8 @@ var gameManager = new Vue({
                     HP : 500,
                     speed : 1,
                     size : 40,
-                    ylimit : 250
+                    ylimit : 250,
+                    shotInterval : {interval: 80, range:30}                 
                 },// 1
                 {
                     imageKey : ["enemy02"],
@@ -327,7 +342,8 @@ var gameManager = new Vue({
                     HP : 500,
                     speed : 1,
                     size : 40,
-                    ylimit : 250
+                    ylimit : 250,
+                    shotInterval : {interval: 100, range:20}                 
                 },// 1
 
             ];  
@@ -340,7 +356,8 @@ var gameManager = new Vue({
                 speed : 2,
                 size : 30,
                 ylimit : 250,
-                itemType : "POWER"
+                itemType : "POWER",
+                shotInterval : {interval: 2, range:1}
             };
             e_HpUP = {
                 imageKey : ["enemy05"],
@@ -351,7 +368,8 @@ var gameManager = new Vue({
                 speed : 2,
                 size : 30,
                 ylimit : 250,
-                itemType : "HP"
+                itemType : "HP",
+                shotInterval : {interval: 2, range:1}                 
             }
             
 
