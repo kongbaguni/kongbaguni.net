@@ -1,116 +1,118 @@
-var gameUtil = {
-    count:0,
-    dropItemCount:0,
-    lastPlayerPosiont : { x : 0, y : 0},
-    isScreenOut(x,y,targetSize) {
-        if(y > screenSize.h + targetSize) {
-            return true 
-        }
-        if(x > screenSize.w + targetSize) {
-            return true 
-        }
-        if(x < -targetSize) {
-            return true 
-        }
-        if(y < -targetSize) {
-            return true 
-        }
-        return false 
-    },
-    makeDropItem(targetPosition, point, itemType) {
-        var item = new Vue({
-            data : {
-                die : false,
-                position : targetPosition,
-                vector : {x:0,y:1},
-                size : 10,
-                speed : 1,
-                fireCount : 0,
-                point : point,
-                itemType : itemType, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
-            },
-            methods : {                
-                init() {
-                    gameUtil.dropItemCount ++;
-                },
-                update() {
-                    if(gameManager.player == null) {
-                        return;
-                    }
-                    const pp = gameManager.player.position;
-                    const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);                    
-
-                    if(gameUtil.isScreenOut(this.position.x, this.position.y,-50)) {
-                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
-                    }
-                    if(distance >= 150) {
-                        this.speed = 0.9;
-                    }
-                    if(distance < 150) {
-                        this.speed = 1.5;
-                        this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);                        
-                    }                                        
-                    if(distance < 10) {                        
-                        this.die = true;
-                    }                    
-                    if(!this.die) {
-                        this.position.x += this.vector.x * this.speed;
-                        this.position.y += this.vector.y * this.speed;    
-                    } else {
-                        this.fireCount ++;
-                    }
-                },
-
-                draw(ctx) {
-                    var text = this.point;
-                    switch (this.itemType) {
-                        case 1:
-                            text = "P";
-                            break;
-                        case 2:
-                            text = "HP";
-                            break;
-                        default:
-                            break;                        
-                    }
-                    this.update();
-                    ctx.font = (this.fireCount + 30) + "px Gill Sans";             
-                    ctx.fillStyle = "blue"
-                    if(this.speed > 1.0) {
-                        ctx.fillStyle = "green";
-                    }
-                    ctx.fillText(text,this.position.x, this.position.y);
-                    ctx.strokeStyle = "white"        
-                    ctx.strokeText(text,this.position.x, this.position.y);
-                }
-            },
-            watch : {
-                die(a,b) {
-                    if(this.die && gameManager.player != null) {     
-                        switch (this.itemType) {
-                            case 0:
-                                gameManager.addPoint(this.point);
-                                break;
-                            case 1:
-                                gameManager.powerup();                                
-                            case 2:
-                                gameManager.player.healing();
-                            default:
-                                break;
-                        }               
-                    }
-                }
-
+var gameUtil = new Vue ({
+    data: {
+        count:0,
+        dropItemCount:0,
+        lastPlayerPosiont : { x : 0, y : 0},    
+    }, methods : {
+        isScreenOut(x,y,targetSize) {
+            if(y > screenSize.h + targetSize) {
+                return true 
             }
-        })
-        item.init();
-        return item;
-    },
-    // 적 생성 
-    makeEnemy(data) {
+            if(x > screenSize.w + targetSize) {
+                return true 
+            }
+            if(x < -targetSize) {
+                return true 
+            }
+            if(y < -targetSize) {
+                return true 
+            }
+            return false 
+        },
+        makeDropItem(targetPosition, point, itemType) {
+            var item = new Vue({
+                data : {
+                    die : false,
+                    position : targetPosition,
+                    vector : {x:0,y:1},
+                    size : 10,
+                    speed : 1,
+                    fireCount : 0,
+                    point : point,
+                    itemType : itemType, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
+                },
+                methods : {                
+                    init() {
+                        gameUtil.dropItemCount ++;
+                    },
+                    update() {
+                        if(gameManager.player == null) {
+                            return;
+                        }
+                        const pp = gameManager.player.position;
+                        const distance = gameUtil.getDistance(this.position.x, this.position.y, pp.x, pp.y);                    
+    
+                        if(gameUtil.isScreenOut(this.position.x, this.position.y,-50)) {
+                            this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);
+                        }
+                        if(distance >= 150) {
+                            this.speed = 0.9;
+                        }
+                        if(distance < 150) {
+                            this.speed = 1.5;
+                            this.vector = gameUtil.getMoveVector(this.position.x, this.position.y, pp.x, pp.y, 2);                        
+                        }                                        
+                        if(distance < 10) {                        
+                            this.die = true;
+                        }                    
+                        if(!this.die) {
+                            this.position.x += this.vector.x * this.speed;
+                            this.position.y += this.vector.y * this.speed;    
+                        } else {
+                            this.fireCount ++;
+                        }
+                    },
+    
+                    draw(ctx) {
+                        var text = this.point;
+                        switch (this.itemType) {
+                            case 1:
+                                text = "P";
+                                break;
+                            case 2:
+                                text = "HP";
+                                break;
+                            default:
+                                break;                        
+                        }
+                        this.update();
+                        ctx.font = (this.fireCount + 30) + "px Gill Sans";             
+                        ctx.fillStyle = "blue"
+                        if(this.speed > 1.0) {
+                            ctx.fillStyle = "green";
+                        }
+                        ctx.fillText(text,this.position.x, this.position.y);
+                        ctx.strokeStyle = "white"        
+                        ctx.strokeText(text,this.position.x, this.position.y);
+                    }
+                },
+                watch : {
+                    die(a,b) {
+                        if(this.die && gameManager.player != null) {     
+                            switch (this.itemType) {
+                                case 0:
+                                    gameManager.addPoint(this.point);
+                                    break;
+                                case 1:
+                                    gameManager.powerup();                                
+                                case 2:
+                                    gameManager.player.healing();
+                                default:
+                                    break;
+                            }               
+                        }
+                    }
+    
+                }
+            })
+            item.init();
+            return item;
+        },
+     // 적 생성 
+     makeEnemy(data) {
         /**
          * {
-         * shottype : 0 // 에너미 미사일타입 (0~4)
+         * shottype : 0 // 에너미 미사일타입 (0~5)
          * x : 0 // 등장 위치 
          * movetype : 0 // 이동방법 1 : 직진 0 : 플레이어 추적 
          * HP : 100 // HP
@@ -216,10 +218,8 @@ var gameUtil = {
                             }, 500);              
                         }
                     }
-                    if( gameManager.timeline % 100  < 50) {
-                        if(gameManager.timeline % 10 == 0) {
-                            this.makeShot();
-                        }
+                    if( gameManager.timeline % 100 < 30) {
+                        this.makeShot();
                     }
                 },
                 draw(ctx) {
@@ -264,105 +264,112 @@ var gameUtil = {
                     const idx = this.shotCount % this.misailPettrnNumber.length;
                     const data = gameUtil.getMisailPettern(this.position,this.misailPettrnNumber[idx]);
                     const vectors = data.vectors;
-                    for(i=0; i< vectors.length; i++) {
-                        var shot = new Vue ({
-                            data : {
-                                die : false,
-                                position : {
-                                    x : this.position.x,
-                                    y : this.position.y
-                                },
-                                vector : vectors[i],
-                                fireCount : 0,
-                            },
-                            methods : {
-                                update : function() {
-                                    if(this.die == true) {
-                                        return 
-                                    }
-                                    this.position.x += this.vector.x;
-                                    this.position.y += this.vector.y;
-                                    if(gameUtil.isScreenOut(this.position.x, this.position.y,20)) {
-                                        this.die = true;
-                                        this.screenOut = true;
-                                        return;
-                                    }
-                                    if(gameManager.player == null) {
-                                        return;
-                                    }
-                                    // 적군 미사일과 플레이어의 충돌검사 
-                                    const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
-                                    if (distance  < 5 && gameManager.player.die == false && this.die == false ) {
-                                        this.die = true;
-                                        gameManager.player.damage(1);
-                                    }                              
-                                    if(gameManager.player.HP <= 0) {
-                                        setTimeout(() => {
-                                            gameManager.player = null;
-                                        }, 5000);
-                                    }                                              
-                                },
-                                draw : function(ctx) {
-                                    if(this.die) {
-                                        this.fireCount += 1;
-                                    }
-                                    this.update();   
-
-                                    if(this.screenOut) {
-                                        return ;
-                                    }                                     
-                                    ctx.fillStyle = "white";
-                                    if(this.fireCount > 0) {
-                                        switch (getRandomInt(0,3)) {
-                                            case 0:
-                                                ctx.fillStyle = "orange";
-                                                break;
-                                            case 1:
-                                                ctx.fillStyle = "red";
-                                                break;
-                                            default:
-                                                ctx.fillStyle = "yellow";
-                                                break;
-                                        }
-                                    }
-                                    var newHeight = this.fireCount;
-                                    if((5 - this.fireCount) < 1) {
-                                        newHeight = 1;
-                                    } 
-                                    let x = this.position.x - 2.5 - this.fireCount * 2.5;
-                                    let y = this.position.y + 2.5 + newHeight;           
-                                    let w = 5 + this.fireCount * 5;
-                                    let h = 5 - newHeight * 2;
-
-                                    
-                                    // ctx.fillRect(x, y, w, h); 
-                                    if(this.die) {
-                                        ctx.fillRect(
-                                            this.position.x + 2.5 + newHeight,
-                                            this.position.y - 2.5 - this.fireCount * 2.5,
-                                            5 - newHeight * 2,
-                                            5 + this.fireCount * 5                                        
-                                        )
-                                    } else {
-                                        let idx = gameManager.timeline % data.imageKey.length;
-                                        let imgKey = data.imageKey[idx];
-                                        let image = imageLoader.getImage(imgKey);    
-                                        if(image != null) {
-                                            ctx.drawImage(image,this.position.x - 5, this.position.y - 5, 10,10);
-                                        } 
-                                
-                                    }
-                                    
-                                }    
-                            }
-                        })                                                                                        
-                        gameManager.enemysShots.push(shot);
-                    }
+                    
+                    const vid = gameManager.timeline % vectors.length;
+                    let shot = gameUtil.makeEnemyShot({
+                        imageKey : data.imageKey,
+                        position : {x : this.position.x, y : this.position.y},
+                        vector : vectors[vid],
+                        speed : data.speed,
+                    })
+                    gameManager.enemysShots.push(shot);
                 }
             }
         })
         enemy.init();
         return enemy;
+    },
+    makeEnemyShot(data) {
+        var enemyShot = new Vue ({
+            data : {
+                die : false,
+                position : data.position,
+                vector : data.vector,
+                speed : data.speed,
+                fireCount : 0,
+            },
+            methods : {
+                update : function() {
+                    if(this.die == true) {
+                        return 
+                    }
+                    this.position.x += (this.vector.x * this.speed);
+                    this.position.y += (this.vector.y * this.speed);
+                    if(gameUtil.isScreenOut(this.position.x, this.position.y,20)) {
+                        this.die = true;
+                        this.screenOut = true;
+                        return;
+                    }
+                    if(gameManager.player == null) {
+                        return;
+                    }
+                    // 적군 미사일과 플레이어의 충돌검사 
+                    const distance = gameUtil.getDistance(this.position.x,this.position.y, gameManager.player.position.x, gameManager.player.position.y);
+                    if (distance  < 5 && gameManager.player.die == false && this.die == false ) {
+                        this.die = true;
+                        gameManager.player.damage(1);
+                    }                              
+                    if(gameManager.player.HP <= 0) {
+                        setTimeout(() => {
+                            gameManager.player = null;
+                        }, 5000);
+                    }                                              
+                },
+                draw : function(ctx) {
+                    if(this.die) {
+                        this.fireCount += 1;
+                    }
+                    this.update();   
+
+                    if(this.screenOut) {
+                        return ;
+                    }                                     
+                    ctx.fillStyle = "white";
+                    if(this.fireCount > 0) {
+                        switch (getRandomInt(0,3)) {
+                            case 0:
+                                ctx.fillStyle = "orange";
+                                break;
+                            case 1:
+                                ctx.fillStyle = "red";
+                                break;
+                            default:
+                                ctx.fillStyle = "yellow";
+                                break;
+                        }
+                    }
+                    var newHeight = this.fireCount;
+                    if((5 - this.fireCount) < 1) {
+                        newHeight = 1;
+                    } 
+                    let x = this.position.x - 2.5 - this.fireCount * 2.5;
+                    let y = this.position.y + 2.5 + newHeight;           
+                    let w = 5 + this.fireCount * 5;
+                    let h = 5 - newHeight * 2;
+
+                    
+                    // ctx.fillRect(x, y, w, h); 
+                    if(this.die) {
+                        ctx.fillRect(
+                            this.position.x + 2.5 + newHeight,
+                            this.position.y - 2.5 - this.fireCount * 2.5,
+                            5 - newHeight * 2,
+                            5 + this.fireCount * 5                                        
+                        )
+                    } else {
+                        let idx = gameManager.timeline % data.imageKey.length;
+                        let imgKey = data.imageKey[idx];
+                        let image = imageLoader.getImage(imgKey);    
+                        if(image != null) {
+                            ctx.drawImage(image,this.position.x - 5, this.position.y - 5, 10,10);
+                        } 
+                
+                    }
+                    
+                }    
+            }
+        }) 
+        return enemyShot;
     },
     // 플레이어 생성 
     makePlayer() {
@@ -612,6 +619,12 @@ var gameUtil = {
         const mvY = directionY * speed;
         return {x : mvX, y: mvY};
     },
+    getCircleVector:function(range) {
+        var a = gameManager.timeline * range;
+        var x = Math.cos(a);
+        var y = Math.sin(a);
+        return {x : x, y : y};
+    },
     getDistance:function(x1,y1,x2,y2) {
         let distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
         return distance;
@@ -632,6 +645,7 @@ var gameUtil = {
                 {x:0,y:-1.5},
                 {x:1,y:-1},
             ],
+            speed : 1.0
         }, // 0
         {
             imageKey : ["shot03"],
@@ -644,13 +658,15 @@ var gameUtil = {
                 {x:0.5,y:-1.5},
                 {x:-0.5,y:+1.5},
                 {x:0.5,y:+1.5},
-            ]            
+            ],
+            speed : 1.0         
         },  // 1      
         {
             imageKey : ["shot06_1","shot06_2","shot06_3","shot06_2","shot06_1"],
             vectors : [
                 this.getMoveVector(position.x,position.y, this.lastPlayerPosiont.x, this.lastPlayerPosiont.y, getRandomInt(1,3)),
-            ]
+            ],
+            speed : 1.5
         }, // 2
         {
             imageKey : ["shot04"],
@@ -676,7 +692,8 @@ var gameUtil = {
                 {x : 0.8, y : 0.2},
                 {x : 0.8, y : 0.15},
                 {x : 1.0, y : 0.1},
-            ]
+            ],
+            speed : 1.8
         }, // 3 
         {
             imageKey : ["shot05"],
@@ -686,9 +703,6 @@ var gameUtil = {
                 {x : -1.8, y:0.2},
                 {x : -1.75, y:0.25},
                 {x : -1.7, y:0.3},
-                // {x : -1.65, y:0.35},
-                // {x : -1.6, y:0.4},
-                // {x : -1.55, y:0.45},
                 {x : -1.5, y:0.5},
                 {x : -1.45, y:0.55},
                 {x : -1.4, y:0.6},
@@ -706,16 +720,11 @@ var gameUtil = {
                 {x : -0.25, y:1.75},
                 {x : -0.2, y:1.8},
                 {x : -0.15, y:1.85},
-                // {x : -0.1, y:1.9},
-                // {x : -0.0, y:2},
                 {x : 1.9, y:0.1},
                 {x : 1.85, y:0.15},
                 {x : 1.8, y:0.2},
                 {x : 1.75, y:0.25},
                 {x : 1.7, y:0.3},
-                // {x : 1.65, y:0.35},
-                // {x : 1.6, y:0.4},
-                // {x : 1.55, y:0.45},
                 {x : 1.5, y:0.5},
                 {x : 1.45, y:0.55},
                 {x : 1.4, y:0.6},
@@ -735,10 +744,22 @@ var gameUtil = {
                 {x : 0.15, y:1.85},
                 // {x : 0.1, y:1.9},
                 // {x : 0.0, y:2},
-            ]
+            ],
+            speed : 1.2
         } ,//4
+        {
+            imageKey : ["shot02"],
+            vectors : [
+                this.getCircleVector(0.1),
+                this.getCircleVector(0.2),
+                this.getCircleVector(0.02),
+                this.getCircleVector(0.05),
+            ],
+            speed : 5
+        }, // 5
         ]
         return data[index];
+    }   
     }
-    
-}
+      
+})

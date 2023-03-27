@@ -281,7 +281,7 @@ var gameManager = new Vue({
             boss = [
                 {
                     imageKey : ["enemy03"],
-                    shottype : [0,0,1,1,1,1,2,2,3,3,3],
+                    shottype : [0,0,1,1,1,1,2,2,3,3,3,5,5],
                     x : 150,
                     movetype : 0,
                     HP : 500,
@@ -311,7 +311,7 @@ var gameManager = new Vue({
                 },// 1
                 {
                     imageKey : ["enemy02"],
-                    shottype : [0,0,0,0,2,2],
+                    shottype : [0,0,5,5,2,2],
                     x : 50,
                     movetype : 0,
                     HP : 500,
@@ -321,7 +321,7 @@ var gameManager = new Vue({
                 },// 1
                 {
                     imageKey : ["enemy02"],
-                    shottype : [0,0,0,0,2,2],
+                    shottype : [0,0,5,5,2,2],
                     x : 300,
                     movetype : 0,
                     HP : 500,
@@ -333,10 +333,10 @@ var gameManager = new Vue({
             ];  
             e_power = {
                 imageKey : ["enemy04_1","enemy04_2","enemy04_3","enemy04_3","enemy04_3","enemy04_3","enemy04_3","enemy04_3","enemy04_2","enemy04_1","enemy04_1","enemy04_1","enemy04_1","enemy04_1"],
-                shottype : [0,1,2,2],
+                shottype : [5,1],
                 x : getRandomInt(50,200),
                 movetype : 0,
-                HP : 30,
+                HP : 10,
                 speed : 2,
                 size : 30,
                 ylimit : 250,
@@ -344,7 +344,7 @@ var gameManager = new Vue({
             };
             e_HpUP = {
                 imageKey : ["enemy05"],
-                shottype : [0,1,2,2],
+                shottype : [0,1,2,2,5,5],
                 x : getRandomInt(50,200),
                 movetype : 0,
                 HP : 30,

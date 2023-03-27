@@ -4,7 +4,7 @@ var audioLoader = new Vue ({
     el : "#audioController",
     data : {
         isIosSafari : /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && /iP(hone|od|ad)/.test(navigator.platform),
-        checkbox : [],
+        checkbox : "",
         master_volum : localStorage.getItem("masterVolume"),
         music_volum : localStorage.getItem("bgmVolume"),
         effect_volum : localStorage.getItem("effectVolume"),
@@ -46,15 +46,6 @@ var audioLoader = new Vue ({
             console.log("setMusicVolume : " + event + " " + index);
         },
         setVolume() {
-            if(this.mute) {
-                if(this.bgmPlayer != null){
-                    this.bgmPlayer.volume = 0;
-                }
-                for(var i=0 ; i<this.effectPlayers.length; i++) {
-                    this.effectPlayers[i].volume = 0;
-                }                    
-                return;
-            }
             if(this.bgmPlayer != null){
                 this.bgmPlayer.volume = (this.master_volum / 100) * (this.music_volum / 100);
             }
@@ -86,7 +77,7 @@ var audioLoader = new Vue ({
             const load = localStorage.getItem("audio_checkbox")
             console.log("checkbox load " + load + " length : " + load.length);
             const value = load.split(",")
-            this.checkbox = value;
+            this.checkbox = load;
         }
         const sliders = document.getElementsByClassName("volume_mix");
         for(var i=0; i<sliders.length; i++) {
