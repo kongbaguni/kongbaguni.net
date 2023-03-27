@@ -25,7 +25,7 @@ var gameUtil = new Vue ({
                     die : false,
                     position : targetPosition,
                     vector : {x:0,y:1},
-                    size : 10,
+                    size : 20,
                     speed : 1,
                     fireCount : 0,
                     point : point,
@@ -65,25 +65,37 @@ var gameUtil = new Vue ({
     
                     draw(ctx) {
                         var text = this.point;
+                        var imageKey = ""
                         switch (this.itemType) {
                             case 1:
-                                text = "P";
+                                imageKey = "powerUp";
+                                text = "";
                                 break;
                             case 2:
-                                text = "HP";
+                                imageKey = "hpUp";
+                                text = "";
                                 break;
                             default:
                                 break;                        
                         }
                         this.update();
+
                         ctx.font = (this.fireCount + 30) + "px Gill Sans";             
                         ctx.fillStyle = "blue"
                         if(this.speed > 1.0) {
                             ctx.fillStyle = "green";
                         }
-                        ctx.fillText(text,this.position.x, this.position.y);
-                        ctx.strokeStyle = "white"        
-                        ctx.strokeText(text,this.position.x, this.position.y);
+                        if(text !=  "") {
+                            ctx.fillText(text,this.position.x, this.position.y);
+                            ctx.strokeStyle = "white"        
+                            ctx.strokeText(text,this.position.x, this.position.y);    
+                        }
+                        if(imageKey != "") {
+                            let image = imageLoader.getImage(imageKey);
+                            if(image != null) {
+                                ctx.drawImage(image,this.position.x - this.size , this.position.y - this.size , this.size * 2, this.size * 2);                                
+                            }
+                        }
                     }
                 },
                 watch : {

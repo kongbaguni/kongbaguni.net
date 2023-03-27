@@ -26,6 +26,9 @@ var imageLoader = new Vue({
             { src : "./images/player_1.svg", key : "player_1" , image : new Image()},
             { src : "./images/player_2.svg", key : "player_2" , image : new Image()},
             { src : "./images/player_3.svg", key : "player_3" , image : new Image()},
+            { src : "./images/hpUp.svg", key : "hpUp" , image : new Image()},
+            { src : "./images/powerUp.svg", key : "powerUp" , image : new Image()},
+
         ],
         keys : [],
         images : {},

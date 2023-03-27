@@ -63,6 +63,23 @@ var gameManager = new Vue({
             if(this.player != null){
                 this.timeline ++;
             }
+
+            //아이템 그리기 
+            for(var i=0; i<this.dropItems.length; i++) {
+                let item = this.dropItems[i];
+                if(item.die && item.fireCount > 10) {
+                    this.dropItems.splice(i,1);
+                }
+            }
+            for(var i=0; i<this.dropItems.length; i++) {
+                this.dropItems[i].draw(ctx);
+            }
+            
+            // 플레이어 그리기 
+            if (this.player != null) {
+                this.player.draw(ctx);
+            }                
+            
             // 적 미사일 그리기 
             for(var i=0; i < this.enemys.length; i++) {
                 let enemy = this.enemys[i];
@@ -85,16 +102,6 @@ var gameManager = new Vue({
                 this.playersShots[i].draw(ctx);
             }
 
-            //아이템 그리기 
-            for(var i=0; i<this.dropItems.length; i++) {
-                let item = this.dropItems[i];
-                if(item.die && item.fireCount > 10) {
-                    this.dropItems.splice(i,1);
-                }
-            }
-            for(var i=0; i<this.dropItems.length; i++) {
-                this.dropItems[i].draw(ctx);
-            }
 
             for(var i=0; i< this.enemysShots.length; i++) {
                 if(this.enemysShots[i].die && this.enemysShots[i].fireCount > 10) {
@@ -132,17 +139,8 @@ var gameManager = new Vue({
                     ctx.fillStyle = "yellow";
                     ctx.fillText("+"+gameManager.lastAddedPoint, 5+ pText.length * 15 ,30);
                 }    
-                // 플레이어 그리기 
-                if (this.player != null) {
-                    this.player.draw(ctx);
-                }                
             }
             else {
-                // 플레이어 그리기 
-                if (this.player != null) {
-                    this.player.draw(ctx);
-                }
-
                 var ty = 30;
                 ctx.font = "30px gill sans";
                 ctx.fillStyle = "orange";
