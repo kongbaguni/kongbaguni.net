@@ -1,0 +1,79 @@
+#shootinggame_canvas {
+    background: darkgray;
+    border: 1px solid #fff;
+}
+#game01_canvas {
+    border: 1px solid #368;
+}
+.controller {
+    text-align: center;
+}
+.controller table {
+    display: inline-block;
+}
+.controller button{
+    width: 50px;
+    height: 50px;
+}
+
+.controller button.OFF {
+
+}
+
+.controller button.ON {
+    background: yellow;
+    border: 2px solid yellow;
+}
+
+div.controller table {
+    opacity: 0.2;
+}
+
+p.gameOver {
+    text-align: center;
+    color:lime;
+    font-size: 30px;
+    width: 340px;
+    top:400px;
+}
+
+div.gamebox {    
+    position: relative;
+    width: 370px;
+    height:500px;
+}
+div.gamebox > * {
+    position: absolute;
+}
+
+div.controller {
+    top:350px;
+    text-align: center;
+}
+div.controller > button {
+    width: 310px;
+    margin: 20px;
+}
+
+#imageLoader {
+    position: absolute;
+    display: block;
+    width: 347px;
+    height: 500px;
+    z-index: 100;    
+    background-color: cadetblue;
+    margin: 0px;
+    margin-top: -10px;
+    padding: 10px;
+}
+
+#imageLoader > p.title {
+    display: block;    
+    color : brown;    
+    text-align: center;
+    margin-top: 200px;
+}
+
+#imageLoader canvas {
+    border: 2px solid white;
+}
