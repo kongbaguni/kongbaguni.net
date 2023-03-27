@@ -77,6 +77,14 @@ var audioLoader = new Vue ({
             const value = load.split(",")
             this.checkbox = value;
         }
+        const sliders = document.getElementsByClassName("volume_mix");
+        for(var i=0; i<sliders.length; i++) {
+            sliders[i].addEventListener("change",function() {
+                console.log("event Listener");
+                audioLoader.setVolume();
+            })
+        }
+
     }, 
     watch : {
         music_volum(a,b) {

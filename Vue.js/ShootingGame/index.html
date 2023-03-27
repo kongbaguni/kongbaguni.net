@@ -26,23 +26,23 @@
                 <tbody>
                     <tr>
                         <th>master</th>
-                        <td><input v-model="master_volum" type="range" min="0" max="100"/></td>                        
+                        <td><input v-model="master_volum" type="range" min="0" max="100" class="volume_mix"/></td>                        
                         <td>{{master_volum}}</td>
                     </tr>
                     <tr>
                         <th>music</th>
-                        <td><input v-model="music_volum"  type="range" min="0" max="100"/></td>                        
+                        <td><input v-model="music_volum"  type="range" min="0" max="100" class="volume_mix"/></td>                        
                         <td>{{music_volum}}</td>
                     </tr>
                     <tr>
                         <th>effect</th>
-                        <td><input v-model="effect_volum" type="range" min="0" max="100" /></td>
+                        <td><input v-model="effect_volum" type="range" min="0" max="100" class="volume_mix"/></td>
                         <td>{{effect_volum}}</td>
                     </tr>
                     <tr>
                         <th>mute</th>
                         <td colspan="2">
-                            <input v-model="checkbox" type="checkbox" value="mute" />
+                            <input v-model="checkbox" type="checkbox" value="mute" class="volume_mix" />
                         </td>
                     </tr>
                 </tbody>
