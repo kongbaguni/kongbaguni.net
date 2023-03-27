@@ -20,7 +20,7 @@
 
     <body>
         <h1>Shooting Game</h1>
-        <div id = "audioController">
+        <div id = "audioController" v-if="!isIosSafari">
             <h2>audio controller</h2>
             <table>
                 <tbody>

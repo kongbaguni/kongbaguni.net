@@ -1,6 +1,9 @@
+
+
 var audioLoader = new Vue ({
     el : "#audioController",
     data : {
+        isIosSafari : /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && /iP(hone|od|ad)/.test(navigator.platform),
         checkbox : [],
         master_volum : localStorage.getItem("masterVolume"),
         music_volum : localStorage.getItem("bgmVolume"),
@@ -15,6 +18,10 @@ var audioLoader = new Vue ({
     },
     methods : {
         playBGM(key) {
+            if(this.isIosSafari) {
+                console.log("아이폰 브라우저는 사운드 미지원")
+                return ;
+            }
             const audio = this.datas[key];
             this.bgmPlayer = audio;
             this.setVolume();
@@ -22,6 +29,10 @@ var audioLoader = new Vue ({
             audio.loop = true;            
         },
         playEffect(key) {
+            if(this.isIosSafari) {
+                console.log("아이폰 브라우저는 사운드 미지원")
+                return ;
+            }
             const audio = this.datas[key];            
             this.effectPlayers.push(audio);
             this.setVolume();
