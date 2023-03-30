@@ -219,9 +219,10 @@ ol.imageSlide li > img {
     left: 0px;
     bottom: 0px;
     right: 0px;
-    background: #000000aa;
+    background: #999999aa;
     padding: 20px;
     cursor: pointer;
+    backdrop-filter: blur(10px);
 }
 
 #preview > img {
