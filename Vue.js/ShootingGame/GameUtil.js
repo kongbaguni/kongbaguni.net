@@ -31,10 +31,10 @@ var gameUtil = new Vue ({
                     point : point,
                     itemType : itemType, // 아이템 타임 0 : 포인트 , 1 : 파워업 , 2 : HP 회복 
                 },
+                created() {
+                    gameUtil.dropItemCount ++;
+                },
                 methods : {                
-                    init() {
-                        gameUtil.dropItemCount ++;
-                    },
                     update() {
                         if(gameManager.player == null) {
                             return;
@@ -117,7 +117,6 @@ var gameUtil = new Vue ({
     
                 }
             })
-            item.init();
             return item;
         },
      // 적 생성 
@@ -153,26 +152,25 @@ var gameUtil = new Vue ({
                 shotCount : 0,  
                 itemType : data.itemType,              
             },
+            created() {
+                this.HP_MAX = this.HP;
+                if(this.size == null) {
+                    this.size = this.HP * 2
+                }
+                switch (this.moveType) {
+                    case 0:
+                        this.setPlayerTargetVector();
+                        break;
+                    default:
+                        break;
+                } 
+            },
             methods:{
                 setPlayerTargetVector()  {
                     const px = gameManager.player.position.x;
                     const py = gameManager.player.position.y; 
                     this.vector = gameUtil.getMoveVector(this.position.x,this.position.y,px, py, 1);
-                },
-                init(){
-                    this.HP_MAX = this.HP;
-                    if(this.size == null) {
-                        this.size = this.HP * 2
-                    }
-                    switch (this.moveType) {
-                        case 0:
-                            this.setPlayerTargetVector();
-                            break;
-                        default:
-                            break;
-                    } 
-
-                },
+                },                
                 update() {
                     if(this.HP <= 0) {
                         this.size += 1;
@@ -295,8 +293,7 @@ var gameUtil = new Vue ({
                     gameManager.enemysShots.push(shot);
                 }
             }
-        })
-        enemy.init();
+        })        
         return enemy;
     },
     makeEnemyShot(data) {
