@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="Poker" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+    
+        <link rel="stylesheet" type="text/css" href="../../style.css"></link>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <article id = "imageLoader">
+            <header><h2>ImageLoader</h2></header>
+            <p v-if="!isLoadFinish">Now Loading...</p>
+            <p v-if="isLoadFinish">Loading Finish {{loadCount}}</p>
+        </article>
+        <script src="./ImageLoader.js"></script>
+
+        <article id = "scene1">
+            <header><h2>Scene1</h2></header>
+            <canvas id = "scene1_canvas" width="300px" height="300px"></canvas>
+        </article>
+        <script src="./UnitMaker.js"></script>
+        <script src="./Scene1.js"></script>
+    </body>
+</html>
