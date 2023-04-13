@@ -395,3 +395,18 @@ table.keypad tbody button.enter {
 table.keypad button.off {
     opacity: 0.5;
 }
+
+
+article strong {
+    color: yellow;
+}
+
+article strong::before {
+    content: "<";
+    color: green;
+}
+
+strong::after {
+    content: ">";
+    color: green;
+}

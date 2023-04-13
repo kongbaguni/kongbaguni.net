@@ -488,6 +488,355 @@
                 <li>정규화의 목적은 가능한 한 중복을 제거하여 삽입, 삭제, 갱신 이상의 발생 가능성을 줄이는 것이다.</li>
                 <li>정규형에는 제1정규형(1NF), 제2정규형(2NF), 제3정규형(3NF), BCNF, 제4정규형(4NF), 제5정규형(5NF)이 있으며, 순서대로 정규화의 정도가 높아진다.</li>
             </ul>
+            <h3>정규화 과정 <sup>a</sup></h3>
+            <p>아래의 <strong>주문목록</strong> 테이블을 가지고 정규화 과정을 살펴보자. <strong>주문목록</strong> 테이블의 기본키 (Primary Key)는 제품번호이다.</p>
+            <p><strong>주문목록</strong> (비정규 릴레이션)</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>제품번호</th>
+                        <th width = "40px">제품명</th>
+                        <th>재고수량</th>
+                        <th>주문번호</th>
+                        <th>고객번호</th>
+                        <th width = "30px">주소</th>
+                        <th>주문수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>모니터</td>
+                        <td>2000</td>
+                        <td>A345,<br> D347</td>
+                        <td>100,<br> 200</td>
+                        <td>서울,<br> 부산</td>
+                        <td>150,<br> 300</td>
+                    </tr>
+                    <tr>
+                        <td>1007</td>
+                        <td>마우스</td>
+                        <td>9000</td>
+                        <td>A210,<br> A345,<br> B230</td>
+                        <td>300,<br> 100,<br> 200</td>
+                        <td>광주,<br> 서울,<br> 부산</td>
+                        <td>600,<br> 400,<br> 700</td>
+                    </tr>
+                    <tr>
+                        <td>1201</td>
+                        <td>키보드</td>
+                        <td>2100</td>
+                        <td>D347</td>
+                        <td>200</td>
+                        <td>부산</td>
+                        <td>300</td>
+                    </tr>
+                </tbody>
+            </table>                               
+            <h4>제 1정규형(1NF: First Normal Form)</h4>
+            <ul>
+                <li>제 1정규형은 테이블 R에 속한 모든 속성의 도메인이 원자값(Atomic Value)만으로 되어 있는 정규형이다. 즉 테이블의 모든 속성 값이 원자 값으로만 되어 있는 정규형이다.</li>
+                <li><strong>주문목록</strong> 테이블에서는 하나의 제품에 대해 여러 개의 주문 관련 정보(주문번호, 고객번호, 주소, 주문수량)가 발생하고 있다. 따라서 <strong>주문목록</strong> 테이블은 제1정규형이 아니다.</li>                
+            </ul>
+            <p><strong>제품</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>제품번호</th>
+                        <th>제품명</th>
+                        <th>재고수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>모니터</td>
+                        <td>2000</td>
+                    </tr>
+                    <tr>
+                        <td>1007</td>
+                        <td>마우스</td>
+                        <td>9000</td>
+                    </tr>
+                    <tr>
+                        <td>1201</td>
+                        <td>키보드</td>
+                        <td>2100</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>제품주문</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>제품번호</th>
+                        <th>고객번호</th>
+                        <th>주소</th>
+                        <th>주문수량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A345</td>
+                        <td>1001</td>
+                        <td>100</td>
+                        <td>서울</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <td>D347</td>
+                        <td>1001</td>
+                        <td>200</td>
+                        <td>부산</td>
+                        <td>300</td>
+                    </tr>
+                    <tr>
+                        <td>A210</td>
+                        <td>1007</td>
+                        <td>300</td>
+                        <td>광주</td>
+                        <td>600</td>
+                    </tr>
+                    <tr>
+                        <td>A345</td>
+                        <td>1007</td>
+                        <td>100</td>
+                        <td>서울</td>
+                        <td>400</td>
+                    </tr>
+                    <tr>
+                        <td>B230</td>
+                        <td>1007</td>
+                        <td>200</td>
+                        <td>부산</td>
+                        <td>700</td>
+                    </tr>
+                    <tr>
+                        <td>D347</td>
+                        <td>1201</td>
+                        <td>200</td>
+                        <td>부산</td>
+                        <td>300</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>주문목록</strong> 테이블에서 반복되는 주문 관련인 주문번호, 고객번호, 주소, 주문수량을 분리하면 위와같이 제1정규형인 <strong>제품</strong>테이블과 <strong>제품주문</strong> 테이블이 만들어진다.</p>
+            <ul>
+                <li>1차 정규화 과정으로 생성된 <strong>제품주문</strong> 테이블의 기본키는 (주문번호, 제품번호)이고, 다음과 같은 함수적 종속이 존재한다.
+                    <table>
+                        <tr>
+                            <td>
+                                주문번호, 제품번호 
+                            </td>
+                            <td>→</td>
+                            <td>고객번호, 주소, 주문수량</td>
+                        </tr>
+                        <tr>
+                            <td>주문번호</td>
+                            <td>→</td>
+                            <td>고객번호, 주소</td>
+                        </tr>
+                        <tr>
+                            <td>고객번호</td>
+                            <td>→</td>
+                            <td>주소</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+            <h4>제 2정규형(2NF : Second Normal Form)</h4>
+            <p><strong>제품주문</strong> 테이블에서 함수적 종속이 되는 속성들을 분리하여 제2정규형을 만들 수 있다.</p>
+            <p><strong>주문목록</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>제품번호</th>
+                        <th>주문수량</th>    
+                    </tr>
+                </thead>
+            </tbody>
+                <tbody>
+                    <tr>
+                        <td>A345</td>
+                        <td>1001</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <td>A347</td>
+                        <td>1001</td>
+                        <td>300</td>
+                    </tr>
+                    <tr>
+                        <td>A210</td>
+                        <td>1007</td>
+                        <td>600</td>
+                    </tr>
+                    <tr>
+                        <td>A345</td>
+                        <td>1007</td>
+                        <td>400</td>
+                    </tr>
+                    <tr>
+                        <td>B200</td>
+                        <td>1007</td>
+                        <td>700</td>
+                    </tr>
+                    <tr>
+                        <td>D347</td>
+                        <td>1201</td>
+                        <td>300</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>주문</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>고객번호</th>
+                        <th>주소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A345</td>
+                        <td>100</td>
+                        <td>서울</td>
+                    </tr>
+                    <tr>
+                        <td>D347</td>
+                        <td>200</td>
+                        <td>부산</td>
+                    </tr>            
+                    <tr>
+                        <td>A210</td>
+                        <td>300</td>
+                        <td>광주</td>
+                    </tr>
+                    <tr>
+                        <td>B230</td>
+                        <td>200</td>
+                        <td>부산</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>제품주문</strong> 테이블에서 주문번호에 함수적 종속이 되는 속성인 고객번호와 주소를 분리 (즉 부분 함수적 종속을 제거)해내면 위와 같이 제2정규형인 
+                <strong>주문목록</strong> 테이블과 <strong>주문</strong> 테이블로 무손실 분해된다.</p>
+            <ul>
+                <li>제2정규화 과정을 거쳐 생성된 <strong>주문</strong> 테이블의 기본키는 주문번호이다.</li>
+                <li>주문 테이블에는 아직 다음과 같은 함수적 종속이 존제한다.
+                    <table>
+                        <tr>
+                            <td>주문번호</td>
+                            <td>→</td>
+                            <td>고객번호, 주소</td>
+                        </tr>
+                        <tr>
+                            <td>고객번호</td>
+                            <td>→</td>
+                            <td>주소</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul> 
+            
+            <h4>제 3정규형(3NF : Third Normal Form)</h4>
+            <ul>
+                <li>제 3정규형은 테이블 R이 제 2정규형이고 기본키가 아닌 모든 속성이 기본키에 대해 이행적 함수적 종속(Transitive Functional Dependency)을 만족하지 않는 정규형이다.</li>
+                <li><strong>제품주문</strong> 테이블이 <strong>주문목록</strong>테이블과 <strong>주문</strong>테이블로 무손실 분해되면서 모두 제 2정규형이 되었다. 그러나 
+                    <strong>주문</strong>테이블에서 고객번호가 주문번호에 함수적 종속이고, 주소가 고객번호에 함수적 종속이므로 주소는 기본인 주문번호에 대해 이행적 함수적 종속을 만족한다.
+                    즉 주문번호→고객번호이고, 고객번호→주소 이므로 번호→주소는 이행적 함수적 종속이 된다. 따라서 <strong>주문</strong> 은 제3정규형이 아니다.
+                </li>
+            </ul>
+            <p><strong>주문</strong> 테이블에서 이행적 함수적 종속을 제거하여 제3정규형을 만들 수 있다.</p>
+            <p><strong>주문</strong></p>
+            <table>
+                <thead>
+                    <tr><th>주문번호</th><th>고객번호</th></tr>                    
+                </thead>
+                <tbody>
+                    <tr><td>A345</td><td>100</td></tr>
+                    <tr><td>D347</td><td>200</td></tr>
+                    <tr><td>A210</td><td>300</td></tr>
+                    <tr><td>B230</td><td>200</td></tr>
+                </tbody>
+            </table>
+            <p><strong>고객</strong></p>
+            <table>
+                <thead>
+                    <tr><th>고객번호</th><th>주소</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>100</td><td>서울</td></tr>
+                    <tr><td>200</td><td>부산</td></tr>
+                    <tr><td>300</td><td>광주</td></tr>
+                </tbody>
+            </table>
+            <p><b>주문</b> 테이블에서 이행적 함수적 종속(주문번호 → 주소)을 제거하여 무손실 분해함으로서 위와 같이 제3정규형인 <strong>주문</strong> 테이블과 <strong>고객</strong> 테이블이 생성된다.</p>
+            <h4>BCNF(Boyce-Codd Normal Form)</h4>            
+            <ul>
+                <li>BCNF는 테이블 R에서 모든 결정자가 후보키(Candidate Key)인 정규형이다.</li>
+                <li>일반적으로 제3정규형에 후보키가 여러 개 존재하고, 이러한 후보키들이 서로 중첩되어 나타나는 경우에 적용 가능하다.</li>            
+                <li>아래의 <strong>수강_교수</strong> 테이블에 (제3정규형)은 함수적 종속{(학번, 과목명) → 담당교수,(학번, 담당교수) → 과목명, 담당교수 → 과목명}을 만족하고 있다. 
+                <strong>수강_교수</strong> 테이블의 후보키는 (학번, 과목명)과 (학번, 담당교수)이다.
+                <p><strong>수강_교수</strong></p>
+                <table>
+                    <thead>
+                        <tr><th>학번</th><th>과목명</th><th>담당교수</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>211746</td><td>데이터베이스</td><td>홍길동</td></tr>
+                        <tr><td>211747</td><td>네트워크</td><td>유관순</td></tr>
+                        <tr><td>211748</td><td>인공지능</td><td>윤봉길</td></tr>
+                        <tr><td>211749</td><td>데이터베이스</td><td>홍길동</td></tr>
+                        <tr><td>211747</td><td>데이터베이스</td><td>이순신</td></tr>
+                        <tr><td>211749</td><td>네트워크</td><td>유관순</td></tr>
+                    </tbody>
+                </table>                
+                </li>
+                <li><strong>수강_교수</strong> 테이블에서 결정자 중 후보키가 아닌 속성이 존재한다. 즉 함수적 종속 담당교수 → 과목명이 존재하는데, 담당교수가 <strong>수강_교수</strong> 테이블에서 후보키가 아니기 때문에 
+                <strong>수강_교수</strong> 테이블은 BCNF가 아니다.</li>                
+            </ul>
+            <p><strong>수강_교수</strong>테이블에서 결정자가 후보키가 아닌 속성을 분리하여 BCNF를 만들 수 있다.</p>
+            <p><strong>수강</strong></p>
+            <table>
+                <thead>
+                    <tr><th>학번</th><th>담당교수</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>211746</td><td>홍길동</td></tr>
+                    <tr><td>211747</td><td>유관순</td></tr>
+                    <tr><td>211748</td><td>윤봉길</td></tr>
+                    <tr><td>211749</td><td>홍길동</td></tr>
+                    <tr><td>211747</td><td>이순신</td></tr>
+                    <tr><td>211749</td><td>유관순</td></tr>
+                </tbody>
+            </table>
+            <p><strong>교수</strong></p>
+            <table>
+                <thead>
+                    <tr><th>담당교수</th><th>과목명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>홍길동</td><td>데이터베이스</td></tr>
+                    <tr><td>이순신</td><td>데이터베이스</td></tr>
+                    <tr><td>윤봉길</td><td>인공지능</td></tr>
+                    <tr><td>유관순</td><td>네트워크</td></tr>
+                </tbody>
+            </table>
+            <p><strong>수강_교수</strong> 테이블에서 BCNF를 만족하지 못하게 하는 속성(즉 담당교수 → 과목명)을 분리해내면 위와 같이 BCNF인 <strong>수강</strong> 테이블과 
+            <strong>교수</strong> 테이블로 무손실 분해된다.</p>
+            <h4>제 4정규형(4NF : Forth Normal Form)</h4>
+            <p>제 4정규형은 테이블 R에 다중값 종속(MVD : Multi Valued Dependency) A →→ B 가 존재할 경우 R의 모든 속성이 A에 함수적 종속 관계를 만족하는 정규형이다.</p>
+            <p>다중 값 종속(다치 종속) : A, B, C 3개의 속성을 가진 테이블 R에서 어떤 복합 속성 (A,C)에 대응하는 B값의 집합이 A값에만 종속되고 C값에는 무관하면 B는 A에 다중 값 종속이라 하고 
+                A →→ B로 표기함</p>
+            <h5>제 5정규형(5NF : Fifth Normal Form)</h5>
+            <p>제 5정규형은 테이블 R의 모든 조인 종속(JD : Join Dependency)이 R의 후보키를 통해서만 성립되는 정규형이다.</p>
+            <p>조인 종속 : 어떤 테이블 R의 속성에 대한 부분집합 X,Y, ..., Z가 있다고 하자. 이때 만일 테이블R이 자신의 프로젝션(Projection) X, Y, ..., Z를 모두 조인한 결과와 동일한 경우
+                테이블 R은 조인 종속 JD(X, Y, ..., Z)를 만족한다고 함
+            </p>
         </article>
         
 </body>
