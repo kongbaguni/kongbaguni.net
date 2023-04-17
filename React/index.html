@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React 학습</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="React 학습" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+    
+        <link rel="stylesheet" type="text/css" href="../style.css"></link>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="../java.js"></script>
+    
+    </head>
+
+    <body>
+        <h1>React, typescript</h1>
+        <article>
+            <header>
+                
+            </header>
+            <ol>
+                <li>typescript 설치
+                    <pre class="commandline"><span>npm install -g typescript</span></pre>
+                </li>
+                <li>typescript 설치 확인
+                    <pre class="commandline"><span>tsc --version</span></pre>
+                </li>
+                <li>프로젝트 생성
+                    <pre class="commandline"><span>npx create-react-app hello-world --typescript</span></pre>
+                </li>
+                <li>TypeScript 종속성 설치하기
+                    <pre class="commandline"><span>npm install --save-dev typescript @types/react @types/react-dom</span></pre>
+                </li>
+                <li>App.js 파일을 App.tsx로 변경하기
+                    <pre class="commandline"><span>mv hello-world/src/App.js hello-world/src/App.tsx</span></pre>
+                </li>
+                <li>tsconfig.json 파일 생성하기
+                    <pre class="commandline"><span>npx tsc --init</span></pre>
+                </li>
+                <li>tsconfig.json 파일 수정하기
+                    <pre class="json">{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "jsx": "react",
+        "strict": true,
+        "esModuleInterop": true
+    }
+}</pre>
+                </li>
+                <li> 외부 ts 파일 import
+                    <ul>
+                        <li>Student.ts 
+                            <pre class="ts">
+export class Student {
+    private name : string
+    constructor(name : string) {
+      this.name = name
+    }
+    startRun() {
+      return this.name + "학생은 달리기를 시작했다";
+    }
+  }                                
+                            </pre>
+                        </li>
+                        <li> import 
+                            <pre class="ts">import {Student} from './Student';</pre>
+                        </li>
+                    </ul>
+                </li>
+                <li>서버 시작 
+                    <pre class="commandline"><span>yarn start</span></pre>
+                </li>
+            </ol>
+            
+    </article>
+    </body>
+</html>

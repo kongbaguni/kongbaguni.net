@@ -395,3 +395,17 @@ table.keypad tbody button.enter {
 table.keypad button.off {
     opacity: 0.5;
 }
+
+article pre {
+    background: #00000044;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #ffffffaa;
+    font-size: 15px;
+    color: #ffffff99;
+}
+
+article pre > span::before {
+    content: "$";
+    color: #fff;
+}
