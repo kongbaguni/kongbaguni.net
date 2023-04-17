@@ -396,16 +396,17 @@ table.keypad button.off {
     opacity: 0.5;
 }
 
-article pre {
-    background: #00000044;
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid #ffffffaa;
-    font-size: 15px;
-    color: #ffffff99;
+
+article strong {
+    color: yellow;
 }
 
-article pre > span::before {
-    content: "$";
-    color: #fff;
+article strong::before {
+    content: "<";
+    color: green;
+}
+
+strong::after {
+    content: ">";
+    color: green;
 }
