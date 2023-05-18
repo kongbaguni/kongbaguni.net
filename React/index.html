@@ -19,7 +19,7 @@
         <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>                        
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
-        
+
     </head>
 
     <body>
@@ -86,17 +86,16 @@ export class Student {
     </article>
 
     <article id="react1"></article>    
-    <script type="text/babel" src="./SiteHeader.jsx"></script>
-    <script type="text/babel" src="./Product.jsx"></script>
-    <script type="text/babel" src="./ProductList.jsx"></script>
-    <script type="text/babel" src="./App.jsx"></script>
-
-    <script type="text/babel">
-        const rootElement = document.getElementById("react1");
-
-        ReactDOM.createRoot(rootElement).render(
-            <App />
-        );
-    </script>
     </body>
 </html>
+
+<script type="text/babel" src="./SiteHeader.jsx"></script>
+<script type="text/babel" src="./Product.jsx"></script>
+<script type="text/babel" src="./ProductList.jsx"></script>
+<script type="text/babel" src="./App.jsx"></script>
+<script type="text/babel">
+    const rootElement = document.getElementById("react1");
+    ReactDOM.createRoot(rootElement).render(
+        <App />
+    );
+</script>
