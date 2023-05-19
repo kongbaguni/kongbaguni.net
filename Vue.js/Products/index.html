@@ -20,10 +20,8 @@
         <article id="app">
             <header><h2>ProductList</h2></header>
             <ul>
-                <li v-for="product in products"> 
-                    {{ product.title }}
-                    <productitem></productitem>
-
+                <li v-for="product in products">                     
+                    <productitem v-bind:data = "product"></productitem>
                 </li>  
                 
             </ul>
@@ -33,17 +31,16 @@
 
 <script>
     const products = Vue.ref([]);
-    const app = Vue.createApp({        
-        components: {
-            'productitem':ProductItem
-        },
+    const app = Vue.createApp({              
         data(){
             return {       
                 products : products,         
                 msg:"hello world",
             }
         }
-    }).mount('#app')
+    });
+    app.component('productitem',ProductItem);
+    app.mount('#app');
 
     function load() {
         console.log("load")
