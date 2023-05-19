@@ -11,7 +11,7 @@ function ProductList() {
         const category = params.get('category')
         console.log("params : " + category);
         console.log("react loaded!");
-        const sort = sortDesc ? '?sort=desc' : '' 
+        const sort = sortDesc ? '?sort=desc' : '?sort=asc'; 
         let url = 'https://fakestoreapi.com/products'+ sort;
         if(category!=null) {
             url = 'https://fakestoreapi.com/products/category/'+category+sort;
