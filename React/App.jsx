@@ -1,5 +1,8 @@
 function App() {
-    return (
-        <ProductList />
+    return (   
+        <div>
+            <CategoryList />    
+            <ProductList />
+        </div> 
     );
 };

@@ -1,31 +1,33 @@
 function ProductList() {
     const [products, setProducts] = React.useState([]);
     const [sortDesc, setSortDesc] = React.useState(true);
-    const [loadFinish, setLoadFinish] = React.useState(false);
 
+    const params = new URLSearchParams(location.search);
     React.useEffect(()=> {
         reload();
-    });
+    },[]);
 
-    function reload(){
-        if(loadFinish) {
-            return;
-        }
+    function reload(){       
+        const category = params.get('category')
+        console.log("params : " + category);
         console.log("react loaded!");
-        const url = 'https://fakestoreapi.com/products'+ (sortDesc ? '?sort=desc' : '' );
+        const sort = sortDesc ? '?sort=desc' : '' 
+        let url = 'https://fakestoreapi.com/products'+ sort;
+        if(category!=null) {
+            url = 'https://fakestoreapi.com/products/category/'+category+sort;
+        }
+
         console.log("request : " + url);
         axios.get(url)
         .then((res)=>res.data)
         .then((json)=> {
             console.log(json);
             setProducts(json);
-            setLoadFinish(true);
         });
     }
 
     function toggleSort() {
         setSortDesc(!sortDesc);
-        setLoadFinish(false);
         reload();
     }
 
