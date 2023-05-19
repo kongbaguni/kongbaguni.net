@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React 학습</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="React 학습" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+    
+        <link rel="stylesheet" type="text/css" href="../style.css"></link>
+
+        <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>                        
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
+
+    </head>
+
+    <body>
+        <header>
+            <h1><a href="/">kongbaguni.net</a></h1>
+        </header>        
+        <div id="react"></div>
+    </body>
+</html>
+
+<script type="text/babel" src="./ProductPage.jsx"></script>
+<script type="text/babel">
+    const rootElement = document.getElementById("react");
+    ReactDOM.createRoot(rootElement).render(        
+        <ProductPage />
+    );
+</script>
