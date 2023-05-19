@@ -12,25 +12,22 @@
         <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
 
-        <script src="./ProductItem.js"></script>
+        <script src="./components/ProductItem.js"></script>
+        <script src="./components/ProductList.js"></script>
     </head>
 
     <body>
         <header><h1><a href="/">kongbaguni.net</a></h1></header>
         <article id="app">
             <header><h2>ProductList</h2></header>
-            <ul>
-                <li v-for="product in products">                     
-                    <productitem v-bind:data = "product"></productitem>
-                </li>  
-                
-            </ul>
+            <productlist v-bind:datas = "products" />
         </article>        
     </body>
 </html>
 
 <script>
     const products = Vue.ref([]);
+    const categorys = Vue.ref([]);
     const app = Vue.createApp({              
         data(){
             return {       
@@ -40,6 +37,7 @@
         }
     });
     app.component('productitem',ProductItem);
+    app.component('productlist',ProductList);
     app.mount('#app');
 
     function load() {
@@ -49,6 +47,13 @@
         .then((json)=> {
             console.log(json);
             products.value = json;
+        })
+
+        axios.get('https://fakestoreapi.com/products/categories')
+        .then((res)=>res.data)
+        .then((json)=> {
+            console.log(json);
+            categorys.value = json;
         })
     }
     load();
