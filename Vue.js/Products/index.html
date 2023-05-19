@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="Poker" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />    
+        <link rel="stylesheet" type="text/css" href="../../style.css"></link>
+        <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
+
+        <script src="./ProductItem.js"></script>
+    </head>
+
+    <body>
+        <header><h1><a href="/">kongbaguni.net</a></h1></header>
+        <article id="app">
+            <header><h2>ProductList</h2></header>
+            <ul>
+                <li v-for="product in products"> 
+                    {{ product.title }}
+                    <productitem></productitem>
+
+                </li>  
+                
+            </ul>
+        </article>        
+    </body>
+</html>
+
+<script>
+    const products = Vue.ref([]);
+    const app = Vue.createApp({        
+        components: {
+            'productitem':ProductItem
+        },
+        data(){
+            return {       
+                products : products,         
+                msg:"hello world",
+            }
+        }
+    }).mount('#app')
+
+    function load() {
+        console.log("load")
+        axios.get('https://fakestoreapi.com/products')
+        .then((res)=>res.data)
+        .then((json)=> {
+            console.log(json);
+            products.value = json;
+        })
+    }
+    load();
+</script>
+
