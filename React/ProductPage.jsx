@@ -19,7 +19,7 @@ function ProductPage() {
         <article>
             <header><h2>{data.title}</h2></header>
             <p>
-            <img src={data.image} width={300} height={300} alt={data.title}/>
+            <img src={data.image} height={300} alt={data.title}/>
             </p>
             <ul>
                 <li>price : ${data.price}</li>

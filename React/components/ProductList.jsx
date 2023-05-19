@@ -3,11 +3,11 @@ function ProductList() {
     const [sortDesc, setSortDesc] = React.useState(true);
 
     const params = new URLSearchParams(location.search);
-    React.useEffect(()=> {
-        reload();
+    React.useEffect(()=> {        
+        reload(sortDesc);
     },[]);
 
-    function reload(){       
+    function reload(sortDesc){       
         const category = params.get('category')
         console.log("params : " + category);
         console.log("react loaded!");
@@ -16,7 +16,7 @@ function ProductList() {
         if(category!=null) {
             url = 'https://fakestoreapi.com/products/category/'+category+sort;
         }
-
+        console.log("sort : " + sortDesc + " : " + sort);
         console.log("request : " + url);
         axios.get(url)
         .then((res)=>res.data)
@@ -27,8 +27,9 @@ function ProductList() {
     }
 
     function toggleSort() {
-        setSortDesc(!sortDesc);
-        reload();
+        const newDesc = !sortDesc;
+        setSortDesc(newDesc);
+        reload(newDesc);            
     }
 
     return (
