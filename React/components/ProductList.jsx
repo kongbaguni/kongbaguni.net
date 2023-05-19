@@ -37,9 +37,9 @@ function ProductList() {
             <header><h2>Product List</h2></header>
             <p>product length : {products.length}</p>
             <p>Sort : <button onClick={toggleSort}>{sortDesc ? 'DESC' : 'ASC'}</button></p>
-            <ol>
+            <ul>
                 {products.map(product=> <li key={product.id}><Product data = {product} /></li>)}
-            </ol>
+            </ul>
         </article>
     )
 }
