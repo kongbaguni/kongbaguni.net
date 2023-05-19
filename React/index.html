@@ -11,19 +11,10 @@
         <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
     
         <link rel="stylesheet" type="text/css" href="../style.css"></link>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" src="../java.js"></script>
-
-        <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
-        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>                        
-        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
-
     </head>
 
     <body>
-        <h1>React, typescript</h1>
+        <header><h1><a href="/index.html">kongbaguni.net</a></h1></header>
         <article>
             <header>
                 <h2>Hello World</h2>
@@ -84,20 +75,5 @@ export class Student {
             </ol>
             
     </article>
-
-    <article>
-        <div id="react1"></div>
-    </article>
     </body>
 </html>
-
-<script type="text/babel" src="./SiteHeader.jsx"></script>
-<script type="text/babel" src="./Product.jsx"></script>
-<script type="text/babel" src="./ProductList.jsx"></script>
-<script type="text/babel" src="./App.jsx"></script>
-<script type="text/babel">
-    const rootElement = document.getElementById("react1");
-    ReactDOM.createRoot(rootElement).render(
-        <App />
-    );
-</script>

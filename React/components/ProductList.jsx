@@ -15,12 +15,12 @@ function ProductList() {
     });
 
     return (
-        <div>
-            <h3>Product List</h3>
+        <article>
+            <header><h2>Product List</h2></header>
             <p>product length : {products.length}</p>
             <ol>
                 {products.map(product=> <li key={product.id}><Product data = {product} /></li>)}
             </ol>
-        </div>
+        </article>
     )
 }
