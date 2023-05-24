@@ -14,6 +14,8 @@ function KCanvasView(props) {
     const [dropShadowBlurRadius, setDropShadowBlurRadios] = React.useState(10);
     const [isApplyDropShadow, setIsApplyDropShadow] = React.useState(false);
     const [isChangeColorWhenBound, setIsChangeColorWhenBound] = React.useState(false);
+
+    const [frameRate,setFrameRate] = React.useState(60);
     const [filterValues, setFilterValues] = React.useState({
         blur        : 'blur(0px)', 
         contrast    : 'contrast(100%)', 
@@ -41,14 +43,13 @@ function KCanvasView(props) {
         ;
     }
 
-
     let drawCount = 0;
     React.useEffect(()=> {
        draw();
         const int = setInterval(()=> {
             draw();
             record();
-        },1000 / 60);  
+        },1000 / frameRate);  
         return () => {
             clearInterval(int);
        }
@@ -56,11 +57,6 @@ function KCanvasView(props) {
 
     const record = ()=> {
         if(isRecording == false) {
-            if(captureData.length > 0) {        
-                captureData.map(data=> {
-                    console.log(data);
-                });
-            }
             return;
         }
         const canvas = document.getElementById(props.canvasid);
@@ -218,19 +214,18 @@ function KCanvasView(props) {
     )
 
     const recording = (
-        <div>
+        <span>
         <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
         {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}
-        </div>
+        </span>
     )
 
-    const controller = (<div>
+    const controller = (<div className="controller">
     <table>
         <tbody>
             <tr>
                 <th>blend mode</th>
                 <td><BlendModeSelector callback = {(value)=> {
-                    console.log("new blend : " + value);
                     setBlendMode(value);
                 }} />
                 </td>
@@ -241,6 +236,14 @@ function KCanvasView(props) {
                 <RangePicker min={1} max={20} default={1} unit = "배속" callback = {(value)=> {
                 setSpeed(value);
                 }} />
+                </td>
+            </tr>
+            <tr>
+                <th>Frame Rate</th>
+                <td>
+                    <RangePicker min={10} max = {60} default={60} unit = "fps" callback = {(value)=> {
+                        setFrameRate(value);
+                    }} />
                 </td>
             </tr>
             <tr>
@@ -320,7 +323,6 @@ function KCanvasView(props) {
                 <th>backgroundColor</th>
                 <td>
                 <ColorPicker title = "background" color = {backgroundColor} callback = {(color) => {                
-                    console.log(color);
                     setBackgroundColor(color)
                 }} />
                 </td>
@@ -333,7 +335,6 @@ function KCanvasView(props) {
             {dropShadow}       
             <p>
             <ToggleButton on="pause" off="resume" default = "true" callback = {(isOn) => {
-                console.log(isOn);
                 setIsPause(isOn);
             }} /> <button onClick={addUnits}>addUnit</button> <button onClick={clearUnits}>clearUnits</button>
             </p>
@@ -346,7 +347,7 @@ function KCanvasView(props) {
             <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
             <p>아이템 개수 : {[unitCount]}개</p>
 
-            {(captureData.length > 0 && isRecording == false) ? <VidoePreview data = {captureData} width={300} height={300} /> : <span></span>} 
+            {(captureData.length > 0 && isRecording == false) ? <VidoePreview fps = {frameRate} data = {captureData} width={300} height={300} /> : <span></span>} 
             <p>{recording}</p>
         </div>
     )

@@ -1,0 +1,10 @@
+.controller {
+    float: left;
+}
+canvas {
+    margin: 5px;
+}
+
+button.on {
+    background-color: yellow;
+}
