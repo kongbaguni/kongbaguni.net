@@ -22,7 +22,8 @@ function KCanvasView(props) {
         sepia       : 'sepia(0%)',
         opacity     : 'opacity(100%)',
         huerotate   : 'hue-rotate(0deg)',
-        brightness  : 'brightness(100%)' 
+        brightness  : 'brightness(100%)',
+        grayscale   : 'grayscale(0%)', 
     })
 
     const [captureData, setCaptureData] = React.useState([]);
@@ -36,6 +37,7 @@ function KCanvasView(props) {
         + filterValues.opacity + ' '
         + filterValues.huerotate + ' '
         + filterValues.brightness + ' '
+        + filterValues.grayscale + ' '
         ;
     }
 
@@ -304,6 +306,16 @@ function KCanvasView(props) {
             }} />
             </td>
             </tr>
+            <tr>
+                <th>grayscale</th>
+                <td>
+                    <RangePicker min={0} max={100} unit = "%" default={0} callback = {(value)=> {
+                        const txt = 'grayscale('+value+'%)';
+                        filterValues.grayscale =  txt;
+                    }} />
+                </td>
+            </tr>
+
             <tr>
                 <th>backgroundColor</th>
                 <td>
