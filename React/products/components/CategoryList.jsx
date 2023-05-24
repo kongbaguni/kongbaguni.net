@@ -14,7 +14,7 @@ function CategoryList() {
         <div>
             categories
         <ul>
-            <li key="all"><a href="/React/ProductList.html">all</a></li>
+            <li key="all"><a href="/React/products/">all</a></li>
             {categorys.map(category => 
                 <li key={category}><a href={"?category=" + category}>{category}</a></li>
             )}

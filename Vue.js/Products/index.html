@@ -12,6 +12,7 @@
         <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
 
+        <script src="./components/CategoryList.js"></script>
         <script src="./components/ProductItem.js"></script>
         <script src="./components/ProductList.js"></script>
     </head>
@@ -20,14 +21,15 @@
         <header><h1><a href="/">kongbaguni.net</a></h1></header>
         <article id="app">
             <header><h2>ProductList</h2></header>
+            <categorylist v-bind:datas = "categorys"/>
             <productlist v-bind:datas = "products" />
         </article>        
     </body>
 </html>
 
 <script>
-    const products = Vue.ref([]);
     const categorys = Vue.ref([]);
+    const products = Vue.ref([]);
     const app = Vue.createApp({              
         data(){
             return {       
@@ -36,6 +38,7 @@
             }
         }
     });
+    app.component('categorylist',CategoryList);
     app.component('productitem',ProductItem);
     app.component('productlist',ProductList);
     app.mount('#app');
