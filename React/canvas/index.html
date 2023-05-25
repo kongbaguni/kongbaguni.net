@@ -1,50 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>React 학습</title>
-        <meta charset="UTF-8"></meta>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-        <meta property="og:url" content="https://kongbaguni.net" />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="kongbaguni.net" />
-        <meta property="og:description" content="React 학습" />
-        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
-    
-        <link rel="stylesheet" type="text/css" href="../../style.css"></link>
-        <link rel="stylesheet" type="text/css" href="./style.css"></link>
 
-        <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
-        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>                        
-        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>          
-        <script src="../../whammy.js"></script>
-    </head>
+<head>
+    <title>React 학습</title>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <meta property="og:url" content="https://kongbaguni.net" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="kongbaguni.net" />
+    <meta property="og:description" content="React 학습" />
+    <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
 
-    <body>
-        <header>
-            <h1><a href="/">kongbaguni.net</a></h1>
-        </header>        
-        <div id="react1"></div>
-    </body>
+    <link rel="stylesheet" type="text/css" href="../../style.css"></link>
+    <link rel="stylesheet" type="text/css" href="./style.css"></link>
+
+    <!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    <script src="../../whammy.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1><a href="/">kongbaguni.net</a></h1>
+    </header>
+    <div id="react1"></div>
+</body>
+
 </html>
-
-<script type="text/babel" src="./App.jsx"></script>
-<script type="text/babel" src="./components/BlendModeSelector.js"></script>
-<script type="text/babel" src="./components/CheckBox.js"></script>
-<script type="text/babel" src="./components/ColorPicker.js"></script>
-<script type="text/babel" src="./components/CommentList.js"></script>
-<script type="text/babel" src="./components/CommentList.js"></script>
-<script type="text/babel" src="./components/CommentUpdateForm.js"></script>
-<script type="text/babel" src="./components/KCanvasView.js"></script>
-<script type="text/babel" src="./components/Navigation.js"></script>
-<script type="text/babel" src="./components/People.js"></script>
-<script type="text/babel" src="./components/RangePicker.js"></script>
-<script type="text/babel" src="./components/ToggleButton.js"></script>
-<script type="text/babel" src="./components/VideoPreview.js"></script>
+<script src="./moduleImport.js"></script>
 <script type="text/babel">
-    const rootElement = document.getElementById("react1");
-    ReactDOM.createRoot(rootElement).render(        
-        <App />
-    );
+    const rootElement = document.getElementById("react1"); ReactDOM.createRoot(rootElement).render(
+    <App /> );
 </script>
