@@ -1,10 +1,26 @@
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomHexColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
 function KCanvasView(props) {
     const [isRecording, setIsRecording] = React.useState(false);
     const [units, setUnits] = React.useState([]);
     const [unitCount, setUnitCount] = React.useState(0); 
     const [speed, setSpeed] = React.useState(1.0);
-    const [blendMode, setBlendMode] = React.useState('sorce-over');
-    const [backgroundColor, setBackgroundColor] = React.useState('#ffffff');
+    const [blendMode, setBlendMode] = React.useState('lighter');
+    const [backgroundColor, setBackgroundColor] = React.useState('#336699');
     const [isPause, setIsPause] = React.useState(false);
     const [isControllerOpen, setIsControllerOpen] = React.useState(false);
 
@@ -29,6 +45,7 @@ function KCanvasView(props) {
     })
 
     const [captureData, setCaptureData] = React.useState([]);
+    const [captureCount, setCaptureCount] = React.useState(0);
 
     const getFilterTxt = () => {
         return filterValues.blur + ' ' 
@@ -60,13 +77,15 @@ function KCanvasView(props) {
             return;
         }
         const canvas = document.getElementById(props.canvasid);
-        const data = canvas.toDataURL('image/webp');
+        const data = canvas.toDataURL('image/webp');        
         captureData.push(data);
+        setCaptureCount(captureCount + 1);
         setCaptureData(captureData);
     } 
 
     const clearRecord = () => {
         setCaptureData([]);
+        setCaptureCount(0);
         setIsRecording(false);
     }
 
@@ -75,28 +94,28 @@ function KCanvasView(props) {
     
         const unitTempletes = [
             {
-                center: {x:40,y:40},
-                range : 20,
-                color:"#ff00ff",
-                movement : {x:0.5, y : 0.1}
+                center: {x:getRandomInt(150,200),y:getRandomInt(150,200)},
+                range : getRandomInt(10,20),
+                color: getRandomHexColor(),
+                movement : {x:getRandomInt(-10,10)/10, y : getRandomInt(-10,10)/10}
             },
             {
-                center: {x:50,y:50},
-                range : 30,
-                color:"#369",
-                movement : {x:0.5, y : -0.4}
+                center: {x:getRandomInt(150,200),y:getRandomInt(150,200)},
+                range : getRandomInt(20,30),
+                color: getRandomHexColor(),
+                movement : {x:getRandomInt(-10,10)/10, y : getRandomInt(-10,10)/10}
             },
             {
-                center: {x:30,y:20},
-                range : 10,
-                color:"#ffa",
-                movement : {x:0.1, y : 0.3}
+                center: {x:getRandomInt(150,200),y:getRandomInt(150,200)},
+                range : getRandomInt(5,15),
+                color: getRandomHexColor(),
+                movement : {x:getRandomInt(-10,10)/10, y : getRandomInt(-10,10)/10}
             },
             {
-                center: {x:30,y:30},
-                range : 15,
-                color:"#98f",
-                movement : {x:0.4, y : -0.3}
+                center: {x:getRandomInt(150,200),y:getRandomInt(150,200)},
+                range : getRandomInt(30,40),
+                color: getRandomHexColor(),
+                movement : {x:getRandomInt(-10,10)/10, y : getRandomInt(-10,10)/10}
             },
         ]
         arr.push(unitTempletes[units.length%unitTempletes.length]);
@@ -117,20 +136,7 @@ function KCanvasView(props) {
 
     const draw = () => {
         drawCount ++;
-        const colors = [
-            "#369", "#693", "#936", "#963", "#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff"
-        ]
-        const canvas = document.getElementById(props.canvasid);
-        
-        function getNextColor(now) {
-            const nextColor = colors[drawCount % colors.length];
-            if(nextColor == now) {
-                drawCount ++;
-                return getNextColor(now)
-            }
-            return nextColor
-        }
-
+        const canvas = document.getElementById(props.canvasid);        
         if(canvas.getContext) {
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0,0,props.width,props.height);
@@ -150,18 +156,18 @@ function KCanvasView(props) {
                 if(u.center.y + u.range + u.movement.y >= props.height || u.center.y < u.range - u.movement.y) {
                     u.movement.y *= -1;
                     if(isChangeColorWhenBound) {
-                        u.color = getNextColor(u.color);
+                        u.color = getRandomHexColor();
                     }
                 }
                 if(u.center.x + u.range + u.movement.x >= props.width || u.center.x < u.range - u.movement.x) {
                     u.movement.x *= -1;
                     if(isChangeColorWhenBound) {
-                        u.color = getNextColor(u.color);
+                        u.color = getRandomHexColor();
                     }
                 }           
             }
         }
-    }
+    }    
 
 
     const dropSadowPanner = (
@@ -216,128 +222,113 @@ function KCanvasView(props) {
     const recording = (
         <span>
         <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
-        {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}
+        {captureCount} 
+        {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}        
         </span>
     )
 
     const controller = (<div className="controller">
-    <table>
-        <tbody>
-            <tr>
-                <th>blend mode</th>
-                <td><BlendModeSelector callback = {(value)=> {
+        
+        <TableViewLayout className = "filtterController" datas = {[
+            {
+                title:"blend Mode",
+                component:<BlendModeSelector default={blendMode} callback = {(value)=> {
                     setBlendMode(value);
                 }} />
-                </td>
-            </tr>
-            <tr>
-                <th>Speed</th>
-                <td>
-                <RangePicker min={1} max={20} default={1} unit = "배속" callback = {(value)=> {
-                setSpeed(value);
+            },
+            {
+                title : "Speed",
+                component:<RangePicker min={1} max={20} default={1} unit = "배속" callback = {(value)=> {
+                    setSpeed(value);
+                    }} />
+            },
+            {
+                title : "Frame Rate",
+                component : <RangePicker min={10} max = {60} default={60} unit = "fps" callback = {(value)=> {
+                    setFrameRate(value);
                 }} />
-                </td>
-            </tr>
-            <tr>
-                <th>Frame Rate</th>
-                <td>
-                    <RangePicker min={10} max = {60} default={60} unit = "fps" callback = {(value)=> {
-                        setFrameRate(value);
-                    }} />
-                </td>
-            </tr>
-            <tr>
-                <th>blur</th>                
-                <td>
-                <RangePicker min={0} max={20} default={0} unit = "px" callback = {(value)=> {
-                const blurtxt = 'blur('+value+'px)';
-                filterValues.blur =  blurtxt;
-            }} />  
-                </td>
-            </tr>
-            <tr>
-                <th>contrast</th>
-                <td> <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
-                const txt = 'contrast('+value+'%)';
-                filterValues.contrast = txt;
-            }} /></td>
-            </tr>
-            <tr>
-                <th>invert</th>
-                <td>  <RangePicker min={0} max={100} default={0} unit = "%" callback = {(value)=> {
-               const txt = 'invert('+value+'%)';
-               filterValues.invert = txt;
-            }} /></td>
-            </tr>
-            <tr>
-                <th>saturate</th>
-                <td>
-                    <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
-                        const txt = 'saturate('+value+'%)';
-                        filterValues.saturate = txt;
-                    }} />
-                </td>
-            </tr>
-            <tr>
-                <th>sepia</th>
-                <td>  
-                    <RangePicker  min={0} max={100} default={0} unit = "%" callback = {(value)=> {
-                const txt = 'sepia('+value+'%)';
-                filterValues.sepia = txt;
-            }} />  </td>
-            </tr>
-            <tr>
-                <th>opacity</th>
-                <td>   <RangePicker  min={0} max={100} default={100} unit="%" callback = {(value)=> {
-                const txt = 'opacity('+value+'%)';
-                filterValues.opacity = txt;
-
-            }} /></td>
-            </tr>
-            <tr>
-                <th>hue-rotate</th>
-                <td> <RangePicker min={0} max={360} default={0} unit="deg" callback = {(value)=> {
-                const txt = 'hue-rotate('+value+'deg)';
-                filterValues.huerotate = txt;
-            }} /></td>
-            </tr>
-            <tr>
-                <th>brightness</th>
-                <td>      <RangePicker min={0} max={100} default={100} unit="%" callback = {(value)=> {
-                const txt = 'brightness('+value+'%)';
-                filterValues.brightness = txt;
-            }} />
-            </td>
-            </tr>
-            <tr>
-                <th>grayscale</th>
-                <td>
-                    <RangePicker min={0} max={100} unit = "%" default={0} callback = {(value)=> {
-                        const txt = 'grayscale('+value+'%)';
-                        filterValues.grayscale =  txt;
-                    }} />
-                </td>
-            </tr>
-
-            <tr>
-                <th>backgroundColor</th>
-                <td>
-                <ColorPicker title = "background" color = {backgroundColor} callback = {(color) => {                
+            },
+            {
+                title : "blur",
+                component : <RangePicker min={0} max={20} default={0} unit = "px" callback = {(value)=> {
+                    const blurtxt = 'blur('+value+'px)';
+                    filterValues.blur =  blurtxt;
+                }} />  
+            },
+            {
+                title : "contrast",
+                component : <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
+                    const txt = 'contrast('+value+'%)';
+                    filterValues.contrast = txt;
+                }} />                
+            },
+            {
+                title : "invert",
+                component : <RangePicker min={0} max={100} default={0} unit = "%" callback = {(value)=> {
+                    const txt = 'invert('+value+'%)';
+                    filterValues.invert = txt;
+                 }} />
+            },
+            {
+                title : "saturate",
+                component : <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
+                    const txt = 'saturate('+value+'%)';
+                    filterValues.saturate = txt;
+                }} />
+            },
+            {
+                title : "sepia",
+                component : <RangePicker  min={0} max={100} default={0} unit = "%" callback = {(value)=> {
+                    const txt = 'sepia('+value+'%)';
+                    filterValues.sepia = txt;
+                }} /> 
+            }, 
+            {
+                title : "opacity",
+                component : <RangePicker  min={0} max={100} default={100} unit="%" callback = {(value)=> {
+                    const txt = 'opacity('+value+'%)';
+                    filterValues.opacity = txt;
+    
+                }} />
+            }, 
+            {
+                title : "hue-rotate",
+                component : <RangePicker min={0} max={360} default={0} unit="deg" callback = {(value)=> {
+                    const txt = 'hue-rotate('+value+'deg)';
+                    filterValues.huerotate = txt;
+                }} />
+            },
+            {
+                title : "brightness",
+                component :  <RangePicker min={0} max={100} default={100} unit="%" callback = {(value)=> {
+                    const txt = 'brightness('+value+'%)';
+                    filterValues.brightness = txt;
+                }} />
+            }, 
+            {
+                title : "grayscale",
+                component : <RangePicker min={0} max={100} unit = "%" default={0} callback = {(value)=> {
+                    const txt = 'grayscale('+value+'%)';
+                    filterValues.grayscale =  txt;
+                }} />
+            },
+            {
+                title : "backgroundColor",
+                component : <ColorPicker title = "background" color = {backgroundColor} callback = {(color) => {                
                     setBackgroundColor(color)
                 }} />
-                </td>
-            </tr>
-         </tbody>
-    </table>
-            <Checkbox title="change color when bound" callback = {(value)=> {
-                setIsChangeColorWhenBound(value);
-            }} />     
-            {dropShadow}       
-            <p>
-            <ToggleButton on="pause" off="resume" default = "true" callback = {(isOn) => {
-                setIsPause(isOn);
-            }} /> <button onClick={addUnits}>addUnit</button> <button onClick={clearUnits}>clearUnits</button>
-            </p>
+            }
+        ]}/>
+
+        <Checkbox title="change color when bound" callback = {(value)=> {
+            setIsChangeColorWhenBound(value);
+        }} />     
+        {dropShadow}       
+        <p>
+        <ToggleButton on="pause" off="resume" default = "true" callback = {(isOn) => {
+            setIsPause(isOn);
+        }} /> <button onClick={addUnits}>addUnit</button> <button onClick={clearUnits}>clearUnits</button>
+        </p>
     </div>
     );
     return (

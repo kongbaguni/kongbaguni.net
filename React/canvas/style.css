@@ -3,6 +3,7 @@
 }
 canvas {
     margin: 5px;
+    border: 1px solid #fff
 }
 
 button.on {

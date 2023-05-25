@@ -1,7 +1,9 @@
 function BlendModeSelector(props) {
     const modes = [
-        "source-over",
+        "lighter", 
         "multiply",
+        "source-over",
+        "xor",
         // "source-atop",
         // "source-in",
         // "source-out",
@@ -9,17 +11,14 @@ function BlendModeSelector(props) {
         // "destination-atop", 
         // "destination-in",
         // "destination-out", 
-        "lighter", 
         // "copy", 
-
-        "xor"
     ];
 
-    const [currentmode, setCurrentMode] = React.useState(modes[0]);
+    const [currentmode, setCurrentMode] = React.useState(props.default);
 
     const onChangeValue = (mode) => {
         setCurrentMode(mode);
-        
+        console.log(props.default);
         props.callback(mode);
     }
     

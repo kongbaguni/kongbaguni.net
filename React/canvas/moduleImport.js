@@ -6,6 +6,7 @@ const modules = [
     './components/CommentCreateForm.js',
     './components/CommentList.js',
     './components/CommentUpdateForm.js',
+    './components/TableViewLayout.js',
     './components/KCanvasView.js',
     './components/Navigation.js',
     './components/People.js',
