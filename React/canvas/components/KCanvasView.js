@@ -216,7 +216,9 @@ function KCanvasView(props) {
         <div className="recording">
             <VidoePreview fps = {frameRate} data = {captureData} width={props.width} height={props.height} /> 
             <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
-            {captureCount} / {props.recordlimit}             
+            &nbsp;
+            <progress value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit}        
+            <br />
             {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}        
         </div>
     )

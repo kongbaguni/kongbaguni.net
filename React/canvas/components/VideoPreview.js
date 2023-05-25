@@ -37,8 +37,7 @@ function VidoePreview(props) {
     return (
         <div className="videopreview">            
             <img src={props.data.length == 0 ? 'https://via.placeholder.com/'+props.width+'/FFFF00/000000' : props.data[idx]} alt="preview" width={props.width} height={props.height} /> <br />
-            {props.data.length > 0 ? <button onClick={makeMp4}>download webm</button> : <span></span>}
-            
+            <button onClick={makeMp4} hidden={props.data.length == 0}>download webm</button>             
         </div>
     )
 }
