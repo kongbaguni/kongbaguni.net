@@ -3,9 +3,17 @@
 }
 canvas {
     margin: 5px;
-    border: 1px solid #fff
+    border: 1px solid #fff;
+    float : left;
 }
 
 button.on {
     background-color: yellow;
+}
+.recording {
+    float:left
+}
+.videopreview img {
+    border: 1px solid #fff;
+    margin: 5px;
 }

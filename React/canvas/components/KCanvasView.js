@@ -76,6 +76,10 @@ function KCanvasView(props) {
         if(isRecording == false) {
             return;
         }
+        if(captureCount >= props.recordlimit) {
+            setIsRecording(false);
+            return;
+        }
         const canvas = document.getElementById(props.canvasid);
         const data = canvas.toDataURL('image/webp');        
         captureData.push(data);
@@ -171,64 +175,53 @@ function KCanvasView(props) {
 
 
     const dropSadowPanner = (
-        <div>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Drop Shadow</th>
-                    <td><ColorPicker title = "Drop Shadow" color = {dropShadowColor} callback = {(color) => {
+            <TableViewLayout className="dropShadowController" datas = {[
+                {
+                    title : "Shadow Color",
+                    component : <ColorPicker title = "Drop Shadow" color = {dropShadowColor} callback = {(color) => {
                         setDropShadowColor(color);
-                    }} />   
-                    </td>
-                </tr>
-                <tr>
-                    <th>offset x</th>
-                    <td>
-                        <RangePicker title = "Drop Shadow offset x" min={-30} max={30} unit="px" default={dropshadowOffsetX} callback = {(value) => {
-                            setDropShadowOffsetX(value);
-                        }} />
-                    </td>
-                </tr>
-                <tr>
-                    <th>offset y</th>
-                    <td>
-                    <RangePicker title = "Drop Shadow offset y" min={-30} max={30} unit="px" default={dropShadowOffsetY} callback = {(value) => {
+                    }} />
+                },
+                {
+                    title : "Offset X",
+                    component : <RangePicker title = "Drop Shadow offset x" min={-30} max={30} unit="px" default={dropshadowOffsetX} callback = {(value) => {
+                        setDropShadowOffsetX(value);
+                    }} />
+                },
+                {
+                    title : "Offset Y",
+                    component : <RangePicker title = "Drop Shadow offset y" min={-30} max={30} unit="px" default={dropShadowOffsetY} callback = {(value) => {
                         setDropShadowOffsetY(value);
                     }} />
-                    </td>
-                </tr>
-                <tr>
-                    <th>blur range</th>
-                    <td>
-                    <RangePicker title = "Drop Shadow blur range " min={0} max={30} unit="px" default={dropShadowBlurRadius}  callback = {(value) => {
+                },
+                {
+                    title : "blur range",
+                    component : <RangePicker title = "Drop Shadow blur range " min={0} max={30} unit="px" default={dropShadowBlurRadius}  callback = {(value) => {
                         setDropShadowBlurRadios(value);
                     }} />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
+                }
+            ]} />        
     )    
-    const dropShadow = (<div>
+
+    const dropShadow = (
+    <div>
         <Checkbox title = "use drop shadow" callback = {(value)=> {
             setIsApplyDropShadow(value);
         }}/>
-
         {isApplyDropShadow ? dropSadowPanner : <span></span>}
     </div>
-
     )
 
     const recording = (
-        <span>
-        <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
-        {captureCount} 
-        {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}        
-        </span>
+        <div className="recording">
+            <VidoePreview fps = {frameRate} data = {captureData} width={props.width} height={props.height} /> 
+            <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
+            {captureCount} / {props.recordlimit}             
+            {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}        
+        </div>
     )
 
-    const controller = (<div className="controller">
-        
+    const controller = (<div className="controller">        
         <TableViewLayout className = "filtterController" datas = {[
             {
                 title:"blend Mode",
@@ -331,15 +324,15 @@ function KCanvasView(props) {
         </p>
     </div>
     );
+
     return (
         <div className="canvas">
             {controller}
             
             <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
             <p>아이템 개수 : {[unitCount]}개</p>
-
-            {(captureData.length > 0 && isRecording == false) ? <VidoePreview fps = {frameRate} data = {captureData} width={300} height={300} /> : <span></span>} 
-            <p>{recording}</p>
+                        
+            {recording}
         </div>
     )
 }
