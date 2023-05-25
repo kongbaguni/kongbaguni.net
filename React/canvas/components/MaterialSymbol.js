@@ -1,6 +1,6 @@
 function MaterialSymbol(props) {
     return (
-        <span class="material-symbols-outlined">
+        <span className="material-symbols-outlined">
         {props.text}
         </span>
     )
