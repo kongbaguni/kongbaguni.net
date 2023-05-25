@@ -1,5 +1,6 @@
 const modules = [
     './App.jsx',
+    './components/MaterialSymbol.js',
     './components/BlendModeSelector.js',
     './components/CheckBox.js',
     './components/ColorPicker.js',
@@ -12,7 +13,7 @@ const modules = [
     './components/People.js',
     './components/RangePicker.js',
     './components/ToggleButton.js',
-    './components/VideoPreview.js'
+    './components/VideoPreview.js',
 ]
 
 for (let i = 0; i < modules.length; i++) {

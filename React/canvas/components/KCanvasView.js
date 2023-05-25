@@ -212,14 +212,15 @@ function KCanvasView(props) {
     </div>
     )
 
+
     const recording = (
         <div className="recording">
             <VidoePreview fps = {frameRate} data = {captureData} width={props.width} height={props.height} /> 
-            <button onClick={toggleIsRecording}>{isRecording ? "recording stop" : "recording start"}</button>
+            <button onClick={toggleIsRecording}>{isRecording ? materialSymbol_pause_circle : materialSymbol_fiber_manual_record}</button>
             &nbsp;
             <progress value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit}        
             <br />
-            {captureData.length > 0 ? <button onClick={clearRecord}>clear Record</button> : <span></span>}        
+            {captureData.length > 0 ? <button onClick={clearRecord}>{materialSymbol_delete}</button> : <span></span>}        
         </div>
     )
 
@@ -320,9 +321,9 @@ function KCanvasView(props) {
         }} />     
         {dropShadow}       
         <p>
-        <ToggleButton on="pause" off="resume" default = "true" callback = {(isOn) => {
+        <ToggleButton on={materialSymbol_pause} off={materialSymbol_resume} default = "true" callback = {(isOn) => {
             setIsPause(isOn);
-        }} /> <button onClick={addUnits}>addUnit</button> <button onClick={clearUnits}>clearUnits</button>
+        }} /> <button onClick={addUnits}>{materialSymbol_add}</button> <button onClick={clearUnits}>{materialSymbol_delete}</button>
         </p>
     </div>
     );
@@ -334,7 +335,7 @@ function KCanvasView(props) {
             <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
             <p>아이템 개수 : {[unitCount]}개</p>
                         
-            {recording}
+            {unitCount > 0 ? recording : <span></span>}
         </div>
     )
 }
