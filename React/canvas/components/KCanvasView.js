@@ -216,11 +216,20 @@ function KCanvasView(props) {
     const recording = (
         <div className="recording">
             <VidoePreview fps = {frameRate} data = {captureData} width={props.width} height={props.height} /> 
-            <button onClick={toggleIsRecording}>{isRecording ? materialSymbol_pause_circle : materialSymbol_fiber_manual_record}</button>
-            &nbsp;
-            <progress value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit}        
-            <br />
-            {captureData.length > 0 ? <button onClick={clearRecord}>{materialSymbol_delete}</button> : <span></span>}        
+            <TableViewLayout className = "recordController" 
+            datas = {[
+                {
+                    title:"record",
+                    component : <span>
+                        <button onClick={toggleIsRecording}>{isRecording ? materialSymbol_pause_circle : materialSymbol_fiber_manual_record}</button>
+                        {captureData.length > 0 ? <button onClick={clearRecord}>{materialSymbol_delete}</button> : <span></span>}
+                        </span>
+                },
+                { 
+                    title:"record progress",
+                    component : <span><progress value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit} </span>
+                },
+            ]} />            
         </div>
     )
 
@@ -333,9 +342,9 @@ function KCanvasView(props) {
             {controller}
             
             <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
-            <p>아이템 개수 : {[unitCount]}개</p>
-                        
             {unitCount > 0 ? recording : <span></span>}
+            <p>Unit Count : {[unitCount]}개</p>
+                        
         </div>
     )
 }
