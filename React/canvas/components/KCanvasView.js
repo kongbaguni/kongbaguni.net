@@ -343,7 +343,7 @@ function KCanvasView(props) {
             
             <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
             {unitCount > 0 ? recording : <span></span>}
-            <p>Unit Count : {[unitCount]}개</p>
+            <p>Unit Count : {[unitCount]}</p>
                         
         </div>
     )
