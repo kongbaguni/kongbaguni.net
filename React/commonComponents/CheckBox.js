@@ -5,7 +5,6 @@ function Checkbox (props) {
     }
 
     return (
-        <p> {props.title} : <input type="checkbox" onChange={onChangeValueHandler} />
-        </p>
+        <span>{props.title} : <input type="checkbox" onChange={onChangeValueHandler} /></span>
     )
 }

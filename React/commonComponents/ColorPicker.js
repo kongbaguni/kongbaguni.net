@@ -7,7 +7,6 @@ function ColorPicker(params) {
     }
 
     return (
-        <p><input type="color" value={color} onChange={handleChange} />
-        </p>
+        <input type="color" value={color} onChange={handleChange} />
     )
 }
