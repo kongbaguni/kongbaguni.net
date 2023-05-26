@@ -18,6 +18,7 @@ function dataURItoBlob(dataURI) {
 
 function VidoePreview(props) {
     const [idx, setIdx] = React.useState(0);
+    const [fileName, setFileName] = React.useState("capture.zip");
 
     React.useEffect(()=> {
         const interval = setInterval(()=> {
@@ -44,14 +45,18 @@ function VidoePreview(props) {
         
         // zip 파일을 Blob으로 만들기
         zip.generateAsync({ type: "blob" }).then(zipFile => {           
-            saveAs(zipFile, 'capture.zip'); // zip 파일 다운로드 실행
+            saveAs(zipFile, fileName); // zip 파일 다운로드 실행
         });
     }
 
+    const onChangeFileName = (event) => {
+        setFileName(event.target.value);
+    }
 
     return (
         <div className="videopreview">            
             <img src={props.data.length == 0 ? 'https://via.placeholder.com/'+props.width+'/FFFF00/000000' : props.data[idx]} alt="preview" width={props.width} height={props.height} /> <br />
+            fileName : <input type="text" value={fileName} name="fileName" onChange={onChangeFileName}/>&nbsp;
             <button onClick={makeMp4} hidden={props.data.length == 0}>{materialSymbol_download}</button>             
         </div>
     )
