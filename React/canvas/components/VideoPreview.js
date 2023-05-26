@@ -1,3 +1,21 @@
+function dataURItoBlob(dataURI) {
+    if(typeof dataURI !== 'string'){
+        throw new Error('Invalid argument: dataURI must be a string');
+    }
+    dataURI = dataURI.split(',');
+    var type = dataURI[0].split(':')[1].split(';')[0],
+        byteString = atob(dataURI[1]),
+        byteStringLength = byteString.length,
+        arrayBuffer = new ArrayBuffer(byteStringLength),
+        intArray = new Uint8Array(arrayBuffer);
+    for (var i = 0; i < byteStringLength; i++) {
+        intArray[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([intArray], {
+        type: type
+    });
+}
+
 function VidoePreview(props) {
     const [idx, setIdx] = React.useState(0);
 
@@ -8,32 +26,29 @@ function VidoePreview(props) {
                 newIdx = 0;
             }
             setIdx(newIdx);
-
+            
         }, 1000 / props.fps);
         return(()=> {
             clearInterval(interval)
         })
     })
 
-    const makeMp4 = () => {
-        var encoder = new Whammy.Video(props.fps);
-        for (let i=0; i< props.data.length; i++) {
-            console.log(props.data[i]);
-            encoder.add(props.data[i]);
-        } 
-
-        encoder.compile(false,function(output){
-            console.log(output);
-            const url = (window.webkitURL || window.URL).createObjectURL(output);
-
-            var downloadLink = document.createElement('a');
-            downloadLink.href = url;
-            downloadLink.download = 'animation.webm';
-            downloadLink.textContent = 'Download webm';  
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
+    const makeMp4 = () => {     
+        const zip = new JSZip(); // JSZip 인스턴스 생성
+        for (let i = 0; i < props.data.length; i++) {
+            const fileName = "captureImage" + String(i).padStart(5, '0');;
+            const dataURL = props.data[i]; // 이미지 얻기
+            const blob = dataURItoBlob(dataURL); // blob 만들기
+            zip.file(`${fileName}.png`, blob, { binary: true }); // zip 파일에 추가
+        }
+        
+        // zip 파일을 Blob으로 만들기
+        zip.generateAsync({ type: "blob" }).then(zipFile => {           
+            saveAs(zipFile, 'capture.zip'); // zip 파일 다운로드 실행
         });
     }
+
+
     return (
         <div className="videopreview">            
             <img src={props.data.length == 0 ? 'https://via.placeholder.com/'+props.width+'/FFFF00/000000' : props.data[idx]} alt="preview" width={props.width} height={props.height} /> <br />
