@@ -4,7 +4,7 @@ const modules = [
     '../commonComponents/CheckBox.js',
     '../commonComponents/RangePicker.js',
     './App.jsx',
-    './components/BlendModeSelector.js',
+    './components/BlendModeSelector.tsx',
     './components/TableViewLayout.js',
     './components/KCanvasView.js',
     './components/Navigation.js',

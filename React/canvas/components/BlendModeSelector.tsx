@@ -1,4 +1,9 @@
-function BlendModeSelector(props) {
+interface BlendModeSelectorProps {
+    default:string;
+    callback:(mode:string)=>void;
+}
+
+const BlendModeSelector = (props:BlendModeSelectorProps) => {
     const modes = [
         "lighter", 
         "multiply",
@@ -21,12 +26,12 @@ function BlendModeSelector(props) {
         console.log(props.default);
         props.callback(mode);
     }
-    
+    const btnClssName = 'btn btn-primary';
     return (
         <div className="blend">
             {
                 modes.map((mode)=>
-                    <button key={mode} className = {mode == currentmode ? 'on' : 'off'} onClick={(e) => onChangeValue(mode)}>{mode}</button>
+                    <button key={mode} className = {btnClssName + ( mode == currentmode ? ' disabled' : '')} onClick={(e) => onChangeValue(mode)}>{mode}</button>
                 )
             }
         </div>
