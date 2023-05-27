@@ -8,7 +8,7 @@ interface RangePickerProps {
 
 const RangePicker = (props:RangePickerProps) => {
 
-    const [value, setValue] = React.useState(props.default);
+    const [value, setValue] = useState(props.default);
 
     const onChangeValue = (event)=> {
         setValue(event.target.value);
