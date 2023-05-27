@@ -2,7 +2,7 @@ const modules = [
     '../commonComponents/MaterialSymbol.js',
     '../commonComponents/ColorPicker.tsx',
     '../commonComponents/CheckBox.tsx',
-    '../commonComponents/RangePicker.js',
+    '../commonComponents/RangePicker.tsx',
     './App.jsx',
     './components/BlendModeSelector.tsx',
     './components/TableViewLayout.js',
