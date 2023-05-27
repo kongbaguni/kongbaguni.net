@@ -22,7 +22,7 @@ interface KCanvasViewProps {
 
 const KCanvasView = (props:KCanvasViewProps) => {
     const [isRecording, setIsRecording] = useState(false);
-    const [units, setUnits] = useState([]);
+    const [units, setUnits] = useState<UnitModel[]>([]);
     const [unitCount, setUnitCount] = useState(0); 
     const [speed, setSpeed] = useState(1.0);
     const [blendMode, setBlendMode] = useState('lighter');
@@ -50,7 +50,7 @@ const KCanvasView = (props:KCanvasViewProps) => {
         grayscale   : 'grayscale(0%)', 
     })
 
-    const [captureData, setCaptureData] = useState([]);
+    const [captureData, setCaptureData] = useState<string[]>([]);
     const [captureCount, setCaptureCount] = useState(0);
 
     const getFilterTxt = () => {
@@ -86,11 +86,14 @@ const KCanvasView = (props:KCanvasViewProps) => {
             setIsRecording(false);
             return;
         }
-        const canvas = document.getElementById(props.canvasid);
-        const data = canvas.toDataURL('image/webp');        
-        captureData.push(data);
-        setCaptureCount(captureCount + 1);
-        setCaptureData(captureData);
+        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid) as HTMLCanvasElement;
+        
+        if(canvas != null) {
+            const data = canvas.toDataURL('image/webp');        
+            captureData.push(data);
+            setCaptureCount(captureCount + 1);
+            setCaptureData(captureData);    
+        }
     } 
 
     const clearRecord = () => {
@@ -147,11 +150,14 @@ const KCanvasView = (props:KCanvasViewProps) => {
 
     const draw = () => {
         drawCount ++;
-        const canvas = document.getElementById(props.canvasid);        
-        if(canvas.getContext) {
-            const ctx = canvas.getContext('2d');
+        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid) as HTMLCanvasElement;        
+        if(canvas != null && canvas.getContext) {
+            const ctx:CanvasRenderingContext2D | null = canvas.getContext('2d');
+            if(ctx == null) {
+                return
+            }
             ctx.clearRect(0,0,props.width,props.height);
-            ctx.globalCompositeOperation = blendMode;
+            ctx.globalCompositeOperation = blendMode as GlobalCompositeOperation;;
             ctx.filter = getFilterTxt() + (isApplyDropShadow ? 'drop-Shadow('+dropshadowOffsetX+'px '+dropShadowOffsetY+'px '+ dropShadowBlurRadius+'px '+dropShadowColor+' )' : '');
             ctx.fillStyle = backgroundColor;
             ctx.fillRect(-200,-200,props.width+400,props.height+400);
