@@ -18,8 +18,8 @@ const BlendModeSelector = (props:BlendModeSelectorProps) => {
         // "destination-out", 
         // "copy", 
     ];
-
-    const [currentmode, setCurrentMode] = React.useState(props.default);
+    
+    const [currentmode, setCurrentMode] = useState(props.default);
 
     const onChangeValue = (mode) => {
         setCurrentMode(mode);
