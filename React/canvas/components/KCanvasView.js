@@ -13,7 +13,6 @@ function getRandomHexColor() {
     return color;
 }
 
-
 function KCanvasView(props) {
     const [isRecording, setIsRecording] = React.useState(false);
     const [units, setUnits] = React.useState([]);
