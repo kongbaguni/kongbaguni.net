@@ -1,5 +1,7 @@
 const modules = [
     '../commonComponents/MaterialSymbol.js',
+    './components/DCanvasView.tsx',
+    './Root.tsx',
     './App.jsx',
 ]
 
