@@ -13,25 +13,32 @@ function getRandomHexColor() {
     return color;
 }
 
-function KCanvasView(props) {
-    const [isRecording, setIsRecording] = React.useState(false);
-    const [units, setUnits] = React.useState([]);
-    const [unitCount, setUnitCount] = React.useState(0); 
-    const [speed, setSpeed] = React.useState(1.0);
-    const [blendMode, setBlendMode] = React.useState('lighter');
-    const [backgroundColor, setBackgroundColor] = React.useState('#336699');
-    const [isPause, setIsPause] = React.useState(false);
-    const [isControllerOpen, setIsControllerOpen] = React.useState(false);
+interface KCanvasViewProps {
+    canvasid:string;
+    recordlimit:number;
+    width:number;
+    height:number;
+}
 
-    const [dropshadowOffsetX, setDropShadowOffsetX] = React.useState(0);
-    const [dropShadowOffsetY, setDropShadowOffsetY] = React.useState(0);
-    const [dropShadowColor, setDropShadowColor] = React.useState('#000000');
-    const [dropShadowBlurRadius, setDropShadowBlurRadios] = React.useState(10);
-    const [isApplyDropShadow, setIsApplyDropShadow] = React.useState(false);
-    const [isChangeColorWhenBound, setIsChangeColorWhenBound] = React.useState(false);
+const KCanvasView = (props:KCanvasViewProps) => {
+    const [isRecording, setIsRecording] = useState(false);
+    const [units, setUnits] = useState([]);
+    const [unitCount, setUnitCount] = useState(0); 
+    const [speed, setSpeed] = useState(1.0);
+    const [blendMode, setBlendMode] = useState('lighter');
+    const [backgroundColor, setBackgroundColor] = useState('#336699');
+    const [isPause, setIsPause] = useState(false);
+    const [isControllerOpen, setIsControllerOpen] = useState(false);
 
-    const [frameRate,setFrameRate] = React.useState(60);
-    const [filterValues, setFilterValues] = React.useState({
+    const [dropshadowOffsetX, setDropShadowOffsetX] = useState(0);
+    const [dropShadowOffsetY, setDropShadowOffsetY] = useState(0);
+    const [dropShadowColor, setDropShadowColor] = useState('#000000');
+    const [dropShadowBlurRadius, setDropShadowBlurRadios] = useState(10);
+    const [isApplyDropShadow, setIsApplyDropShadow] = useState(false);
+    const [isChangeColorWhenBound, setIsChangeColorWhenBound] = useState(false);
+
+    const [frameRate,setFrameRate] = useState(60);
+    const [filterValues, setFilterValues] = useState({
         blur        : 'blur(0px)', 
         contrast    : 'contrast(100%)', 
         invert      : 'invert(0%)', 
@@ -43,8 +50,8 @@ function KCanvasView(props) {
         grayscale   : 'grayscale(0%)', 
     })
 
-    const [captureData, setCaptureData] = React.useState([]);
-    const [captureCount, setCaptureCount] = React.useState(0);
+    const [captureData, setCaptureData] = useState([]);
+    const [captureCount, setCaptureCount] = useState(0);
 
     const getFilterTxt = () => {
         return filterValues.blur + ' ' 
@@ -121,6 +128,7 @@ function KCanvasView(props) {
                 movement : {x:getRandomInt(-10,10)/10, y : getRandomInt(-10,10)/10}
             },
         ]
+    
         arr.push(unitTempletes[units.length%unitTempletes.length]);
         setUnits(arr);
         setUnitCount(units.length);
@@ -148,7 +156,7 @@ function KCanvasView(props) {
             ctx.fillStyle = backgroundColor;
             ctx.fillRect(-200,-200,props.width+400,props.height+400);
             for(var i = 0; i < units.length; i++) {
-                const u = units[i];
+                const u:UnitModel = units[i];
                 ctx.fillStyle = u.color;
                 ctx.beginPath();
                 ctx.arc(u.center.x, u.center.y, u.range, 0, 2 * Math.PI)
@@ -172,18 +180,17 @@ function KCanvasView(props) {
         }
     }    
 
-
     const dropSadowPanner = (
-            <TableViewLayout className="dropShadowController" datas = {[
+            <TableViewLayout datas = {[
                 {
                     title : "Shadow Color",
-                    component : <ColorPicker title = "Drop Shadow" color = {dropShadowColor} callback = {(color) => {
+                    component : <ColorPicker title = "Drop Shadow" color = {dropShadowColor} callback = {(color:string) => {
                         setDropShadowColor(color);
                     }} />
                 },
                 {
                     title : "Offset X",
-                    component : <RangePicker title = "Drop Shadow offset x" min={-30} max={30} unit="px" default={dropshadowOffsetX} callback = {(value) => {
+                    component : <RangePicker title = "Drop Shadow offset x" min={-30} max={30} unit="px" default={dropshadowOffsetX} callback = {(value:number) => {
                         setDropShadowOffsetX(value);
                     }} />
                 },
@@ -202,38 +209,30 @@ function KCanvasView(props) {
             ]} />        
     )    
 
-    const dropShadow = (
-    <div>
-        <Checkbox title = "use drop shadow" callback = {(value)=> {
-            setIsApplyDropShadow(value);
-        }}/>
-        {isApplyDropShadow ? dropSadowPanner : <span></span>}
-    </div>
-    )
 
 
     const recording = (
         <div className="recording">
             <VidoePreview fps = {frameRate} data = {captureData} width={props.width} height={props.height} /> 
-            <TableViewLayout className = "recordController" 
+            <TableViewLayout
             datas = {[
                 {
                     title:"record",
                     component : <span>
-                        <button onClick={toggleIsRecording}>{isRecording ? materialSymbol_pause_circle : materialSymbol_fiber_manual_record}</button>
-                        {captureData.length > 0 ? <button onClick={clearRecord}>{materialSymbol_delete}</button> : <span></span>}
+                        <button className="btn btn-primary" onClick={toggleIsRecording}>{isRecording ? materialSymbol_pause_circle : materialSymbol_fiber_manual_record}</button>
+                        {captureData.length > 0 ? <button className="btn btn-primary" onClick={clearRecord}>{materialSymbol_delete}</button> : <span></span>}
                         </span>
                 },
                 { 
                     title:"record progress",
-                    component : <span><progress value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit} </span>
+                    component : <span className="form-control"><progress className="progress" value={captureCount} max={props.recordlimit} /> {captureCount} / {props.recordlimit} </span>
                 },
             ]} />            
         </div>
     )
 
     const controller = (<div className="controller">        
-        <TableViewLayout className = "filtterController" datas = {[
+        <TableViewLayout datas = {[
             {
                 title:"blend Mode",
                 component:<BlendModeSelector default={blendMode} callback = {(value)=> {
@@ -242,54 +241,54 @@ function KCanvasView(props) {
             },
             {
                 title : "Speed",
-                component:<RangePicker min={1} max={20} default={1} unit = "배속" callback = {(value)=> {
+                component:<RangePicker title="speed" min={1} max={20} default={1} unit = "배속" callback = {(value:number)=> {
                     setSpeed(value);
                     }} />
             },
             {
                 title : "Frame Rate",
-                component : <RangePicker min={10} max = {60} default={60} unit = "fps" callback = {(value)=> {
+                component : <RangePicker title = "frame rate" min={10} max = {60} default={60} unit = "fps" callback = {(value:number)=> {
                     setFrameRate(value);
                 }} />
             },
             {
                 title : "blur",
-                component : <RangePicker min={0} max={20} default={0} unit = "px" callback = {(value)=> {
+                component : <RangePicker title="blur" min={0} max={20} default={0} unit = "px" callback = {(value:number)=> {
                     const blurtxt = 'blur('+value+'px)';
                     filterValues.blur =  blurtxt;
                 }} />  
             },
             {
                 title : "contrast",
-                component : <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
+                component : <RangePicker title="contrast" min={0} max={100} default={100} unit = "%" callback = {(value:number)=> {
                     const txt = 'contrast('+value+'%)';
                     filterValues.contrast = txt;
                 }} />                
             },
             {
                 title : "invert",
-                component : <RangePicker min={0} max={100} default={0} unit = "%" callback = {(value)=> {
+                component : <RangePicker title= "invert" min={0} max={100} default={0} unit = "%" callback = {(value:number)=> {
                     const txt = 'invert('+value+'%)';
                     filterValues.invert = txt;
                  }} />
             },
             {
                 title : "saturate",
-                component : <RangePicker min={0} max={100} default={100} unit = "%" callback = {(value)=> {
+                component : <RangePicker title="saturate" min={0} max={100} default={100} unit = "%" callback = {(value:number)=> {
                     const txt = 'saturate('+value+'%)';
                     filterValues.saturate = txt;
                 }} />
             },
             {
                 title : "sepia",
-                component : <RangePicker  min={0} max={100} default={0} unit = "%" callback = {(value)=> {
+                component : <RangePicker title="sepia" min={0} max={100} default={0} unit = "%" callback = {(value:number)=> {
                     const txt = 'sepia('+value+'%)';
                     filterValues.sepia = txt;
                 }} /> 
             }, 
             {
                 title : "opacity",
-                component : <RangePicker  min={0} max={100} default={100} unit="%" callback = {(value)=> {
+                component : <RangePicker title="opacity" min={0} max={100} default={100} unit="%" callback = {(value:number)=> {
                     const txt = 'opacity('+value+'%)';
                     filterValues.opacity = txt;
     
@@ -297,21 +296,21 @@ function KCanvasView(props) {
             }, 
             {
                 title : "hue-rotate",
-                component : <RangePicker min={0} max={360} default={0} unit="deg" callback = {(value)=> {
+                component : <RangePicker title="hue-rotate" min={0} max={360} default={0} unit="deg" callback = {(value:number)=> {
                     const txt = 'hue-rotate('+value+'deg)';
                     filterValues.huerotate = txt;
                 }} />
             },
             {
                 title : "brightness",
-                component :  <RangePicker min={0} max={100} default={100} unit="%" callback = {(value)=> {
+                component :  <RangePicker title="brightness" min={0} max={100} default={100} unit="%" callback = {(value:number)=> {
                     const txt = 'brightness('+value+'%)';
                     filterValues.brightness = txt;
                 }} />
             }, 
             {
                 title : "grayscale",
-                component : <RangePicker min={0} max={100} unit = "%" default={0} callback = {(value)=> {
+                component : <RangePicker title="grayscale" min={0} max={100} unit = "%" default={0} callback = {(value:number)=> {
                     const txt = 'grayscale('+value+'%)';
                     filterValues.grayscale =  txt;
                 }} />
@@ -321,29 +320,53 @@ function KCanvasView(props) {
                 component : <ColorPicker title = "background" color = {backgroundColor} callback = {(color) => {                
                     setBackgroundColor(color)
                 }} />
+            },
+            {
+                title:"",
+                component : <div>
+                <Checkbox title="change color when bound" callback = {(value:boolean)=> {
+                        setIsChangeColorWhenBound(value);
+                }} />     
+                <div className="accordion-item">
+                    <span className="accordion-header">
+                    <Checkbox title = "use drop shadow" callback = {(value)=> {
+                        setIsApplyDropShadow(value);
+                    }}/>
+                    </span>
+                    <span className="accordion-body">
+                {isApplyDropShadow ? dropSadowPanner : <span></span>}
+                </span>
+                </div>      
+            </div>
+            },
+            {
+                title:"",
+                component:<span>
+                <ToggleButton on={materialSymbol_pause} off={materialSymbol_resume} default = {true} callback = {(isOn:boolean) => {
+                    setIsPause(isOn);
+                }} /> 
+                <button className="btn btn-primary" onClick={addUnits}>{materialSymbol_add}</button>
+                <button className="btn btn-primary" onClick={clearUnits}>{materialSymbol_delete}</button>
+                </span>
             }
         ]}/>
 
-        <Checkbox title="change color when bound" callback = {(value)=> {
-            setIsChangeColorWhenBound(value);
-        }} />     
-        {dropShadow}       
-        <p>
-        <ToggleButton on={materialSymbol_pause} off={materialSymbol_resume} default = "true" callback = {(isOn) => {
-            setIsPause(isOn);
-        }} /> <button onClick={addUnits}>{materialSymbol_add}</button> <button onClick={clearUnits}>{materialSymbol_delete}</button>
-        </p>
+        
     </div>
     );
 
     return (
-        <div className="canvas">
-            {controller}
-            
-            <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
-            {unitCount > 0 ? recording : <span></span>}
-            <p>Unit Count : {[unitCount]}</p>
-                        
+        <div className="container p-3">
+            <div className="row">
+            <div className="col">
+                {controller}
+            </div>
+            <div className="col">
+                <canvas width={props.width} height={props.height} id={props.canvasid}></canvas>
+                <p>Unit Count : {[unitCount]}</p>
+                {unitCount > 0 ? recording : <span></span>}
+            </div>
+            </div>                        
         </div>
     )
 }

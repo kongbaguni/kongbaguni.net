@@ -5,12 +5,14 @@ const modules = [
     '../commonComponents/RangePicker.tsx',
     '../commonComponents/ToggleButton.tsx',
     '../commonComponents/TableViewLayout.tsx',
+    './models/Position.tsx',
+    './models/UnitModel.tsx',
     './App.jsx',
     './components/BlendModeSelector.tsx',
-    './components/KCanvasView.js',
+    './components/VideoPreview.tsx',
+    './components/KCanvasView.tsx',
     './components/Navigation.js',
     './components/People.js',
-    './components/VideoPreview.js',
 ]
 
 for (let i = 0; i < modules.length; i++) {

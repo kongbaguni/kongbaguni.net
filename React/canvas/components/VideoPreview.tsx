@@ -16,7 +16,14 @@ function dataURItoBlob(dataURI) {
     });
 }
 
-function VidoePreview(props) {
+interface VidoePreviewProps {
+    data:Array<string>;
+    fps:number;
+    width:number;
+    height:number;
+}
+
+const VidoePreview = (props:VidoePreviewProps) =>  {
     const [idx, setIdx] = React.useState(0);
     const [fileName, setFileName] = React.useState("capture.zip");
 
@@ -56,7 +63,7 @@ function VidoePreview(props) {
     return (
         <div className="videopreview">       
         <img src={props.data.length == 0 ? 'https://via.placeholder.com/'+props.width+'/FFFF00/000000' : props.data[idx]} alt="preview" width={props.width} height={props.height} />             
-        <TableViewLayout className = "save" datas = {
+        <TableViewLayout datas = {
         [{
             title : "fileName",
             component : <span>

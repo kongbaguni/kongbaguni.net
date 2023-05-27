@@ -3,7 +3,7 @@ interface TableViewLayoutRow {
     component:JSX.Element;
 }
 interface TableViewLayoutProps {
-    datas:[TableViewLayoutRow];
+    datas:Array<TableViewLayoutRow>;
 }
 
 const TableViewLayout = (props:TableViewLayoutProps) => {

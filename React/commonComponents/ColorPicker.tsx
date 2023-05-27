@@ -1,4 +1,5 @@
 interface ColorPickerProps {
+    title:string;
     color:string;
     callback:(value:string)=>void;
 }
@@ -11,7 +12,7 @@ const ColorPicker = (props:ColorPickerProps) => {
     }
 
     return (
-    <div className="input-group mb-1">
+    <div className="input-group mb-1" title={props.title}>
         <div className="input-group-text">
             <input type="color" value={color} onChange={handleChange} />
         </div>

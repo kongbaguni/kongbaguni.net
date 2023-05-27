@@ -1,6 +1,6 @@
 interface CheckboxProps {
     title:string;
-    callback:(value:Boolean)=>void;
+    callback:(value:boolean)=>void;
 }
 
 const Checkbox = (props:CheckboxProps) => {

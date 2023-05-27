@@ -1,6 +1,6 @@
 interface ToggleButtonProps {
-    on:string;
-    off:string;
+    on:any;
+    off:any;
     default:boolean;
     callback:(value:boolean)=>void;
 }

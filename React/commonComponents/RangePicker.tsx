@@ -1,9 +1,10 @@
 interface RangePickerProps {
+    title:string;
     min:number;
     max:number;
-    default:string;
+    default:number;
     unit:string;
-    callback:(value:string)=>void;
+    callback:(value:number)=>void;
 }
 
 const RangePicker = (props:RangePickerProps) => {
@@ -15,7 +16,7 @@ const RangePicker = (props:RangePickerProps) => {
         props.callback(event.target.value);
     }
     return (
-        <div className="input-group mb-1">
+        <div className="input-group mb-1" title={props.title}>
             <span className="form-control">
             <input  type="range" value={value} min={props.min} max={props.max} onChange={onChangeValue}/>
             </span>
