@@ -1,3 +1,6 @@
+declare const JSZip: any;
+declare const saveAs: any;
+
 function dataURItoBlob(dataURI) {
     if(typeof dataURI !== 'string'){
         throw new Error('Invalid argument: dataURI must be a string');
@@ -41,7 +44,9 @@ const VidoePreview = (props:VidoePreviewProps) =>  {
         })
     })
 
-    const makeMp4 = () => {     
+    
+    const makeMp4 = () => {             
+
         const zip = new JSZip(); // JSZip 인스턴스 생성
         for (let i = 0; i < props.data.length; i++) {
             const fileName = "captureImage" + String(i).padStart(5, '0');;
