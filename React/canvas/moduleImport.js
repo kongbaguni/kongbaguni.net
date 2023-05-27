@@ -1,6 +1,6 @@
 const modules = [
     '../commonComponents/MaterialSymbol.js',
-    '../commonComponents/ColorPicker.js',
+    '../commonComponents/ColorPicker.tsx',
     '../commonComponents/CheckBox.tsx',
     '../commonComponents/RangePicker.js',
     './App.jsx',
