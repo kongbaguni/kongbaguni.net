@@ -1,16 +1,14 @@
-/**
- * 테이블 레이아웃 출력 
- * @param { className, datas } props 
- * className 
- * datas = {
- * title : "" // 타이틀 th 안에 들어감
- * component : "" // td 안에 들어갈 컴포넌트 
- * }
- * @returns 
- */
-function TableViewLayout (props) {
+interface TableViewLayoutRow {
+    title:string; 
+    component:JSX.Element;
+}
+interface TableViewLayoutProps {
+    datas:[TableViewLayoutRow];
+}
+
+const TableViewLayout = (props:TableViewLayoutProps) => {
     return (
-        <table className={props.className}> 
+        <table className="table-primary table-striped-columns"> 
             <tbody>
             { 
                 props.datas.map(data => (

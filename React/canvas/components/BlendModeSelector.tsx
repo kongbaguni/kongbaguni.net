@@ -30,9 +30,11 @@ const BlendModeSelector = (props:BlendModeSelectorProps) => {
     return (
         <div className="blend">
             {
-                modes.map((mode)=>
-                    <button key={mode} className = {btnClssName + ( mode == currentmode ? ' disabled' : '')} onClick={(e) => onChangeValue(mode)}>{mode}</button>
-                )
+                modes.map((mode)=>(
+                    <span className="p-1">
+                        <button key={mode} className = {btnClssName + ( mode == currentmode ? ' disabled' : '')} onClick={(e) => onChangeValue(mode)}>{mode}</button>
+                    </span>
+                ))
             }
         </div>
     )
