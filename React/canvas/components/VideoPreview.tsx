@@ -1,5 +1,4 @@
-declare const JSZip: any;
-declare const saveAs: any;
+
 
 function dataURItoBlob(dataURI) {
     if(typeof dataURI !== 'string'){

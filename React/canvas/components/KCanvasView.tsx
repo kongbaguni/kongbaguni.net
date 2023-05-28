@@ -22,7 +22,7 @@ interface KCanvasViewProps {
 
 const KCanvasView = (props:KCanvasViewProps) => {
     const [isRecording, setIsRecording] = useState(false);
-    const [units, setUnits] = useState<UnitModel[]>([]);
+    const [units, setUnits] = useState([]);
     const [unitCount, setUnitCount] = useState(0); 
     const [speed, setSpeed] = useState(1.0);
     const [blendMode, setBlendMode] = useState('lighter');
@@ -50,7 +50,7 @@ const KCanvasView = (props:KCanvasViewProps) => {
         grayscale   : 'grayscale(0%)', 
     })
 
-    const [captureData, setCaptureData] = useState<string[]>([]);
+    const [captureData, setCaptureData] = useState([]);
     const [captureCount, setCaptureCount] = useState(0);
 
     const getFilterTxt = () => {
@@ -86,7 +86,7 @@ const KCanvasView = (props:KCanvasViewProps) => {
             setIsRecording(false);
             return;
         }
-        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid) as HTMLCanvasElement;
+        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid);
         
         if(canvas != null) {
             const data = canvas.toDataURL('image/webp');        
@@ -150,14 +150,14 @@ const KCanvasView = (props:KCanvasViewProps) => {
 
     const draw = () => {
         drawCount ++;
-        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid) as HTMLCanvasElement;        
+        const canvas:HTMLCanvasElement = document.getElementById(props.canvasid);       
         if(canvas != null && canvas.getContext) {
             const ctx:CanvasRenderingContext2D | null = canvas.getContext('2d');
             if(ctx == null) {
                 return
             }
             ctx.clearRect(0,0,props.width,props.height);
-            ctx.globalCompositeOperation = blendMode as GlobalCompositeOperation;;
+            ctx.globalCompositeOperation = blendMode
             ctx.filter = getFilterTxt() + (isApplyDropShadow ? 'drop-Shadow('+dropshadowOffsetX+'px '+dropShadowOffsetY+'px '+ dropShadowBlurRadius+'px '+dropShadowColor+' )' : '');
             ctx.fillStyle = backgroundColor;
             ctx.fillRect(-200,-200,props.width+400,props.height+400);
