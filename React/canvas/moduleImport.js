@@ -4,6 +4,7 @@ const modules = [
     '../commonComponents/ColorPicker.tsx',
     '../commonComponents/RangePicker.tsx',
     '../commonComponents/TableViewLayout.tsx',
+    '../commonComponents/ToggleButton.tsx',
     './components/BlendModeSelector.tsx',
     './components/KCanvasView.tsx',
     './components/VideoPreview.tsx',
