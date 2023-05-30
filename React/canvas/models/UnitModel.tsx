@@ -4,8 +4,3 @@ interface UnitModel {
     color: string,
     movement : Position
 }
-
-interface Position {
-    x:number;
-    y:number;
-}
