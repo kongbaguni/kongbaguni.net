@@ -1,8 +1,10 @@
 function App() {
+    const [canvasData, setCanvasData] = React.useState(null);
+
+
     return <div>
-        <article>
-        <header><h2>PixelArt</h2></header>
-        
-        </article>
+        {canvasData == null ? <NewCanvasForm callback = {(value)=> {
+            setCanvasData(value)
+        }} /> : <span></span>}    
     </div>
 };

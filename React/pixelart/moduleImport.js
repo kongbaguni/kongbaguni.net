@@ -1,6 +1,8 @@
 const modules = [
     '../commonComponents/MaterialSymbol.js',
+    '../commonComponents/TableViewLayout.js',
     './App.jsx',
+    './components/NewCanvasForm.jsx'
 ]
 
 for (let i = 0; i < modules.length; i++) {
