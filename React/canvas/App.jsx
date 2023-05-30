@@ -1,4 +1,5 @@
-function App() {
+const { useState , useEffect } = React
+const App = ()=>{
     return <div>
         <article>
         <header><h2>Canvas Test</h2></header>

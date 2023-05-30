@@ -1,4 +1,8 @@
-function MaterialSymbol(props) {
+interface MaterialSymbolProps {
+    text:string;
+}
+
+const MaterialSymbol = (props:MaterialSymbolProps) => {
     return (
         <span className="material-symbols-outlined">
         {props.text}

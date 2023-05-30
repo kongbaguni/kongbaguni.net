@@ -8,7 +8,7 @@ const modules = [
 
 for (let i = 0; i < modules.length; i++) {
     let script = document.createElement('script');
-    script.src = modules[i];
+    script.setAttribute('src',modules[i]);
     script.type = "text/babel";
     document.head.appendChild(script);
 }

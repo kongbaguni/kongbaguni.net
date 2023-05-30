@@ -1,3 +1,5 @@
+
+
 function dataURItoBlob(dataURI) {
     if(typeof dataURI !== 'string'){
         throw new Error('Invalid argument: dataURI must be a string');
@@ -16,7 +18,14 @@ function dataURItoBlob(dataURI) {
     });
 }
 
-function VidoePreview(props) {
+interface VidoePreviewProps {
+    data:Array<string>;
+    fps:number;
+    width:number;
+    height:number;
+}
+
+const VidoePreview = (props:VidoePreviewProps) =>  {
     const [idx, setIdx] = React.useState(0);
     const [fileName, setFileName] = React.useState("capture.zip");
 
@@ -34,7 +43,9 @@ function VidoePreview(props) {
         })
     })
 
-    const makeMp4 = () => {     
+    
+    const makeMp4 = () => {             
+
         const zip = new JSZip(); // JSZip 인스턴스 생성
         for (let i = 0; i < props.data.length; i++) {
             const fileName = "captureImage" + String(i).padStart(5, '0');;
@@ -56,7 +67,7 @@ function VidoePreview(props) {
     return (
         <div className="videopreview">       
         <img src={props.data.length == 0 ? 'https://via.placeholder.com/'+props.width+'/FFFF00/000000' : props.data[idx]} alt="preview" width={props.width} height={props.height} />             
-        <TableViewLayout className = "save" datas = {
+        <TableViewLayout datas = {
         [{
             title : "fileName",
             component : <span>

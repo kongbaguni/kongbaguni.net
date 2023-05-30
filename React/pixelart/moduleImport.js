@@ -1,6 +1,5 @@
 const modules = [
     '../commonComponents/MaterialSymbol.js',
-    '../commonComponents/TableViewLayout.js',
     './App.jsx',
     './components/NewCanvasForm.jsx'
 ]

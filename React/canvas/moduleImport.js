@@ -4,7 +4,6 @@ const modules = [
     '../commonComponents/CheckBox.js',
     '../commonComponents/RangePicker.js',
     '../commonComponents/TableViewLayout.js',
-    './App.jsx',
     './components/BlendModeSelector.js',
     './components/CommentCreateForm.js',
     './components/CommentList.js',
@@ -12,8 +11,9 @@ const modules = [
     './components/KCanvasView.js',
     './components/Navigation.js',
     './components/People.js',
-    './components/ToggleButton.js',
-    './components/VideoPreview.js',
+    './models/Position.tsx',
+    './models/UnitModel.tsx',
+    './App.jsx',
 ]
 
 for (let i = 0; i < modules.length; i++) {
