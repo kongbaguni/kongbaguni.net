@@ -1,5 +1,5 @@
 const modules = [
-    '../commonComponents/MaterialSymbol.js',
+    '../commonComponents/MaterialSymbol.tsx',
     './App.jsx',
     './components/CommentCreateForm.js',
     './components/CommentList.js',
