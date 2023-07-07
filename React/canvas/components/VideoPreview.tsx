@@ -1,5 +1,3 @@
-
-
 function dataURItoBlob(dataURI) {
     if(typeof dataURI !== 'string'){
         throw new Error('Invalid argument: dataURI must be a string');
@@ -26,10 +24,10 @@ interface VidoePreviewProps {
 }
 
 const VidoePreview = (props:VidoePreviewProps) =>  {
-    const [idx, setIdx] = React.useState(0);
-    const [fileName, setFileName] = React.useState("capture.zip");
+    const [idx, setIdx] = useState(0);
+    const [fileName, setFileName] = useState("capture.zip");
 
-    React.useEffect(()=> {
+    useEffect(()=> {
         const interval = setInterval(()=> {
             let newIdx = idx + 1;
             if(newIdx >= props.data.length) {
