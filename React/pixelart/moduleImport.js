@@ -1,8 +1,17 @@
 const modules = [
-    '../commonComponents/MaterialSymbol.js',
-    './components/DCanvasView.tsx',
-    './Root.tsx',
+    '../commonComponents/MaterialSymbol.tsx',
     './App.jsx',
+    './components/NewCanvasForm.jsx',
+    './components/MakeNewCanvasView.tsx',
+    './components/DoteMainMenuView.tsx',
+    './components/DoteDraw.tsx',
+    './components/DoteCanvasView.tsx',
+    '../commonComponents/CheckBox.tsx',
+    '../commonComponents/ColorPicker.tsx',
+    '../commonComponents/RangePicker.tsx',
+    '../commonComponents/TableViewLayout.tsx',
+    '../commonComponents/ToggleButton.tsx',
+    '../commonComponents/TextSelector.tsx',
 ]
 
 for (let i = 0; i < modules.length; i++) {

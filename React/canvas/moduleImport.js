@@ -1,18 +1,14 @@
 const modules = [
     '../commonComponents/MaterialSymbol.tsx',
-    '../commonComponents/ColorPicker.tsx',
     '../commonComponents/CheckBox.tsx',
+    '../commonComponents/ColorPicker.tsx',
     '../commonComponents/RangePicker.tsx',
-    '../commonComponents/ToggleButton.tsx',
     '../commonComponents/TableViewLayout.tsx',
-    './models/Position.tsx',
-    './models/UnitModel.tsx',
-    './App.jsx',
+    '../commonComponents/ToggleButton.tsx',
     './components/BlendModeSelector.tsx',
-    './components/VideoPreview.tsx',
     './components/KCanvasView.tsx',
-    './components/Navigation.js',
-    './components/People.js',
+    './components/VideoPreview.tsx',
+    './App.jsx',
 ]
 
 for (let i = 0; i < modules.length; i++) {
