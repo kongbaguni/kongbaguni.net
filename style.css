@@ -410,3 +410,22 @@ strong::after {
     content: ">";
     color: green;
 }
+
+pre {
+    padding: 20;
+    border: 2px solid #fff;
+}
+
+b.tablename {
+    color: #369;
+}
+
+b.tablename::before {
+    content: "<";
+    color: yellow;
+}
+
+b.tablename::after {
+    content: ">";
+    color: yellow;
+}

@@ -33,6 +33,19 @@ function importCommons(useJquery) {
             href:"/style.css"
         },
     ];
+    for (let i=0; i<csss.length; i++) {
+        let link = document.createElement("link");
+        link.setAttribute('href',csss[i].href);
+        link.setAttribute('rel','stylesheet');
+        if(csss[i].crossorigin != null) {
+            link.setAttribute('crossOrigin',csss[i].crossorigin);
+        }
+        if(csss[i].integrity != null) {
+            link.setAttribute('integrity', csss[i].integrity);
+        }
+        document.head.appendChild(link);
+    }
+
     
     for (let i = 0; i < jss.length; i++) {
         let script = document.createElement('script');
@@ -46,16 +59,5 @@ function importCommons(useJquery) {
         document.head.appendChild(script);
     }
     
-    for (let i=0; i<csss.length; i++) {
-        let link = document.createElement("link");
-        link.setAttribute('href',csss[i].href);
-        link.setAttribute('rel','stylesheet');
-        if(csss[i].crossorigin != null) {
-            link.setAttribute('crossOrigin',csss[i].crossorigin);
-        }
-        if(csss[i].integrity != null) {
-            link.setAttribute('integrity', csss[i].integrity);
-        }
-        document.head.appendChild(link);
-    }
+    
 }
