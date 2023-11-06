@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>정보처리기사 실기 공부 8장</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta property="og:url" content="https://kongbaguni.net" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="kongbaguni.net" />
+        <meta property="og:description" content="정보처리기사 실기 대비 공부 8장" />
+        <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
+        <script src="/CommonImport.js"></script>        
+        <script>importCommons(true);</script>
+    </head> 
+    <body>
+        <h1>SQL 응용</h1>
+        <article>
+            <header><h2>DDL(<b>Data Define Language</b>, 데이터 정의어) <sup>b</sup></h2></header>
+            <p>DDL은 DB구조, 데이터 형식, 접근방식등 <b>DB를 구축하거나 수정할 목적</b>으로 사용하는 언어이다.</p>
+            <p>
+                DDL 의 3가지 유형 
+                <table>
+                    <thead>
+                        <tr><th>명령어</th><th>기능</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th>CREATE</th><td>SCHEMA, DOMAIN, TABLE, VIEW, INDEX 를 정의함</td></tr>
+                        <tr><th>ALTER</th><td>TABL에 대한 정의를 변경하는데 사용함</td></tr>
+                        <tr><th>DROP</th><td>SCHEMA, DOMAIN, TABLE, VIEW, INDEX 를 삭제함</td></tr>
+                    </tbody>
+                </table>
+            </p>
+            <h3>CREATE DOMAIN <sup>c</sup></h3>
+            <p>도메인을 정의하는 명령문</p>
+            <p>표기형식</p>
+            <blockquote><pre>CREATE DOMAIN 도메인명 [AS] 데이터_타입 
+        [DEFAULT 기본값]
+        [CONSTRAINT 제약조건명 CHECK (범위값)];</pre></blockquote>
+            <ul>
+                <li>데이터 타입 : SQL에서 지원하는 데이터 타입</li>
+                <li>기본값 : 데이터를 입력하지 않았을 경우 자동으로 입력되는 값</li>
+            </ul>
+            <p>예제 : '성별' 을 '남' 또는 '여'와 같이 정해진 1개의 문자로 표현되는 도메인 SEX를 정의하는 SQL문</p>
+            <blockquote><pre>CREATE DOMAIN SEX CHAR(1)
+        DEFAULT '남'
+        CONSTRAINT VAILD-SEX CHECK(VALUE IN ('남','여'));</pre></blockquote>
+            <ol>
+                <li>정의된 도메인은 이름이 'SEX'이며, 문자형이고 크기는 1자이다.</li>
+                <li>도메인 SEX를 지정한 속성의 기본값은 '남'이다.</li>
+                <li>SEX를 지정한 속성에는 '남','여'중 하나의 값만을 저장할 수 있다.</li>
+            </ol>
+            <blockquote><pre>CREATE DOMAIN 직위 VARCHAR2(10)
+        DEFAULT '사원'
+        CONSTRAINT VALD-직위 CHECK(VALUE IN('사원','대리','과장','부장','이사','사장'));</pre></blockquote>
+        
+            <h3>CREATE TABLE <sup>c</sup></h3>
+            <p>테이블을 정의하는 명령문</p>
+            <p>표기형식</p>
+            <blockquote><pre>CREATE TABLE 테이블명
+        (속성명 데이터_타입 [DEFAULT 기본값] [NOT NULL], ...
+        [, PRIMARY KEY(기본키_속성명, ...)]
+        [, UNIQUE(대체키_속성명, ...)]
+        [, FOREGIN KEY(외래키_속성명, ...)]
+            REFERENCES 참조테이블(기본키_속성명, ...)]
+            [ON DELETE 옵션]
+            [ON UPDATE 옵션]
+        [, CONSTRAINT 제약조건명] [CHECK (조건식)]);</pre></blockquote>           
+        <ul>
+            <li>기본 테이블에 포함될 모든 속성에 대하여 속성명과 그 속성의 데이터 타입, 기본값, NOT NULL 여부를 지정한다.</li>
+            <li>PRIMARY KEY : 기본키로 사용할 속성을 지정함</li>
+            <li>UNIQUE : 대체키로 사용할 속성을 지정함, 중복된 값을 가질 수 없음</li>
+            <li>FOREGIN KEY ~ REFERENCE ~ : 외래키로 사용할 속성을 지정함
+                <ul>
+                    <li>ON DELETE 옵션 : 참조 테이블의 튜플이 삭제되었을 때 기본 테이블에 취해야 할 사항을 지정함</li>
+                    <li>ON UPDATE 옵션 : 참조 테이블의 참조 속성 값이 변경되었을 때 기본 테이블에 취해야 할 사항을 지정함</li>                
+                </ul>
+            </li>
+            <li>CONSTRAINT : 제약 조건의 이름을 지정함</li>
+            <li>CHECK : 속성 값에 대한 제약조건을 정의함</li>
+        </ul>
+
+        <p>(예제) '이름', '학번', '전공', '성별', '생년월일'로 구성된 <strong>학생</strong> 테이블을 정의하는 SQL문을 작성하시오. 단 제약조건은 다음과 같다.</p>
+        <ul>
+            <li>'이름'은 NULL이 올 수 없고, '학번'은 기본키이다.</li>
+            <li>'전공'은 <strong>학과</strong> 테이블의 '학과코드'를 참조하는 외래키로 사용된다.</li>
+            <li><strong>학과</strong> 테이블에서 삭제가 일어나면 관련된 튜플들의 전공 값을 NULL로 만든다.</li>
+            <li><strong>학과</strong> 테이블에서 '학과코드'가 변경되면 전공 값도 같은 값으로 변경한다.</li>
+            <li>'생년월일'은 1980-01-01이후의 데이터만 저장할 수 있다.</li>
+            <li>제약 조건의 이름은 '생년월일제약'으로 한다.</li>
+            <li>각 속성의 데이터 타입은 적당히 지정한다. 단 '성별'은 도메인 'SEX'를 사용한다.</li>
+        </ul>
+        <blockquote><pre>CREATE TABLE 학색
+        (이름 VARCHAR(15) NOT NULL,
+        학번 CHAR(8),
+        전공 CHAR(5),
+        성별 SEX,
+        생년월일 DATE,
+        PRIMARY KEY(학번),
+        FOREIGIN KEY(전공) REFERENCE 학과(학과코드)
+            ON DELETE SET NULL 
+            ON UPDATE SET CASCADE,
+        CONSTRAINT 생년월일제약 
+            CHECK(생년월일>='1980-01-01'));</pre></blockquote>
+        <ol>
+            <li><strong>학생</strong> 테이블을 생성한다.</li>
+            <li>'이름'속성은 최대 문자 15자로 NULL 값을 갖지않는다.</li>
+            <li>'학번'속성은 문자 8자이다.</li>
+            <li>'전공'속성은 문자 5자이다.</li>
+            <li>'성별'속성은 'SEX'도메인을 자료형으로 사용한다.</li>
+            <li>'생년월일'속성은 DATE자료형을 갖는다.</li>
+            <li>'학번'을 기본키로 정의한다.</li>
+            <li>'전공'속성은 <strong>학과</strong> 테이블의 '학과코드' 속성을 참조하는 외래키이다.</li>
+            <li><strong>학과</strong>테이블에서 튜플이 삭제되면 관련된 모든 튜플의 '전공' 속성의 값도 같은 값으로 변경한다.</li>
+            <li>'생년월일' 속성에는 1980-01-01 이후의 값만을 저장할 수 있으며, 이 제약조건의 이름은 '생년월일제약'이다.</li>
+        </ol>
+
+        <h3>CREATE VIEW <sup>c</sup></h3> 
+        <p>뷰(View)를 정의하는 명령문</p>
+        <blockquote><pre>CREATE VIEW 뷰명([속성명[,속성명,...])]
+        AS SELECT문;</pre></blockquote>
+        <p>(예제) <strong>고객</strong> 테이블에서 '주소'가 '안산시'인 고객들의 '성명'과 '전화번호'를 '안산고객'이라는 뷰로 정의하시오</p>
+        <blockquote><pre>CREATE VIEW 안산고객(성명, 전화번호)
+        AS SELECT 성명, 전화번호
+        FROM 고객 
+        WHERE 주소 = '안산시';</pre></blockquote>
+
+        <h3>CREATE INDEX <sup>a</sup></h3>
+        <p>인덱스를 정의하는 명령문이다.</p>
+        <p>표기형식</p>
+        <blockquote><pre>CREATE [UNIQUE] INDEX 인덱스명
+ON 테이블명(속성명 [ASC | DESC][,속성명 [ASC | DESC]]) 
+[CLUSTER];</pre></blockquote>
+        <ul>
+            <li>UNIQUE
+                <ul>
+                    <li>사용된 경우 : 중복 값이 없는 속성으로 인덱스를 생성함</li>
+                </ul>
+            </li>
+        </ul>
+    </article>
+</body>
+</html>

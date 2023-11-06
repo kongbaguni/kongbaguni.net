@@ -951,7 +951,716 @@
                 <li>데이터 삽입, 삭제 발생시 순서를 유지하기 위헤 데이터를 재정렬해야 한다.</li>                
             </ul>
         </article>
-        
+        <article>
+            <header><h2>예상문제</h2></header>
+            <ol>
+                <li>다음은 개체-관계 모델의 E-R 다이어그램에서 사용되는 기호에 대한 설명이다. 괄호(1~3)에 들어갈 알맞은 기호를 쓰시오.
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>기호</th><th>의미</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>(1)</td><td>개체(Entity)타입</td>                        
+                            </tr>
+                            <tr>
+                                <td>(2)</td><td>관계(Relationship)타입</td>
+                            </tr>
+                            <tr>
+                                <td>(3)</td><td>속성(Attribute)</td>
+                            </tr>
+                            <tr>
+                                <td>이중 타원</td><td>다중값 속성(복합속성)</td>
+                            </tr>
+                            <tr>
+                                <td>선</td><td>개체 타입과 속성을 연결</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    답 <ul><li>1 사각형, 2 마름모, 3 타원</li></ul>
+                </li>
+                <li>데이터베이스의 전체적인 논리구조로 단 하나만 존재하며, 모든 응용프로그램이나 사용자들이 필요로 하는 데이터를 종합한 조직 전체의 데이터베이스를 가리키는 스키마는 무었인지 쓰시오.<br />
+                    답 
+                    <ul><li>개념 스키마</li></ul>                    
+                </li>
+                <li>데이터베이스 설계 단계 중 다음 내용은 어떤 단계에 대한 설명인지 쓰시오 
+                    <blockquote>
+                        <ul>
+                            <li>정보의 구조를 얻기 위하여 현실 세계의 무한성과 계속성을 이해하고, 다른 사람과 통신하기 위하여 현실 세계에 대한 인식을 추상적 개념으로 표현하는 과정이다.</li>
+                            <li>개념 스키마 모델링과 트랜잭션 모델링을 병행 수행한다.</li>
+                            <li>DBMS에 독립적인 개념 스키마를 설계한다.</li>
+                        </ul>                        
+                    </blockquote> 
+                    답 
+                    <ul><li>개념적 설계</li></ul>
+                </li>
+                <li>다음은 관계형 데이터베이스의 릴레이션이다. 괄호(1~4)에 들어갈 적합한 릴레이션 관련 용어를 쓰시오.
+                    <blockquote>
+                        <ul>
+                            <li><strong>주문</strong>릴레이션에서 업체번호, 지역, 담장자, 주문량은 <strong>주문</strong> 릴레이션의 (1) 이고, 업체번호가 1001,1002, 1003, 1004, 1005인 업체들의 각 속성에 대한 값을 표현한 행은 (2)이다.</li>
+                            <li><strong>주문</strong>릴레이션에서 '주문'이라는 릴레이션의 이름, (1)들의 이름과 타입, 그리고 (1)들의 도메인을 정의한 내용이 릴레이션(3) 이고, 업체번호가 1001인 업체부터 1005인 업체까지의 (2) 들의 집합이 릴레이션 (4) 이다.</li>
+                            <li>
+                                <ol class = "imageSlide">
+                                    <li><img src="./images/2-1/Q_2-1-05.svg" alt="image" /></li>
+                                </ol>                            
+                            </li>
+                        </ul>
+                    </blockquote>
+                    답 
+                    <ul>
+                        <li>1 속성(Attribute)</li>
+                        <li>2 튜플(Tuple)</li>
+                        <li>3 스키마(Schema)</li>
+                        <li>4 인스턴스(Instance)</li>
+                    </ul>
+                </li>
+                <li>A01, A02, A03, A04 4개 속성을 갖는 한 릴레이션(Relation)에서 A01의 도메인은 2개 값, A02의 도메인은 4개 값, A03의 도메인은 2개 값, A04의 도메인은 3개값을 갖는다. 이 릴레이션에 존재할 수 있는 최대 튜플(Tuple)수를 쓰시오.<br />
+                    답
+                    <ul><li>48</li></ul>
+                    <blockquote>
+                        <p>튜플에 속한 속성 A01, A02, A03, A04 중 한개는 다른 튜플들과 다른 값을 가져야 하므로, 존재할 수 있는 최대 튜플의 수는 각 도메인(Domain)이 가진 값의 종류를 모두 곱한 값과 같습니다.<br />
+                        2*4*2*3 = 48</p>
+                    </blockquote>
+                </li>
+                <li>릴레이션 R의 차수(Degree)가 3, 카디널리티(Cardinality)가 3, 릴레이션(Relation)S의 차수가 4, 카디널리티가 4일 때, 두 릴레이션을 CartesIan Product(교차곱)한 결과 릴레이션의 차수와 카디널리티를 쓰시오.<br />
+                    답 
+                    <ul>
+                        <li>1 차수 :  7</li>
+                        <li>2 카디널리티 : 12</li>
+                    </ul>
+                    <blockquote>
+                        Cartesian Product(교차곱)은 두 릴레이션의 차수(Degree, 속성의 수)는 더하고, 카디널리티(Cardinality,튜플의 수)는 곱하면 됩니다. <br>
+                        차수 : 3 + 4 = 7 <br>
+                        카디널리티 : 3 * 4 = 12 
+                    </blockquote>
+                </li>
+                <li>다음 <strong>회원</strong> 테이블에서 카디널리티(Cardinality)와 디그리(Degree)를 구하시오 <br>
+                    <strong>회원</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>id</th><th>이름</th><th>거주지</th><th>신청강의</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>191-SR05</td><td>백영현</td><td>마포구</td><td>E01</td></tr>
+                            <tr><td>024-RU09</td><td>홍길동</td><td>관악구</td><td>S03</td></tr>
+                            <tr><td>181-SQ03</td><td>서태지</td><td>서대문구</td><td>E02</td></tr>
+                            <tr><td>059-RL08</td><td>김현철</td><td>광진구</td><td>S03</td></tr>
+                            <tr><td>029-SX07</td><td>배철수</td><td>강서구</td><td>E02</td></tr>
+                        </tbody>
+                    </table>
+                    답 
+                    <ul>
+                        <li>1 카디널리티(Cardinality) : 5 </li>
+                        <li>2 디그리(Degree) : 4 </li>
+                    </ul>
+                </li>
+
+                <li>다음은 키(Key)들의 개별적인 특징에 대한 설명이다. 각 키에 부합하는 설명을 선으로 그어 표시하시오. <br>
+                    <ol class = "imageSlide">
+                        <li><img src="./images/2-1/Q_2-1-08.svg" alt="문제" /></li>
+                    </ol>
+                    
+                </li>
+
+                <li>다음 설명의 괄호에 공통적으로 들어갈 키(Key)의 종류를 쓰시오.
+
+                    <blockquote>
+                        <ul>
+                            <li>( )는 다른 릴레이션의 기본키를 참조하는 속성 또는 속성들의 집합을 의미한다.</li>
+                            <li>한 릴레이션에 속한 속성A와 참조릴레이션의 기본키인 B가 동일한 도메인 상에서 정의되었을 떄의 속성A를 ( )라고 한다.</li>
+                        </ul>
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>외래키(Foreign Key)</li>
+                    </ul>
+                </li>
+
+                <li>다음은 계좌관리 시스템을 위하여 설계한 릴레이션 인스턴스이다. 괄호(1~3)에 들어갈 키(Key)의 종류를 쓰시오 <br>
+                    <strong>예금계좌</strong>
+                    <table>
+                        <thead>
+                            <tr><th>예금번호</th><th>잔고</th><th>입출금내역</th><th>지점명</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>809203321</td><td>40,000</td><td>입금</td><td>구로점</td></tr>
+                            <tr><td>809991111</td><td>124,000</td><td>출금</td><td>양평점</td></tr>
+                            <tr><td>100002001</td><td>1,321,123</td><td>출금</td><td>신정점</td></tr>
+                            <tr><td>120830431</td><td>3,123,123</td><td>입금</td><td>강남점</td></tr>
+                            <tr><td>82123212</td><td>50</td><td>출금</td><td>서귀포점</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>지점</strong>
+                    <table>
+                        <thead>
+                            <tr><th>지점명</th><th>도시</th><th>자산</th><th>영문지점명</th><th>지점개설일</th><th>전화번호</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>구로점</td><td>서울</td><td>999,999,999</td><td>GURO</td><td>1980.1.2</td><td>02-1234-1234</td></tr>
+                            <tr><td>양평점</td><td>양평</td><td>123,333,000 </td><td>YANGPYUNG</td><td></td><td>010-1234-1234</td></tr>
+                            <tr><td>서귀포점</td><td>제주시</td><td>333,333,000</td><td>JEJU</td><td>2023,3.1</td><td>010-3333-4444</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>고객</strong>
+                    <table>
+                        <thead>
+                            <tr><th>고객번호</th><th>이름</th><th>주소</th><th>생년월일</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>900</td><td>심봉사</td><td>서울시 송파구 마천동</td><td>1984.03.15</td></tr>
+                            <tr><td>901</td><td>이박사</td><td>서울시 강서구 화곡동</td><td>1991.05.12</td></tr>
+                            <tr><td>902</td><td>김삿갓</td><td>서울시 종로구 중화동</td><td>1972.03.13</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>예금</strong>
+                    <table>
+                        <thead>
+                            <tr><th>예금번호</th><th>고객번호</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>809203321</td><td>900</td></tr>
+                            <tr><td>809991111</td><td>901</td></tr>
+                            <tr><td>100002001</td><td>901</td></tr>
+                            <tr><td>120830431</td><td>903</td></tr>
+                        </tbody>
+                    </table>
+                    <blockquote>
+                        <strong>예금계좌</strong>릴레이션에서는 예금번호. (예금번호, 잔고), (예금번호, 입출금내역), (예금번호, 지점명), (예금번호, 잔고, 지점명), (예금번호, 입출금내역, 지점명) 등 을 슈퍼키로 정의할 수 있다. 
+                        이는 각 속성 또는 속성 집합에서 같은 값이 나타나지 않기 때문이다. 즉 슈퍼키란 릴레이션을 구성하는 모든 튜플을 유일하게 식별해 주 는 속성 또는 속성 집합을 말한다.
+                        이러한 슈퍼키 중에서 릴레이션을 구성하는 모든 튜플을 유일하게 식별하기 위해 사용되는 최소의 속성 또는 속성들의 집합을 ( 1 )라 한다. 즉 ( 1 )는 유일성과 최소성을 모두 만족해야 한다. 
+                        <strong>지점</strong> 릴레이션에서는 지점명, 영문지점명, (지점명, 도시), (지점명, 자산), (영문지점명, 지점개설일), (영문지점명, 전화번호) 등을 슈퍼키로 정의할 수 있고, ( 1 )로 지점명, 
+                        영문지점명 등을 정의할 수 있 다. <strong>지점</strong> 릴레이션의 기본키로 지점명 속성이 정의되었으므로 ( 1 ) 중에 기본키로 지정되지 않은 영문지점명은 ( 2 )가 된다. 
+                        <strong>예금</strong> 릴레이션에서 고객 번호는 <strong>고객</strong> 릴레이션의 기본키인 고객번호 속성을 참조하는 ( 3 )이다. 
+                        그 리고 <strong>예금</strong> 릴레이션에서 예금번호는 예금계좌> 릴레이션의 기본키인 예금번호 속성을 참조하는 ( 3 )이다.
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>1. 후보키(Candidate Key)</li>
+                        <li>2. 대체키(Alternate Key)</li>
+                        <li>3. 외래키(Foreign Key)</li>
+                    </ul>
+                </li>
+                <li>다음 <strong>학생</strong> 릴레이션에서 <q>학과</q>sk <q>학년</q>을 기본키(Primary Key)로 사용할 수 없는 이유를 간략히 서술하시오. <br>
+                    <strong>학생</strong>
+                    <table>
+                        <thead><tr><th>학과</th><th>학번</th><th>성명</th><th>성별</th><th>학년</th></tr></thead>
+                        <tbody>
+                            <tr><td>정보처리과</td><td>222301</td><td>최미경</td><td>여</td><td>1</td></tr>
+                            <tr><td>컴퓨터공학과</td><td>212001</td><td>김예소</td><td>여</td><td>2</td></tr>
+                            <tr><td>전자통신학과</td><td>212201</td><td>김상옥</td><td>남</td><td>2</td></tr>
+                            <tr><td>정보처리과</td><td>222302</td><td>임선호</td><td>남</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    답
+                    <ul><li>기본키는 중복된 값을 가질 수 없는데, '학과' 나 '학년' 은 중복된 값이 존재하므로 기본키로 사용할 수 없다.</li></ul>                    
+                </li>
+                <li>관계형 데이터베이스의 제약조건중 후보키(Candidate key)에 대한 개념을 서술하시오<br>
+                    답
+                    <ul><li>후보키는 릴레이션을 구성하는 속성들 중에서 튜플을 유일하게 식별하기 위해 사용되는 속성들의 부분집합이다.</li></ul>
+                </li>
+                <li>다음 설명의 괄호에 공통적으로 들어갈 알맞은 용어를 쓰시오. 
+                    <blockquote>
+                        <ul>
+                            <li>( )은 데이터베이스에 저장된 데이터의 값과 그것이 표현하는 현실 세계의 실제값이 일치하는 정확성을 말한다.</li>
+                            <li>( )제약 조건은 데이터베이스에 들어 있는 데이터의 정확성을 보장하기위해 부정확한 자료가 데이터베이스 내에 저장되는 것을 방지하기 위한 제약 조건을 말한다.</li>
+                        </ul>
+                    </blockquote>
+                    답
+                    <ul><li>무결성(Integrity)</li></ul>
+                </li>
+                <li>데이터 무결설 제약조건 중 참조 무결성(Referential Integrity)의 개념을 간략히 서술하시오 <br>
+                답
+                <ul><li>참조 무결성은 외래키 값은 null 이거나 참조 릴레이션의 기본키 값과 동일해야 한다는 규정이다.</li></ul>
+                </li>
+                <li>다음은 순수 관계 연산자에 대한 설명이다. 괄호(1,2)에 들어갈 알맞은 연산자의 명칭을 쓰시오
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>join</th>
+                                <td>
+                                    <ul>
+                                        <li>공통 속성을 중심으로 두 개의 릴레이션을 하나로 합쳐서 새로운 릴레이션을 만드는 연산자이다.</li>
+                                        <li>연산자의 기호 : ⋈</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>( 1 )</th>
+                                <td>
+                                    <ul>
+                                        <li>X⊃Y인 두 개의 릴레이션 R(X)와 S(Y)가 있을 때, R의 속성이 S의 속성값을 모두 가진 튜플에서 S가 가진 속성을 제외한 속성만들 구하는 연산이다.</li>
+                                        <li>기호 : ÷</li>                                            
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Project</th>
+                                <td>
+                                    <ul>
+                                        <li>주어진 릴레이션에서 속성 리스트(Attribute List)에 제시된 속성 값만을 추출하여 새로운 릴레이션을 만드는 연산이다.</li>
+                                        <li>기호 : π(파이)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>( 2 )</th>
+                                <td>
+                                    <ul>
+                                        <li>릴레이션에 존재하는 튜플 중에서 선택조건을 만족하는 튜플의 부분집합을 구하여 새로운 릴레이션을 만드는 연산이다.</li>
+                                        <li>기호 : σ(시그마)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                        답 
+                        <ul>
+                            <li>1. Division</li>
+                            <li>2. Select</li>
+                        </ul>
+                    </table>
+                </li>
+                <li>관계대수의 개념을 간략히 서술하시오. <br>
+                    답
+                    <ul><li>관계대수는 <u>원하는 정보와 그 정보를 검색하기 위해서 어떻게 유도하는가를 기술하는 절차적인 언어</u>이다.</li></ul>
+                </li>
+                <li> 데이터베이스에서 이상(Anomaly)의 개념을 간략히 서술하시오 <br>
+                    답
+                    <ul><li>이상은 <u>데이터베이스 내에 데이터들이 불필요하게 중복되어 릴레이션 조작 시 예기치 않게 발생하는 곤란한 현상</u>이다.</li></ul>                    
+                </li>
+                <li>현재 사용중인 <strong>수강</strong> 테이블에 수강신청을 입력하려 하였으나 이상(Anomaly)현상이 발생하였다. 
+                    발생한 이상 현상의 종류와 그 이유를 간략히 서술하시오. <br>
+                    <strong>수강</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>학번</th><th>과목번호</th><th>이름</th><th>과목명</th><th>학년</th><th>학기</th><th>학년도</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200001</td><td>D01</td><td>홍길동</td><td>데이터베이스</td><td>3</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>210002</td><td>N02</td><td>이순신</td><td>네트워크</td><td>2</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>200003</td><td>N02</td><td>강감찬</td><td>네트워크</td><td>3</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>190004</td><td>D01</td><td>윤봉길</td><td>데이터베이스</td><td>4</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>200002</td><td>P04</td><td>홍길동</td><td>물리학 개론</td><td>3</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>200003</td><td>D01</td><td>강감찬</td><td>데이터베이스</td><td>3</td><td>1</td><td>2022</td>
+                            </tr>
+                            <tr>
+                                <td>210002</td><td>P04</td><td>이순신</td><td>물리학개론</td><td>2</td><td>1</td><td>2022</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="6"><strong>2022학년도 1학기 수강신청서</strong></th>
+                            </tr>                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>학번</th><td></td> <th>이름</th><td>홍길동</td> <th>학년</th><td>3</td>
+                            </tr>
+                            <tr>
+                                <th>과목번호</th><td>N02</td> <th>과목명</th><td colspan="3">네트워크</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+                    1. 수강 신청서 내용을 <strong>수강</strong> 테이블에 입력할 때 발생한 이상 현상을 쓰시오. 
+                    답 <ul><li>삽입 이상(Insertion Anomaly)</li></ul>
+            
+                    2. 이상현상이 발생하게 된 이유를 간략히 서술하시오.
+                    답 <ul><li>기본키인 학번과 과목번호를 모두 입력해야 하나 수강신청서에는 학번이 기입되어있지 않았기 떄문에 삽입이상이 발생한다.</li></ul>
+                    <blockquote>
+                        삽입이상(Insertㅑㅐㅜ Anomaly)이란 테이블에 데이터를 삽입할 때 의도와는 상관없이 원하지 않는 값들로 인해 삽입할 수 없는 현상을 의미합니다.
+                    </blockquote>                    
+                </li>
+                <li>다음 설명의 괄호에 공통적으로 들어갈 데이터베이스 관련 용어를 쓰시오.
+                    <blockquote>
+                        <ul>
+                            <li>( )는 테이블의 속성들이 상호 종속적인 관계를 갖는 특성을 이용하여 테이블을 무손실 분해하는 과정이다.</li>
+                            <li>하나의 종속성이 하나의 릴레이션에 표현될 수 있도록 분해해가는 과정이라 할 수 있다.</li>
+                            <li>( )의 목적은 가능한 한 중복을 제거하여 삽입, 삭제, 갱신 이상의 발생 가능성을 줄이는 것이다.</li>
+                            <li>( )된 데이터의 모델은 일관성, 정확성, 단순성, 비중복성, 안전성 등을 보장한다.</li>
+                        </ul>
+                    </blockquote>
+                    답 
+                    <ul><li>정규화(Normalization)</li></ul>
+                </li>
+                <li>다음은 학사관리 시스템에서 사용중인 <strong>학생</strong>릴레이션의 인스턴스다. 괄호(1,2)에 들어갈 알맞은 용어를 쓰시오. <br>
+                    <strong>학생</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>학번</th><th>학과</th><th>과목</th><th>학점</th>
+                            </tr>                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2100125</td><td>컴퓨터공학</td><td>데이터베이스</td><td>A0</td>
+                            </tr>
+                            <tr>
+                                <td>2100125</td><td>컴퓨터공학</td><td>운영체제</td><td>B0</td>
+                            </tr>
+                            <tr>
+                                <td>2000057</td><td>정보통신</td><td>시스템분석</td><td>A0</td>
+                            </tr>
+                            <tr>
+                                <td>2200257</td><td>정보통신</td><td>자료구조</td><td>B0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <blockquote>
+                        정규화를 하기 위해서는 <strong>학생</strong>릴레이션에 존재하는 ( 1 )을 먼저 파악하여야 한다. 
+                        ( 1 )이란 <strong>학생</strong> 테이블에서 학과가 학번 속성에 의해 결정되는 것 처럼 
+                        어떤 릴레이션 R에서 A와 C를 각각 R의 속성 집합에 대한 부분 집합이라고 할 경우, 
+                        속성A의 값 각각에 대하 시간에 관계없이 항상 C의 값이 오직 하나만 연관되어 있을 떄, 
+                        A는 C를 함수적으로 종속한다고 말한다.
+                        또한 <strong>학생</strong> 테이블의 ( 1 )을 기호로 표시하면 ( 2 )이다. 
+                        ( 2 )의 의미는 <strong>학생</strong> 릴레이션에서 속성 학번이 속성 학과를 함수적으로 결정한다는 의미이다. 
+                        이런 의미에서 학번을 결정자, 학과를 종속자라 한다.
+                    </blockquote>
+                    답
+                    <ul>
+                        <li>함수적 종속</li>
+                        <li>학번 → 학과</li>
+                    </ul>
+                </li>
+                <li>
+                    릴레이션 스키마와 릴레이션 인스턴스가 다음과 같을때, <strong>지점</strong> 릴레이션과 
+                    <strong>예금계좌</strong> 릴레이션 사이에 존재하는 무결성 위배조건은 무었이며, 위배사유를 
+                    간략하게 서술하시오.<br>
+                    릴레이션 스키마<br>
+                    <ol class = "imageSlide">
+                        <li><img src="./images/2-1/Q_2-1-21.svg" alt="릴레이션 스키마"></li>
+                    </ol>
+                    
+                    <strong>지점</strong> 릴레이션 인스턴스 
+                    <table>
+                        <thead>
+                            <tr><th>지점명</th><th>도시</th><th>자산</th><th>영문지점명</th><th>지점개설일</th><th>전화번호</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>을지점</td><td>중구</td><td>8,000,000</td><td></td><td>1970.10.01</td><td>02&#41;324-1111</td></tr>
+                            <tr><td>수서점</td><td>강남구</td><td>9,000,000</td><td>SUSEO</td><td>1981.01.23</td><td>02&#41;354-1331</td></tr>
+                            <tr><td>구의점</td><td>광진구</td><td>1,400,000</td><td>GUEE</td><td>2000.12.02</td><td>02&#41;232-1421</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>예금 계좌</strong> 릴레이션 인스턴스 
+                    <table>
+                        <thead>
+                            <tr><th>예금번호</th><th>잔고</th><th>입출금내역</th><th>지점명</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>80090378</td><td>40,000,230</td><td>입금</td><td>을지점</td></tr>
+                            <tr><td>60099111</td><td>380,333,000</td><td>출금</td><td>수서점</td></tr>
+                            <tr><td>10000200</td><td>12,000,200</td><td>입금</td><td>화양점</td></tr>
+                            <tr><td>12083043</td><td>290,000,100</td><td>출금</td><td>명동점</td></tr>
+                            <tr><td>82132121</td><td>41,100,230</td><td>입금</td><td>을지점</td></tr>
+                        </tbody>
+                    </table>
+                    답 
+                    <ul><li>참조 무결성 위배 : <strong>예금계좌</strong> 릴레이션의 <q>지점명</q>중 <q>화양점</q>과 <q>명동점</q> 이 
+                    <strong>지점</strong> 릴레이션의 <q>지점명</q>속성에 존재하지 않기 떄문에 참조 무결성 제약조건에 위배된다.</li></ul>
+                </li>
+                <li>다음의 조건을 모두 만족하는 정규형은 무었인지 쓰시오.
+                    <blockquote>
+                        도메인은 원자 값이고 기본키가 아닌 모든 속성들이 기본키에 대해 완전 함수 종속적이며, 이행적 함수 종소 관계는 제거되었다.
+                    </blockquote>
+                    답
+                    <ul><li>제3정규형(3NF)</li></ul>                    
+                </li>
+                <li>다음에 제시된 조건중 BCNF를 만족하기 위한 조건을 모두 고르시오
+                    <blockquote>
+                        <ul>
+                            <li>ㄱ. 결정자이면서 후보키가 아닌것 제외</li>
+                            <li>ㄴ. 이행적 함수 종속 제거</li>
+                            <li>ㄷ. 부분적 함수 종속 제거</li>
+                            <li>ㄹ. 도메인이 원자 값</li>
+                        </ul>
+                    </blockquote>
+                    답 
+                    <ul><li>ㄱ,ㄴ,ㄷ,ㄹ</li></ul>
+                </li>
+                <li>다음의 <strong>학생</strong>릴레이션은 한 명의 학생이 <q>수강과목</q> 속성의 값을 여러개 가지는 문제점이 있다.
+                    이 문제를 해결하기 위해 다음과 같이 정규화 과정을 수행했다. 어떤 단계의 정규화 과정인지와 해당 정규화 과정에서 필요한 작업을 간략히 서술하시오. <br>
+                    <strong>학생</strong>릴레이션 스키마 
+                    <blockquote>
+                        학생(<u>학번</u>, 이름,학과, 소속대학, 수강과목)
+                    </blockquote>
+                    <strong>학생</strong> 릴레이션 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>학번</th><th>이름</th><th>학과</th><th>소속대학</th><th>수강과목</th>
+                            </tr>                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1255023</td><td>이재학</td><td>컴퓨터공학과</td><td>정보통신대</td><td>네트워크<br>자료구조</td>
+                            </tr>
+                            <tr>
+                                <td>1539011</td><td>성길현</td><td>전기공학과</td><td>정보통신대</td><td>전기회로</td>
+                            </tr>
+                            <tr>
+                                <td>1255008</td><td>류덕호</td><td>컴퓨터공학과</td><td>정보통신대</td><td>데이터베이스</td>
+                            </tr>
+                            <tr>
+                                <td>1603547</td><td>김개동</td><td>전자공학과</td><td>정보통신대</td><td>반도체<br>광통신</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    정규화된 <strong>학생</strong> 릴레이션 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>학번</th><th>이름</th><th>학과</th><th>소속대학</th><th>수강과목</th>
+                            </tr>                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1255023</td><td>이재학</td><td>컴퓨터공학과</td><td>정보통신대</td><td>네트워크</td>
+                            </tr>
+                            <tr>
+                                <td>1255023</td><td>이재학</td><td>컴퓨터공학과</td><td>정보통신대</td><td>자료구조</td>
+                            </tr>
+                            <tr>
+                                <td>1539011</td><td>성길현</td><td>전기공학과</td><td>정보통신대</td><td>전기회로</td>
+                            </tr>
+                            <tr>
+                                <td>1255008</td><td>류덕호</td><td>컴퓨터공학과</td><td>정보통신대</td><td>데이터베이스</td>
+                            </tr>
+                            <tr>
+                                <td>1603547</td><td>김개동</td><td>전자공학과</td><td>정보통신대</td><td>반도체</td>
+                            </tr>
+                            <tr>
+                                <td>1603547</td><td>김개동</td><td>전자공학과</td><td>정보통신대</td><td>광통신</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>1. <strong>학생</strong> 릴레이션에 필요한 정규화를 쓰시오 </p>                     
+                    답  
+                    <ul><li>제1정규화</li></ul>
+                    <p>2. 위 정규화 과정에서 수행된 작업을 쓰시오</p>
+                    답 
+                    <ul><li>도메인이 원자 값만을 갖도록 다중 값 속성을 제거한다.</li></ul>
+                </li>
+                <li>아래의 <strong>상품주문</strong> 릴레이션은 복합키(Composite Key)로서 주문번호와 생산번호가 식별자다. 
+                함수적 종속 관계의 괄호(1~3)에 들어갈 적합한 속성명을 쓰시오. <br>
+                <strong>상품주문</strong> 릴레이션 
+                <table>
+                    <thead>
+                        <tr>
+                            <th>주문번호</th><th>상품명</th><th>상품가격</th><th>주문수량</th><th>생산번호</th><th>생산자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>R001</td><td>사과</td><td>500</td><td>500</td><td>P01</td><td>홍길동 </td>
+                        </tr>
+                        <tr>
+                            <td>R001</td><td>배</td><td>1000</td><td>500</td><td>P02</td><td>윤봉길</td>
+                        </tr>
+                        <tr>
+                            <td>R003</td><td>오이</td><td>2000</td><td>1500</td><td>P03</td><td>이순신</td>
+                        </tr>
+                        <tr>
+                            <td>R003</td><td>사과</td><td>500</td><td>500</td><td>1000</td><td>홍길동</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <strong>함수적 종속 관계</strong>
+                <blockquote>
+                    <ul>
+                        <li>(주문번호, 생산번호) → 상품명, 상품가격, 주문수량, 생산자</li>
+                        <li>생산번호 → ( 1 ), ( 2 ) , ( 3 )</li>
+                        <li>상품명 → 상품가격</li>
+                    </ul>
+                </blockquote>
+                답
+                <ul>
+                    <li>1. 생산자</li>
+                    <li>2. 상품명</li>
+                    <li>3. 상품가격</li>
+                </ul>
+                </li>
+                
+                <li>다음의 정규화(Normalization) 과정은 어떤 단계의 정규화 과정인지 쓰시오. <br>
+                    <strong>부품구입</strong>
+                    <table>
+                        <thead>
+                            <tr><th>부품번호</th><th>구입처</th><th>구입연락처</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>BD-4185</td><td>영풍기계</td><td>031-478-5231</td></tr>
+                            <tr><td>BD-3345</td><td>제일공구</td><td>02-345-6789</td></tr>
+                            <tr><td>BD-4785</td><td>한성전자</td><td>051-733-4747</td></tr>
+                            <tr><td>BD-6231</td><td>제일공구</td><td>02-345-6789</td></tr>                            
+                            <tr><td>BD-2377</td><td>한성전자</td><td>051-733-4747</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>정규화 결과</strong> <br>
+                    <strong>부품구입처</strong>
+                    <table>
+                        <thead>
+                            <tr><th>부품번호</th><th>구입처</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>BD-4185</td><td>영풍기계</td></tr>
+                            <tr><td>BD-3345</td><td>제일공구</td></tr>
+                            <tr><td>BD-4785</td><td>한성전자</td></tr>
+                            <tr><td>BD-6231</td><td>제일공구</td></tr>                            
+                            <tr><td>BD-2377</td><td>한성전자</td></tr>
+                        </tbody>
+                    </table>
+                    <strong>구입처정보</strong>
+                    <table>
+                        <thead>
+                            <tr><th>구입처</th><th>구입연락처</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>영풍기계</td><td>031-478-5231</td></tr>
+                            <tr><td>제일공구</td><td>02-345-6789</td></tr>
+                            <tr><td>한성전자</td><td>051-733-4747</td></tr>
+                        </tbody>
+                    </table>
+                    답 : 제3정규화
+                </li>
+                <li>함수적 종속을 확인하면서, <strong>상품주문</strong> 릴레이션의 이상(Anomaly)과 중복(Redundancy)를 제거하는 정규화(Normalization) 중이다.
+                    어떤 단계의 정규화 과정인지와 해당 정규화 과정에서 수행된 작업을 간략히 서술하시오. <br>
+                    <strong>상품주문</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>주문번호</th><th>상품명</th><th>상품가격</th><th>주문수량</th><th>생산번호</th><th>생산자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>R001</td><td>사과</td><td>500</td><td>500</td><td>P01</td><td>홍길동</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <strong>상품주문</strong> 릴레이션을 무손실 분해한 결과 <br>
+                    <strong>주문</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>주문번호</th><th>주문수량</th><th>생산번호</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>R001</td><td>500</td><td>P01</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <strong>생산</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>생산번호</th><th>상품명</th><th>상품가격</th><th>생산자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P01</td><td>사과</td><td>500</td><td>홍길동</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    1. <strong>주문</strong>과 <strong>생산</strong> 릴레이션은 <strong>상품주문</strong> 릴레이션의 어떤 정규화 결과인지 쓰시오 <br>
+                    답 
+                    <ul><li>제2정규화</li></ul>
+                    2. 위 정규화 과정에서 수행된 작업을 쓰시오 
+                    <ul><li>부분 함수적 종속성 제거</li></ul>
+                    
+                    <strong>생산</strong> 릴레이션을 무손실 분해한 결과 <br>
+                    <strong>생산</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>생산번호</th><th>상품명</th><th>생산자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>P01</td><td>사과</td><td>홍길동</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <strong>상품</strong>
+                    <strong>생산</strong>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>상품명</th><th>상품가격</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>사과</td><td>500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    3. <strong>생산자</strong>와 <strong>상품</strong> 릴레이션은 <strong>생산</strong> 릴레이션의 어떤 정규화의 결과인지 쓰시오 <br>
+                    답 
+                    <ul><li>제3정규화</li></ul>
+                    2. 위 정규화 과정에서 수행된 작업을 쓰시오 
+                    <ul><li>이행적 함수적 종속성 제거</li></ul>
+                </li>
+                <li>정규화 과정 중 릴레이션 R의 모든 결정자(Determinant)가 후보키이면 그 릴레이션 R은 어떤 정규형에 속하는지 쓰시오 <br>
+                    답 
+                    <ul><li>BVNF (Boyce-Codd Normal Form)</li></ul>
+                </li>
+                <li>정규화된 엔티티, 속성, 관계를 시스템의 성능 향상과 개발 운영의 단순화를 위헤 중복, 통합, 분리 등을 수행하는 데이터 모델링 기법은 무었인지 쓰시오. <br>
+                    답 
+                    <ul><li>반정규화(Denormalization)</li></ul>
+                </li>
+                <li>다음 설명과 관련된 트랜잭션(Transition)의 특징을 쓰시오 
+                    <blockquote>
+                        트랜잭션의 연산은 모두 실행되거나, 모두 실행되지 않아야 한다.
+                    </blockquote> 
+                    답 
+                    <ul><li>원자성</li></ul>
+                </li>
+                <li>CRUD 분석에 대한 다음 설명에서 괄호에 차례대로 들어갈 용어를 쓰시오
+                    <blockquote>
+                        <ul>
+                            <li>CRUD 는 ( ), ( ), ( ), ( )의 앞 글자만 모아서 만든 용어이며,
+                                CRUD 분석은 데이터베이스 테이블에 변화를 주는 트랜잭션의 CRUD 연산에 대해 CRUD 매트릭스를 작성하여 분석하는 것이다. </li>
+                            <li>CRUD 분석을 통해 많은 트랜잭션이 몰리는 테이블을 파악할 수 있으므로 디스크 구성시 유용한 자료로 활용할 수 있다.</li>
+                        </ul>
+                    </blockquote>
+                    답 
+                    <ul><li>Create(생성),Read(읽기),Update(갱신),Delete(삭제)</li></ul>
+                </li>
+                <li>다음 설명에서 괄호에 공통으로 들어갈 알맞은 용어를 쓰시오.
+                    <blockquote>
+                        파일의 구조는 파일을 구성하는 레코드들이 보조기억장치에 편성되는 방식을 의미하는 것으로 크게 
+                        순차, ( ), 해싱 으로 구분한다. ( )파일 구조는 <strong>값, 주소</strong> 쌍으로 구성되는
+                        데이터구조를 활용하여 데이터에 접근하는 방식으로, 자기 디스크에서 주로 활용된다.
+                    </blockquote>
+                    답 
+                    <ul><li>인덱스(Index, 색인)</li></ul>
+                </li>
+            </ol>
+
+        </article>
 </body>
 
 </html>
