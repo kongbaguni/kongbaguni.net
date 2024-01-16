@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카메라 촬영 및 화상 처리</title>
+</head>
+<body>
+
+<video id="videoElement" width="400" height="300" autoplay></video>
+<canvas id="canvasElement" width="400" height="300"></canvas>
+
+<script>
+    // 비디오 엘리먼트와 캔버스 엘리먼트 참조
+    const video = document.getElementById('videoElement');
+    const canvas = document.getElementById('canvasElement');
+    const context = canvas.getContext('2d');
+
+    // 카메라 접근 권한 요청
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => console.error('카메라 접근 권한을 얻는 중 에러:', err));
+
+    // 비디오 프레임이 업데이트될 때마다 실행되는 함수
+    video.addEventListener('play', function () {
+        const self = this;
+
+        // 비디오의 크기만큼 캔버스에 그림
+        setInterval(function () {
+            context.drawImage(self, 0, 0, canvas.width, canvas.height);
+
+            // 여기에서 이미지 처리 로직을 추가할 수 있습니다.
+            // 예: context.filter = 'grayscale(100%)'; // 그레이스케일 적용
+        }, 1000 / 30); // 30프레임으로 설정
+    });
+</script>
+
+</body>
+</html>
