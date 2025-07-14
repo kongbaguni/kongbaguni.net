@@ -200,7 +200,7 @@
             <h3>deck</h3>
             <div class="cardDeck before"> 
                 <p>
-                <img v-for="card in deck" src="./images/poker/back.svg" alt="card" width="50px" />
+                <img v-for="card in deck" src="./Poker/images/back.svg" alt="card" width="50px" />
                 </p>
             </div>
             <p class="gameResult"> 
@@ -211,7 +211,7 @@
             <p><b>{{dealer_hand.title}}</b></p>            
             <div class="cardDeck">
                 <p v-if="dealer_open == false">
-                <img v-for="card in dealer_deck" src="./images/poker/back.svg" alt="card" width="50px" />
+                <img v-for="card in dealer_deck" src="./Poker/images/back.svg" alt="card" width="50px" />
                 </p>
                 <p v-if="dealer_open == true">
                     <img v-for="card in dealer_deck" v-bind:src="card.image" v-bind:alt="card.desc" width="50px" />
