@@ -33,6 +33,10 @@ article > p > a > img {
     width:200px;
 }
 
+p {
+    margin: 20px;
+}
+
 article p, article h3, article h4, article ul, article ol {
     margin:5px;
 }
@@ -194,10 +198,10 @@ ol.imageSlide {
     overflow: auto;
     overflow-y: hidden;
     float: inherit;
-    border: 5px solid #f84;
+    /* border: 5px solid #f84; */
     white-space: nowrap;
     padding: 0px;
-    background-color: #fff;
+    background-color: #ffffff22;
 }
 
 ol.imageSlide li {
