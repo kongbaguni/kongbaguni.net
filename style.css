@@ -1,7 +1,9 @@
 body {
-    background:#134;
-    color:#fff;
+    background:#eee;
+    color:#000;
 }
+
+
 a {
     color:#963;
 }
@@ -396,7 +398,6 @@ table.keypad button.off {
     opacity: 0.5;
 }
 
-
 article strong {
     color: yellow;
 }
@@ -428,4 +429,11 @@ b.tablename::before {
 b.tablename::after {
     content: ">";
     color: yellow;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #024;
+    color: #f0f0f0;
+  }
 }
