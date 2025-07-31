@@ -213,6 +213,7 @@ ol.imageSlide li {
 ol.imageSlide li > img {
     height: 300px;
     cursor: pointer;
+    padding-top : 10px;
 }
 
 #preview {
@@ -438,6 +439,11 @@ b.tablename::after {
     background-color: #222;
     color: #f0f0f0;
   }
+
+  article b {
+    color: red;
+}
+
 }
 
 div.exif-data {
