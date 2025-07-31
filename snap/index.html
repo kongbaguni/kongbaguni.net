@@ -9,9 +9,11 @@
         <meta property="og:description" content="포트폴리오" />
         <meta property="og:image" content="https://kongbaguni.net/profile.jpeg" />
         <meta name="contact" content="Changyeol Seo, kongbaguni@gmail.com" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/CommonImport.js"></script>
-        <script>importCommons(true);</script>
-
+        <script>importCommons(false);</script>
+        <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+     
         <title>kongbaguni.net</title>
     </head>
     <body>
@@ -23,19 +25,19 @@
             <h3>Leica M11</h3>
             <h4>APO summicron 35</h4>
             <ol class="imageSlide">
-                <li><img src="./digital/LeicaM11M/35/1.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/2.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/3.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/4.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/5.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/6.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/7.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/8.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/9.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/10.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/11.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/12.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
-                <li><img src="./digital/LeicaM11M/35/13.jpg" alt="Leica M11 monochrom, APO summicron 35" /></li>
+                <li><img src="./digital/LeicaM11M/35/1.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/2.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/3.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/4.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/5.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/6.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/7.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/8.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/9.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/10.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/11.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/12.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
+                <li><img src="./digital/LeicaM11M/35/13.jpg" alt="Leica M11 monochrom, APO summicron 35" class="exif-image"/></li>
             </ol>
             <h4>APO Telyt 135</h4>
             <ol class="imageSlide">
@@ -102,3 +104,51 @@
         </footer>
     </body>
 </html>
+
+<script>
+$(document).ready(function() {
+  $('li > img').each(function(index) {
+    const $img = $(this);
+
+    const handleExif = function () {
+      // 중복 처리 방지 플래그
+      if ($img.data('exifLoaded')) return;
+      $img.data('exifLoaded', true);
+
+      EXIF.getData(this, function() {
+        const make = EXIF.getTag(this, "Make") || "Unknown";
+        const model = EXIF.getTag(this, "Model") || "";
+        const iso = EXIF.getTag(this, "ISOSpeedRatings") || "N/A";
+        const fNumber = EXIF.getTag(this, "FNumber") || "N/A";
+        const exposureTime = EXIF.getTag(this, "ExposureTime") || "N/A";
+
+        // 셔터속도가 분수 형태일 때 (예: 1/125) 표시하기 위한 처리
+        let exposureStr = exposureTime;
+        if (typeof exposureTime === 'number') {
+          exposureStr = `1/${Math.round(1 / exposureTime)}`;
+        } else if (typeof exposureTime === 'object' && exposureTime.numerator && exposureTime.denominator) {
+          exposureStr = `${exposureTime.numerator}/${exposureTime.denominator}`;
+        }
+
+        const exifHtml = `
+          <div class="exif-data" style="font-size:0.9em; margin-top:4px;">
+            <p>Camera: <b>${make}</b> ${model}</p>
+            <p>ISO: ${iso}</p>
+            <p>Aperture: f/${fNumber}</p>
+            <p>Shutter Speed: ${exposureStr} sec</p>
+          </div>
+        `;
+        $img.after(exifHtml);
+      });
+    };
+
+    // load 이벤트 등록
+    $img.on('load', handleExif);
+
+    // 이미 로드된 이미지도 처리
+    if ($img[0].complete && $img[0].naturalHeight !== 0) {
+      handleExif.call($img[0]); // jQuery 객체 말고 DOM 이미지 요소 기준으로 호출
+    }
+  });
+});
+</script>

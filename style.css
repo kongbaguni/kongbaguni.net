@@ -194,11 +194,9 @@ article.EULA > p.list:first-letter {
 
 ol.imageSlide {
     display: block;
-    height: 305px;
     overflow: auto;
     overflow-y: hidden;
     float: inherit;
-    /* border: 5px solid #f84; */
     white-space: nowrap;
     padding: 0px;
     background-color: #ffffff22;
@@ -440,4 +438,8 @@ b.tablename::after {
     background-color: #024;
     color: #f0f0f0;
   }
+}
+
+div.exif-data {
+    padding:10px;
 }
