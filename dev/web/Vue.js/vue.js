@@ -6,7 +6,6 @@ var images = [
     {number:5, url : "https://img.animalplanet.co.kr/thumbnail/2020/06/17/2000/9nie3n54mijq224a57l5.jpg", desc: "깜짝 놀란 고양이 사진과 그림"},
     {number:6, url : "https://img.animalplanet.co.kr/thumbnail/2019/12/30/2000/h53kvxf8tjftc7va0c48.jpg", desc: "깜짝 놀란 검은 고양이"},
     {number:7, url : "https://img.insight.co.kr/static/2017/12/01/2000/y92cr5i5d86lk21c1i87.jpg", desc: "망한 고양이 사진 콘테스트"},
-    {number:8, url : "https://scontent-gmp1-1.xx.fbcdn.net/v/t1.18169-9/27750473_2074141789474495_4757947911887162111_n.png?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=9ttNzYTeMAEAX_UdOum&_nc_ht=scontent-gmp1-1.xx&oh=00_AfBpe4geHhyynUSlFYNd4gkIyo8vPVf3CPZRIktW9vRgIg&oe=6428B57D", desc: "8번 고양이"},
   ];
 var random = getRandomInt(0,images.length-1);
 

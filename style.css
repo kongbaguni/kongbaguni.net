@@ -21,7 +21,7 @@ q {
 }
 
 article {
-    border:1px dashed #369;
+    border:1px dashed #ffffff22;
     margin:10px;
     padding:0px;
     border-radius:10px;
@@ -47,7 +47,7 @@ article ul, article ol {
 }
 
 article header {
-    background:#369;
+    background:#eeeeee33;
     color:#fff;
     margin:0px;
     padding:5px;
@@ -435,7 +435,7 @@ b.tablename::after {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #024;
+    background-color: #222;
     color: #f0f0f0;
   }
 }
