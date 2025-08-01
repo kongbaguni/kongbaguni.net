@@ -214,6 +214,7 @@ ol.imageSlide li > img {
     height: 300px;
     cursor: pointer;
     padding-top : 10px;
+    padding-bottom: 10px;
 }
 
 #preview {
