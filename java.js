@@ -104,6 +104,10 @@ function makeImagePreview() {
                 $preview.remove();
             }
         });
+        
+        $("#preview img").click(function (e) {
+            $preview.remove();
+        })
 
         $("#prevImage").click(function (e) {
             e.preventDefault();
