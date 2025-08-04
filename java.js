@@ -76,9 +76,11 @@ function changeMode(name) {
     $("body").attr("class",name)
 }
 
+
+
 function makeImagePreview() {
     const $images = $("ol.imageSlide img");
-    let currentIndex = $images.index(this);
+    let currentIndex = 0;
     
     $("ol.imageSlide img").click(function () {
         showPreview($(this));
@@ -86,6 +88,7 @@ function makeImagePreview() {
     });
 
     function showPreview($imgEl) {
+        currentIndex = $images.index($imgEl);
         $("#preview").remove();
 
         
@@ -98,6 +101,7 @@ function makeImagePreview() {
                 <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
                     <img id="previewImage" src="${fullsize}" alt="preview" style="max-width:90vw; max-height:80vh;">
                 </div>
+                <h1>${currentIndex + 1}</h1>
                 <div id="exifInfo" style="padding:10px; background:rgba(0,0,0,0.7); font-size:14px; white-space:pre-line;"></div>
                 <a href="#" id="prevImage" style="position:absolute; left:20px; color:white; font-size:3em;">&#8592;</a>
                 <a href="#" id="nextImage" style="position:absolute; right:20px; color:white; font-size:3em;">&#8594;</a>
