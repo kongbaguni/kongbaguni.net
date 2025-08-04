@@ -77,16 +77,85 @@ function changeMode(name) {
 }
 
 function makeImagePreview() {
-    $("img").click(function() {
-        $("#preview").remove();        
-        let img = $("<div id=\"preview\"><img src='"+ this.src + "' alt=\"preview\" /></div>");
-        $("body").append(img);
-        img.click(function() {
-            this.remove();
-        });
-    })    
-}
+    $("ol.imageSlide img").click(function () {
+        $("#preview").remove();
 
+        const $images = $("ol.imageSlide img");
+        const currentIndex = $images.index(this);
+        const fullsize = this.dataset.fullsize;
+
+        let $preview = $(`
+            <div id="preview" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000c; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; color:white;">
+                <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+                    <img id="previewImage" src="${fullsize}" alt="preview" style="max-width:90vw; max-height:80vh;">
+                </div>
+                <div id="exifInfo" style="padding:10px; background:rgba(0,0,0,0.7); font-size:14px; white-space:pre-line;"></div>
+                <a href="#" id="prevImage" style="position:absolute; left:20px; color:white; font-size:3em;">&#8592;</a>
+                <a href="#" id="nextImage" style="position:absolute; right:20px; color:white; font-size:3em;">&#8594;</a>
+            </div>
+        `);
+
+        $("body").append($preview);
+
+        $preview.click(function (e) {
+            if (e.target.id === "preview") {
+                $preview.remove();
+            }
+        });
+
+        $("#prevImage").click(function (e) {
+            e.preventDefault();
+            if (currentIndex > 0) {
+                $images.eq(currentIndex - 1).click();
+            }
+            else {
+                $images.eq($images.length + 1).click();
+            }
+        });
+
+        $("#nextImage").click(function (e) {
+            e.preventDefault();
+            if (currentIndex < $images.length - 1) {
+                $images.eq(currentIndex + 1).click();
+            }
+            else {
+                $images.eq(0).click();
+            }
+        });
+
+        // EXIF 추출
+        const imageEl = document.getElementById("previewImage");
+        imageEl.onload = function () {
+            EXIF.getData(imageEl, function () {
+                const make = EXIF.getTag(this, "Make") || "Unknown Make";
+                const model = EXIF.getTag(this, "Model") || "Unknown Model";
+                const iso = EXIF.getTag(this, "ISOSpeedRatings") || "Unknown ISO";
+                const exposureTime = EXIF.getTag(this, "ExposureTime") || "Unknown Exposure";
+
+                let exposureStr = exposureTime;
+                if (typeof exposureTime === 'number') {
+                exposureStr = `1/${Math.round(1 / exposureTime)}`;
+                } else if (typeof exposureTime === 'object' && exposureTime.numerator && exposureTime.denominator) {
+                exposureStr = `${exposureTime.numerator}/${exposureTime.denominator}`;
+                }
+
+                const fNumber = EXIF.getTag(this, "FNumber") || "Unknown Aperture";
+                const focalLength = EXIF.getTag(this, "FocalLength") || "Unknown Focal Length";
+
+                const exifText = 
+`📷 ${make} ${model}
+🌡 ISO: ${iso}
+⏱ Exposure: ${exposureStr}
+🔘 Aperture: f/${fNumber}
+🔭 Focal Length: ${focalLength}mm`;
+
+                $("#exifInfo").text(exifText);
+            });
+        };
+
+        return false;
+    });
+}
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
