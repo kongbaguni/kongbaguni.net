@@ -82,8 +82,10 @@ function makeImagePreview() {
 
         const $images = $("ol.imageSlide img");
         const currentIndex = $images.index(this);
-        const fullsize = this.dataset.fullsize;
-
+        let fullsize = this.dataset.fullsize;
+        if (fullsize == undefined) {
+            fullsize = this.src;
+        }
         let $preview = $(`
             <div id="preview" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000c; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; color:white;">
                 <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
@@ -132,6 +134,9 @@ function makeImagePreview() {
                 const iso = EXIF.getTag(this, "ISOSpeedRatings") || "Unknown ISO";
                 const exposureTime = EXIF.getTag(this, "ExposureTime") || "Unknown Exposure";
 
+                if (make == "Unknown Make") {
+                    return;
+                }
                 let exposureStr = exposureTime;
                 if (typeof exposureTime === 'number') {
                 exposureStr = `1/${Math.round(1 / exposureTime)}`;
