@@ -77,12 +77,19 @@ function changeMode(name) {
 }
 
 function makeImagePreview() {
+    const $images = $("ol.imageSlide img");
+    let currentIndex = $images.index(this);
+    
     $("ol.imageSlide img").click(function () {
+        showPreview($(this));
+        return false;
+    });
+
+    function showPreview($imgEl) {
         $("#preview").remove();
 
-        const $images = $("ol.imageSlide img");
-        const currentIndex = $images.index(this);
-        let fullsize = this.dataset.fullsize;
+        
+        const fullsize = $imgEl.data("fullsize");
         if (fullsize == undefined) {
             fullsize = this.src;
         }
@@ -104,40 +111,66 @@ function makeImagePreview() {
                 $preview.remove();
             }
         });
-        
+
         $("#preview img").click(function (e) {
             $preview.remove();
         })
 
+        function navigateToLeft() {
+            currentIndex -= 1;
+            if (currentIndex < 0) {
+                currentIndex = $images.length - 1 
+            }
+            $images.eq(currentIndex).click();
+        }
+
         $("#prevImage").click(function (e) {
             e.preventDefault();
-            if (currentIndex > 0) {
-                $images.eq(currentIndex - 1).click();
-            }
-            else {
-                $images.eq($images.length + 1).click();
-            }
+            navigateToLeft(e);
         });
+
+        function navigateToRight() {
+            currentIndex += 1;
+            if (currentIndex > $images.length - 1) {
+                currentIndex = 0;
+            }
+            $images.eq(currentIndex).click();
+        }
 
         $("#nextImage").click(function (e) {
             e.preventDefault();
-            if (currentIndex < $images.length - 1) {
-                $images.eq(currentIndex + 1).click();
-            }
-            else {
-                $images.eq(0).click();
-            }
+            navigateToRight(e);
         });
 
+
+        // ⌨️ 키보드 왼쪽/오른쪽 입력 이벤트 처리
+        function keyHandler(e) {
+            e.preventDefault();
+            if (e.key === "ArrowLeft") {
+                navigateToLeft(e);
+            } else if (e.key === "ArrowRight") {
+                navigateToRight(e);
+            } else if (e.key === "Escape") {
+                $preview.remove();
+            }
+            $(document).off("keydown", keyHandler); // 이벤트 제거
+        }
+
+        $(document).on("keydown", keyHandler);
+
+
+        const $previewImg = $("#previewImage");
+        $previewImg.onload = null;
+        
         // EXIF 추출
         const imageEl = document.getElementById("previewImage");
+        
         imageEl.onload = function () {
             EXIF.getData(imageEl, function () {
                 const make = EXIF.getTag(this, "Make") || "Unknown Make";
                 const model = EXIF.getTag(this, "Model") || "Unknown Model";
                 const iso = EXIF.getTag(this, "ISOSpeedRatings") || "Unknown ISO";
                 const exposureTime = EXIF.getTag(this, "ExposureTime") || "Unknown Exposure";
-
                 if (make == "Unknown Make") {
                     return;
                 }
@@ -163,7 +196,7 @@ function makeImagePreview() {
         };
 
         return false;
-    });
+    };
 }
 function getRandomInt(min, max) {
     min = Math.ceil(min);
