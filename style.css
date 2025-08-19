@@ -210,7 +210,7 @@ ol.imageSlide li {
     margin: 0px;
 }
 
-ol.imageSlide li > img {
+ol.imageSlide li img {
     height: 200px;
     cursor: pointer;
     padding-top : 10px;
