@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>바코드 + QR 리더</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ZXing 라이브러리 (QR + Barcode) -->
+  <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.18.6/umd/index.min.js"></script>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #111;
+      color: #eee;
+    }
+    h1 { margin-bottom: 6px; font-size: 20px; }
+    #status { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+
+    video {
+      width: 100%;
+      max-width: 480px;
+      background: #000;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    #result {
+      background: #222;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    button {
+      padding: 8px 12px;
+      margin-right: 8px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📸 바코드 + QR 리더</h1>
+  <div id="status">카메라 준비 전…</div>
+
+  <video id="video" playsinline></video>
+
+  <button id="startBtn">카메라 시작</button>
+  <button id="stopBtn" disabled>정지</button>
+
+  <div id="result" style="margin-top:15px;">
+    <strong>읽은 결과:</strong>
+    <div id="resultText">아직 인식된 코드가 없음.</div>
+  </div>
+
+  <script>
+    var selectedDeviceId = null;
+    var codeReader = null;
+    var scanning = false;
+
+    var video = document.getElementById('video');
+    var startBtn = document.getElementById('startBtn');
+    var stopBtn = document.getElementById('stopBtn');
+    var resultText = document.getElementById('resultText');
+    var statusEl = document.getElementById('status');
+
+    function log(s) {
+      statusEl.textContent = s;
+      console.log(s);
+    }
+
+    function startScan() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        log("카메라 지원 안됨 (HTTPS 필요)");
+        return;
+      }
+
+      scanning = true;
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+
+      codeReader = new ZXing.BrowserMultiFormatReader();
+
+      codeReader
+        .listVideoInputDevices()
+        .then(function(videoInputDevices) {
+          // 후면 카메라 우선
+          if (videoInputDevices.length > 1) {
+            selectedDeviceId = videoInputDevices[1].deviceId;
+          } else {
+            selectedDeviceId = videoInputDevices[0].deviceId;
+          }
+
+          log("카메라 시작됨. 바코드를 화면 가운데에 맞추세요.");
+
+          codeReader.decodeFromVideoDevice(
+            selectedDeviceId,
+            'video',
+            function(result, err) {
+              if (result) {
+                resultText.textContent = result.getText();
+                log("인식 성공!");
+
+                // 자동 정지 원하면 아래 주석 해제
+                // stopScan();
+              }
+            }
+          );
+        })
+        .catch(function(err) {
+          log("카메라 초기화 오류: " + err);
+        });
+    }
+
+    function stopScan() {
+      scanning = false;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+
+      if (codeReader) {
+        codeReader.reset();
+        log("스캔 정지됨.");
+      }
+    }
+
+    startBtn.addEventListener('click', startScan);
+    stopBtn.addEventListener('click', stopScan);
+
+    window.addEventListener('beforeunload', stopScan);
+  </script>
+
+</body>
+</html>
