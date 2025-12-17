@@ -13,7 +13,34 @@
     <header>
         <h1><a href="/">kongbaguni.net</a></h1>
     </header>
-     
+
+    <script>
+        var apiMap;//2D map
+var SOPPlugin;//3D map
+var apiMap2;//2D map
+var SOPPlugin2;//3D map
+vworld.showMode = true;//브이월드 배경지도 설정 컨트롤 유무(true:배경지도를 컨트롤 할수 있는 버튼 생성/false:버튼 해제)
+ 
+/**
+ * - rootDiv, mapType, mapFunc, 3D initCall, 3D failCall
+ * - 브이월드 5가지 파라미터를 셋팅하여 지도 호출
+ */
+vworld.init("vMap", "map-first", 
+    function() {        
+        apiMap = this.vmap;//브이월드맵 apiMap에 셋팅 
+        apiMap.setBaseLayer(apiMap.vworldBaseMap);//기본맵 설정 
+        apiMap.setControlsType({"simpleMap":true}); //간단한 화면    
+        apiMap.addVWORLDControl("zoomBar");
+        apiMap.setCenterAndZoom(14153034.043823106,4501305.261406751,17);//화면중심점과 레벨로 이동 (초기 화면중심점과 레벨)
+    },
+    function (obj){//3D initCall(성공)
+        SOPPlugin = obj;
+    },
+    function (msg){//3D failCall(실패)
+        alert(msg);
+    }
+);
+    </script>
 
 </body>
 </html>
