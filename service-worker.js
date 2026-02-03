@@ -4,6 +4,14 @@ var CACHE_NAME = 'pwa-demo-v1';
 // 필요한 정적 파일들
 var STATIC_ASSETS = [
   '/index.html',
+  '/java.js',
+  '/profile.jpeg',
+  '/toTop_black.png',
+  '/toTop_dark.png',
+  '/toTop_light.png',
+  '/toTop_white.png',
+  '/unicycle.png',
+  '/style.css',
   '/dev/iOS/index.html',
   '/dev/web/index.html',
   '/snap/index.html',
