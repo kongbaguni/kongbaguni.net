@@ -4,6 +4,9 @@ var CACHE_NAME = 'pwa-demo-v1';
 // 필요한 정적 파일들
 var STATIC_ASSETS = [
   '/index.html',
+  '/dev/iOS/index.html',
+  '/dev/web/index.html',
+  '/snap/index.html',
   '/pwaTest/manifest.json',
   '/pwaTest/app.js',
   '/pwaTest/icon-192.png',
@@ -22,7 +25,7 @@ self.addEventListener('install', function (event) {
 // 활성화 시 이전 캐시 정리 (버전 바뀔 때)
 self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys().then(function (keys) {
+    caches.keys().then(function (keys) {ㅖ
       return Promise.all(
         keys.map(function (key) {
           if (key !== CACHE_NAME) {
