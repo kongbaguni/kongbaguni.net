@@ -4,10 +4,10 @@ var CACHE_NAME = 'pwa-demo-v1';
 // 필요한 정적 파일들
 var STATIC_ASSETS = [
   '/index.html',
-  '/manifest.json',
-  '/app.js',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/pwaTest/manifest.json',
+  '/pwaTest/app.js',
+  '/pwaTest/icon-192.png',
+  '/pwaTest/icon-512.png'
 ];
 
 // 설치 시 캐시
