@@ -34,19 +34,27 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-// 요청 가로채기
 self.addEventListener('fetch', function (event) {
+
+  // 📌 문서 요청만 따로 처리
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(function (response) {
+          return response;
+        })
+        .catch(function () {
+          // 오프라인이면 무조건 index.html
+          return caches.match('/index.html');
+        })
+    );
+    return;
+  }
+
+  // 📌 나머지 리소스
   event.respondWith(
     caches.match(event.request).then(function (cachedResponse) {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(function () {
-        // 네트워크 실패 & 캐시 없음인 경우 최소 fallback
-        if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
-        }
-      });
+      return cachedResponse || fetch(event.request);
     })
   );
 });
