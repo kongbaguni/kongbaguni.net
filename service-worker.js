@@ -10,7 +10,7 @@ var STATIC_ASSETS = [
   '/toTop_dark.png',
   '/toTop_light.png',
   '/toTop_white.png',
-  '/unicycle.png',
+  '/unicycle.jpg',
   '/style.css',
   '/dev/iOS/index.html',
   '/dev/web/index.html',
