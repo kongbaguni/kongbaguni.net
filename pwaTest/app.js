@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 서비스워커 등록
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(function (reg) {
+    navigator.serviceWorker.register('/dev/web/indexedDbCRUD/service-worker.js').then(function (reg) {
       statusEl.textContent = '서비스 워커 등록 완료. (온라인/오프라인 캐시 지원)';
       console.log('SW registered', reg);
     }).catch(function (err) {
