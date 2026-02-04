@@ -1,9 +1,0 @@
-app.js
-bootstrap.bundle.min.js
-bootstrap.min.css
-exif-js.js
-files.txt
-index.html
-jquery-4.0.0.min.js
-popper.min.js
-style.css
