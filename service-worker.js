@@ -3,22 +3,15 @@ var CACHE_NAME = 'pwa-demo-v1';
 
 // 필요한 정적 파일들
 var STATIC_ASSETS = [
-  '/index.html',
-  '/java.js',
-  '/profile.jpeg',
-  '/toTop_black.png',
-  '/toTop_dark.png',
-  '/toTop_light.png',
-  '/toTop_white.png',
-  '/unicycle.jpg',
-  '/style.css',
-  '/dev/iOS/index.html',
-  '/dev/web/index.html',
-  '/snap/index.html',
-  '/pwaTest/manifest.json',
-  '/pwaTest/app.js',
-  '/pwaTest/icon-192.png',
-  '/pwaTest/icon-512.png'
+  '/dev/web/indexedDbCRUD/app.js',
+  '/dev/web/indexedDbCRUD/bootstrap.bundle.min.js',
+  '/dev/web/indexedDbCRUD/bootstrap.min.css',
+  '/dev/web/indexedDbCRUD/exif-js.js',
+  '/dev/web/indexedDbCRUD/files.txt',
+  '/dev/web/indexedDbCRUD/index.html',
+  '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
+  '/dev/web/indexedDbCRUD/popper.min.js',
+  '/dev/web/indexedDbCRUD/style.css'
 ];
 
 // 설치 시 캐시
@@ -56,7 +49,7 @@ self.addEventListener('fetch', function (event) {
         })
         .catch(function () {
           // 오프라인이면 무조건 index.html
-          return caches.match('/index.html');
+          return caches.match('/dev/web/indexedDbCRUD/index.html');
         })
     );
     return;
