@@ -1,7 +1,7 @@
 {
   "name": "PWA Demo",
   "short_name": "PWA9Demo",
-  "start_url": "/index.html",
+  "start_url": "/crud.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
