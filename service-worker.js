@@ -1,30 +1,39 @@
-// ES5만 사용
+// ES5 only
 var CACHE_NAME = 'pwa-demo-v1';
 
-// 필요한 정적 파일들
+// 반드시 실제로 존재하는 파일만!
 var STATIC_ASSETS = [
-  '/dev/web/indexedDbCRUD/bootstrap.min.css',
-  '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
-  '/dev/web/indexedDbCRUD/app.js',
   '/dev/web/indexedDbCRUD/index.html',
+  '/dev/web/indexedDbCRUD/app.js',
+  '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
+  '/dev/web/indexedDbCRUD/bootstrap.min.css',
   '/dev/web/indexedDbCRUD/style.css',
 ];
 
-// 설치 시 캐시
+// --------------------
+// INSTALL
+// --------------------
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
+      // addAll 대신 개별 add → 하나 실패해도 전체 안 죽음
       return Promise.all(
         STATIC_ASSETS.map(function (url) {
-          return cache.add(url).catch(function (e) {
-            console.warn('캐시 실패:', url);
+          return cache.add(url).catch(function (err) {
+            console.warn('[SW] 캐시 실패:', url, err);
           });
         })
       );
     })
   );
+
+  // 새 SW 즉시 활성화
+  self.skipWaiting();
 });
-// 활성화 시 이전 캐시 정리 (버전 바뀔 때)
+
+// --------------------
+// ACTIVATE
+// --------------------
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -35,11 +44,19 @@ self.addEventListener('activate', function (event) {
           }
         })
       );
+    }).then(function () {
+      // 열린 탭 즉시 제어
+      return self.clients.claim();
     })
   );
 });
 
+// --------------------
+// FETCH
+// --------------------
 self.addEventListener('fetch', function (event) {
+
+  // 1️⃣ HTML 문서 요청 (페이지 이동 / 새로고침)
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -47,17 +64,23 @@ self.addEventListener('fetch', function (event) {
           return response;
         })
         .catch(function () {
+          // 오프라인이면 캐시된 index.html
           return caches.match('/dev/web/indexedDbCRUD/index.html');
         })
     );
     return;
   }
 
-  // 📌 나머지 리소스
+  // 2️⃣ JS / CSS / 기타 정적 리소스
   event.respondWith(
-  caches.match(new URL(event.request.url).pathname)
-    .then(function (cachedResponse) {
-      return cachedResponse || fetch(event.request);
-    })
+    caches.match(new URL(event.request.url).pathname)
+      .then(function (cachedResponse) {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        // 캐시에 없으면 네트워크
+        return fetch(event.request);
+      })
   );
 });
