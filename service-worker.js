@@ -3,13 +3,12 @@ var CACHE_NAME = 'pwa-demo-v1';
 
 // 필요한 정적 파일들
 var STATIC_ASSETS = [
-  '/dev/web/indexedDbCRUD/app.js',
-  '/dev/web/indexedDbCRUD/bootstrap.bundle.min.js',
   '/dev/web/indexedDbCRUD/bootstrap.min.css',
+  '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
+  '/dev/web/indexedDbCRUD/app.js',
   '/dev/web/indexedDbCRUD/exif-js.js',
   '/dev/web/indexedDbCRUD/files.txt',
   '/dev/web/indexedDbCRUD/index.html',
-  '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
   '/dev/web/indexedDbCRUD/popper.min.js',
   '/dev/web/indexedDbCRUD/style.css',
   '/style.css',
