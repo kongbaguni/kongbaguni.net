@@ -3,7 +3,7 @@ var CACHE_NAME = 'pwa-demo-v1';
 
 // 반드시 실제로 존재하는 파일만!
 var STATIC_ASSETS = [
-  'index.html',
+  'crud.html',
   'app.js',
   'jquery-4.0.0.min.js',
   'bootstrap.min.css',
