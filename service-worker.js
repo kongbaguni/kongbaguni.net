@@ -11,7 +11,8 @@ var STATIC_ASSETS = [
   '/dev/web/indexedDbCRUD/index.html',
   '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
   '/dev/web/indexedDbCRUD/popper.min.js',
-  '/dev/web/indexedDbCRUD/style.css'
+  '/dev/web/indexedDbCRUD/style.css',
+  '/style.css',
 ];
 
 // 설치 시 캐시
