@@ -97,7 +97,7 @@
 
     // Service Worker 등록
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/dev/web/indexedDbCRUD/service-worker.js')
+      navigator.serviceWorker.register('/service-worker.js')
         .then(function() {
           statusEl.textContent = 'Service Worker 등록 완료';
         })

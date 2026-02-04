@@ -65,7 +65,7 @@ self.addEventListener('fetch', function (event) {
         })
         .catch(function () {
           // 오프라인이면 캐시된 index.html
-          return caches.match('/dev/web/indexedDbCRUD/index.html');
+          return caches.match('/crud.html');
         })
     );
     return;
