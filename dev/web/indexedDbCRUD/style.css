@@ -1,0 +1,452 @@
+body {
+    background:#eee;
+    color:#000;
+}
+
+
+a {
+    color:#963;
+}
+em {
+    color:#48f;
+}
+
+q:before, q:after  {
+    color:#396;
+}
+
+q {
+    color:#369;
+    font-weight:bold;
+}
+
+article {
+    border:1px dashed #ffffff22;
+    margin:10px;
+    padding:0px;
+    border-radius:10px;
+    overflow:hidden;
+    background: #00000044;
+}
+
+article > p > a > img {
+    width:200px;
+}
+
+p {
+    margin: 20px;
+}
+
+article p, article h3, article h4, article ul, article ol {
+    margin:5px;
+}
+
+article ul, article ol {
+    margin:5px;
+    padding-left:20px;
+}
+
+article header {
+    background:#eeeeee33;
+    color:#fff;
+    margin:0px;
+    padding:5px;
+    text-align:center;
+}
+
+article b {
+    color: darkblue;
+}
+
+article del {
+    color:#555
+}
+
+article sub, article sup {
+    color: #aaa;
+}
+
+h3 {
+    color:#369;
+    border-bottom:2px solid #369;
+}
+
+h4 {
+    color:#396;
+    border-bottom: 1px dashed #555;
+}
+
+body.dark {
+    background:#000;
+    color:#fff;
+}
+body.dark a {
+    color:#369;
+}
+body.dark em {
+    color:#f84;
+}
+
+body.dark q:before, body.dark q:after  {
+    color:#ffff00;
+}
+
+body.dark q {
+    color:#999;
+}
+
+body.dark article {
+    border:1px dashed #963;
+}
+
+body.dark article header {
+    background:#963;
+    color:#000;
+}
+
+body.dark h3 {
+    color:#963;
+    border-bottom:1px dashed #963;
+}
+
+body article.firstLetter > p:first-letter {
+    text-transform:uppercase;
+    padding:10px;
+    margin-right:2px;
+    float:left;
+    color:#fff;
+    background:#369;
+    font-size:200%;
+    border-radius:10px;
+}
+
+body.dark article.firstLetter > p:first-letter {
+    color:#000;
+    background:#963;
+}
+
+body article.firstLetter > footer {
+    border-top:1px dashed #369;
+}
+
+body.dark article.firstLetter > footer {
+    border-top:1px dashed #963;
+}
+
+article.firstLetter header h1 {
+    text-align:center
+}
+
+article.firstLetter header {
+    background:#00000000;
+    color:#000;
+    margin:0px;
+    padding:5px;
+    text-align:left;
+    border-bottom:1px dashed #369;
+}
+
+body.dark article.firstLetter header {
+    color:#fff;
+    background:#00000000;
+    border-bottom:1px dashed #963;
+}
+
+a.toTop {
+    display:inline-block;
+    width:15px;
+    height:15px;
+    background-image:url("toTop_light.png");
+    text-indent:-10000em;
+    overflow:hidden;
+    margin-left:10px;
+}
+
+body.dark a.toTop {
+    background-image:url("toTop_dark.png");
+}
+
+article header a.toTop {
+    background-image:url("toTop_white.png");
+}
+
+body.dark article header a.toTop {
+    background-image:url("toTop_black.png");
+}
+
+article.EULA > p {
+    padding:20px;
+}
+
+article.EULA > p.list:first-letter {
+    font-size:50px;
+    float:left;
+    padding:5px;
+    padding-left:15px;
+    padding-right:15px;
+    margin-right:5px;
+    margin-bottom:5px;
+    color:#fff;
+    background-color:#369;
+    border-radius:10px;
+    text-transform:uppercase;
+}
+
+ol.imageSlide {
+    display: block;
+    overflow: auto;
+    overflow-y: hidden;
+    float: inherit;
+    white-space: nowrap;
+    padding: 0px;
+    background-color: #ffffff22;
+}
+
+ol.imageSlide li {
+    /* float: left; */
+    display: inline-block;
+    list-style: none;
+    padding: 2px;
+    margin: 0px;
+}
+
+ol.imageSlide li img {
+    height: 200px;
+    cursor: pointer;
+    padding-top : 10px;
+    padding-bottom: 10px;
+}
+
+#preview {
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: #999999aa;
+    padding: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+#preview > img {
+    position: fixed;
+    max-width: 90%;
+    max-height: 90%;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+header {
+    padding: 5px;
+    text-align: center;   
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+}
+
+body > footer {
+    margin: 10px;
+    padding: 5px;
+}
+
+aside {
+    margin: 10px;
+    /* float: right; */
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #fff;
+    margin: 5px;
+}
+table thead , table tfoot {
+    background-color: #369;
+}
+table th, table td {
+    border: 1px solid #396;
+    padding:5px;
+}
+
+table.diagram, table.diagram th, table.diagram td {
+    padding: 0px;
+    border: none;
+}
+
+.diagram {
+    margin: 10px;    
+}
+p.diagram {
+    line-height: 50px;
+}
+
+.diagram span{
+    padding: 5px;
+    border: 2px solid #369;
+    background-color: #237;
+    color: #fff;
+ }
+
+ article > ol ul > li , article > ul ul > li {
+    color:#aaa;
+
+ }
+
+ article > ol { counter-reset: item; }
+
+ article > ol > li { display: block; }
+
+ article > ol > li::before {
+    content: counter(item) ". ";
+    counter-increment: item;
+    color: yellow;
+}
+
+article blockquote {
+    border: 2px dashed #396;
+    margin: 5px;
+    padding: 5px;
+}
+
+blockquote > p, article blockquote ul li {
+    color: #48a;
+}
+
+article table {
+    font-size: 13px;
+}
+article table tbody th {
+    background-color: #368;
+}
+article h5 {
+    color: #48a;
+    padding: 5px;
+    margin: 2px;
+}
+article h6 {
+    color: #48f;
+    padding: 5px;
+    margin: 2px;
+}
+h2 sup, h3 sup, h4 sup, h5 sup, h6 sup {
+    color: #fff;
+    text-transform: uppercase;
+}
+h2 sup::before, h3 sup::before, h4 sup::before, h5 sup::before, h6 sup::before {
+    content: "(";
+    color: yellow;
+}
+h2 sup::after, h3 sup::after, h4 sup::after, h5 sup::after, h6 sup::after {
+    content: ")";
+    color: yellow;
+}
+
+
+div.cardDeck {
+    border: 2px dotted #48f;
+    padding: 10px;
+    margin: 10px;
+    min-height: 90px;
+    overflow: auto;
+}
+p.gameResult {    
+    margin: 10px;
+    padding: 5px;    
+    background-color: #00000044;
+    z-index: 10;
+    color:green;
+    border: 2px solid green;
+}
+
+
+div.cardDeck.before p {
+    margin-left: 43px;
+}
+div.cardDeck.before img{
+    display: inline-block;
+    margin-left: -43px;
+}
+
+div.cardDeck table th:empty {
+    background: #00000077;
+}
+
+table.keypad td.on {
+    background-color: yellow;
+}
+
+table.keypad td {
+    text-align: center;
+}
+table.keypad thead tr.input button {
+    background-color: #00000077;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+}
+table.keypad tbody button {
+    background-color: #ff669977;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+}
+table.keypad tbody button.enter {
+    width: 110px;
+}
+
+table.keypad button.off {
+    opacity: 0.5;
+}
+
+article strong {
+    color: yellow;
+}
+
+article strong::before {
+    content: "<";
+    color: green;
+}
+
+strong::after {
+    content: ">";
+    color: green;
+}
+
+pre {
+    padding: 20;
+    border: 2px solid #fff;
+}
+
+b.tablename {
+    color: #369;
+}
+
+b.tablename::before {
+    content: "<";
+    color: yellow;
+}
+
+b.tablename::after {
+    content: ">";
+    color: yellow;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #222;
+    color: #f0f0f0;
+  }
+
+  article b {
+    color: red;
+}
+
+}
+
+div.exif-data {
+    padding:10px;
+}

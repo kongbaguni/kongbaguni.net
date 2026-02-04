@@ -7,18 +7,23 @@ var STATIC_ASSETS = [
   '/dev/web/indexedDbCRUD/jquery-4.0.0.min.js',
   '/dev/web/indexedDbCRUD/app.js',
   '/dev/web/indexedDbCRUD/index.html',
-  '/style.css',
+  '/dev/web/indexedDbCRUD/style.css',
 ];
 
 // 설치 시 캐시
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(STATIC_ASSETS);
+      return Promise.all(
+        STATIC_ASSETS.map(function (url) {
+          return cache.add(url).catch(function (e) {
+            console.warn('캐시 실패:', url);
+          });
+        })
+      );
     })
   );
 });
-
 // 활성화 시 이전 캐시 정리 (버전 바뀔 때)
 self.addEventListener('activate', function (event) {
   event.waitUntil(
@@ -35,8 +40,6 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-
-  // 📌 문서 요청만 따로 처리         
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -44,7 +47,6 @@ self.addEventListener('fetch', function (event) {
           return response;
         })
         .catch(function () {
-          // 오프라인이면 무조건 index.html
           return caches.match('/dev/web/indexedDbCRUD/index.html');
         })
     );
@@ -53,7 +55,8 @@ self.addEventListener('fetch', function (event) {
 
   // 📌 나머지 리소스
   event.respondWith(
-    caches.match(event.request).then(function (cachedResponse) {
+  caches.match(new URL(event.request.url).pathname)
+    .then(function (cachedResponse) {
       return cachedResponse || fetch(event.request);
     })
   );
