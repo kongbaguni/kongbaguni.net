@@ -22,7 +22,7 @@ self.addEventListener('install', function (event) {
 // 활성화 시 이전 캐시 정리 (버전 바뀔 때)
 self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys().then(function (keys) {ㅖ
+    caches.keys().then(function (keys) {
       return Promise.all(
         keys.map(function (key) {
           if (key !== CACHE_NAME) {
@@ -36,7 +36,7 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
 
-  // 📌 문서 요청만 따로 처리
+  // 📌 문서 요청만 따로 처리         
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
