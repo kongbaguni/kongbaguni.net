@@ -1,117 +1,164 @@
 let db;
-const DB_NAME = "TodoDB";
-const STORE_NAME = "todos";
+let editingId = null;
 
-// DB 열기
-const request = indexedDB.open(DB_NAME, 1);
+/* =========================
+   IndexedDB Init
+========================= */
+const request = indexedDB.open("ProductDB", 1);
 
-request.onupgradeneeded = function (e) {
+request.onupgradeneeded = e => {
   db = e.target.result;
-
-  if (!db.objectStoreNames.contains(STORE_NAME)) {
-    const store = db.createObjectStore(STORE_NAME, {
-      keyPath: "id",
-      autoIncrement: true,
-    });
-  }
-};
-
-request.onsuccess = function (e) {
-  db = e.target.result;
-  readTodos();
-};
-
-request.onerror = function () {
-  console.error("IndexedDB 열기 실패");
-};
-
-// CREATE
-function addTodo(title) {
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  const store = tx.objectStore(STORE_NAME);
-
-  store.add({
-    title,
-    createdAt: new Date(),
+  const store = db.createObjectStore("products", {
+    keyPath: "id",
+    autoIncrement: true
   });
+  store.createIndex("category", "category", { unique: false });
+};
 
-  tx.oncomplete = readTodos;
-}
+request.onsuccess = e => {
+  db = e.target.result;
+  syncFromApiIfNeeded();
+};
 
-// READ
-function readTodos() {
-  const tx = db.transaction(STORE_NAME, "readonly");
-  const store = tx.objectStore(STORE_NAME);
-  const request = store.getAll();
+/* =========================
+   API Sync (최초 1회)
+========================= */
+function syncFromApiIfNeeded() {
+  const tx = db.transaction("products", "readonly");
+  const store = tx.objectStore("products");
+  const countRequest = store.count();
 
-  request.onsuccess = function () {
-    $("#todoList").empty();
-      $("#todoList").append(`        
-        <thead class="table-primary">
-        <tr>
-          <th>title</th>
-          <td>createAt</td>
-          <td>updateAt</td>
-          <td>action</td>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      `);
+  countRequest.onsuccess = () => {
+    const count = countRequest.result;
 
-    request.result.forEach((todo) => {
-      $("#todoList > tbody").append(`        
-        <tr class="table-secondary">
-          <th><span>${todo.title}</span></th>
-          <td class="table-secondary"><span>${formatTimeAgo(todo.createdAt)}</span></td>
-          <td class="table-secondary"><span>${formatTimeAgo(todo.updateAt)}</span></td>
-          <td>
-            <button class="btn btn-sm btn-warning me-1" onclick="editTodo(${todo.id}, '${todo.title}')">수정</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteTodo(${todo.id})">삭제</button>
-          </td>
-        </tr>
-      `);
-    });
+    if (count === 0 && navigator.onLine) {
+      console.log("🌐 Online & Empty DB → Fetch API");
+      fetchProductsFromApi();
+    } else {
+      loadProducts();
+    }
   };
 }
 
-// UPDATE
-function editTodo(id, oldTitle) {
-  const newTitle = prompt("수정할 내용", oldTitle);
-  if (!newTitle) return;
+function fetchProductsFromApi() {
+  fetch("https://fakestoreapi.com/products")
+    .then(res => res.json())
+    .then(products => {
+      const tx = db.transaction("products", "readwrite");
+      const store = tx.objectStore("products");
 
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  const store = tx.objectStore(STORE_NAME);
+      products.forEach(p => {
+        store.add({
+          title: p.title,
+          price: p.price,
+          description: p.description,
+          category: p.category,
+          image: p.image
+        });
+      });
 
-  const request = store.get(id);
-  request.onsuccess = function () {
-    const data = request.result;
-    data.title = newTitle;
-    data.updateAt = new Date();
-    store.put(data);
+      tx.oncomplete = loadProducts;
+    })
+    .catch(() => loadProducts());
+}
+
+/* =========================
+   Form Submit (Add / Edit)
+========================= */
+$("#productForm").on("submit", function (e) {
+  e.preventDefault();
+
+  const product = {
+    title: $("#title").val(),
+    price: parseFloat($("#price").val()),
+    description: $("#description").val(),
+    category: $("#category").val(),
+    image: $("#image").val()
   };
 
-  tx.oncomplete = readTodos;
-}
+  const tx = db.transaction("products", "readwrite");
+  const store = tx.objectStore("products");
 
-// DELETE
-function deleteTodo(id) {
-  const tx = db.transaction(STORE_NAME, "readwrite");
-  const store = tx.objectStore(STORE_NAME);
-  store.delete(id);
+  if (editingId !== null) {
+    product.id = editingId;
+    store.put(product);
+  } else {
+    store.add(product);
+  }
 
-  tx.oncomplete = readTodos;
-}
-
-// 이벤트
-$("#addBtn").on("click", function () {
-  const value = $("#todoInput").val().trim();
-  if (!value) return;
-
-  addTodo(value);
-  $("#todoInput").val("");
+  tx.oncomplete = () => {
+    resetForm();
+    loadProducts();
+  };
 });
 
+/* =========================
+   Load Products
+========================= */
+function loadProducts() {
+  const tbody = $("#productTable").empty();
+  const tx = db.transaction("products", "readonly");
+  const store = tx.objectStore("products");
+
+  store.openCursor().onsuccess = e => {
+    const cursor = e.target.result;
+    if (!cursor) return;
+
+    const p = cursor.value;
+    tbody.append(`
+      <tr>
+        <td>${p.id}</td>
+        <td>${p.title}</td>
+        <td>${p.price.toLocaleString()}원</td>
+        <td>${p.category}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1"
+            onclick="editProduct(${p.id})">수정</button>
+          <button class="btn btn-sm btn-danger"
+            onclick="deleteProduct(${p.id})">삭제</button>
+        </td>
+      </tr>
+    `);
+
+    cursor.continue();
+  };
+}
+
+/* =========================
+   Edit / Delete / Reset
+========================= */
+function editProduct(id) {
+  const tx = db.transaction("products", "readonly");
+  tx.objectStore("products").get(id).onsuccess = e => {
+    const p = e.target.result;
+    $("#title").val(p.title);
+    $("#price").val(p.price);
+    $("#description").val(p.description);
+    $("#category").val(p.category);
+    $("#image").val(p.image);
+
+    editingId = id;
+    $("button[type=submit]")
+      .text("수정")
+      .removeClass("btn-primary")
+      .addClass("btn-success");
+  };
+}
+
+function deleteProduct(id) {
+  const tx = db.transaction("products", "readwrite");
+  tx.objectStore("products").delete(id);
+  tx.oncomplete = loadProducts;
+}
+
+function resetForm() {
+  $("#productForm")[0].reset();
+  editingId = null;
+  $("button[type=submit]")
+    .text("추가")
+    .removeClass("btn-success")
+    .addClass("btn-primary");
+}
 
 function formatTimeAgo(date) {
   if(date == null) {
@@ -213,6 +260,9 @@ $(document).ready(function() {
             $btnText.text('오프라인 상태 (연결 필요)');
         }
     }
+    $btn.on('click', function() {
+      alert("TODO : 업로드");
+    })
 
     // 이벤트 리스너 등록
     window.addEventListener('online', updateOnlineStatus);

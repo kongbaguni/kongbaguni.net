@@ -28,17 +28,46 @@
                 <h2 class="mb-4">📦 IndexedDB CRUD</h2>
             </header>
 
-            <section>
-            <!-- 입력 폼 -->
-            <div class="input-group mb-3">
-                <input type="text" id="todoInput" class="form-control" placeholder="할 일 입력" />
-                <button class="btn btn-primary" id="addBtn">추가</button>
-            </div>
-            </section>
-            
-            <section>
-            <table class="table table-striped-columns" id="todoList"></table>
-            </section>
+
+<!-- Form -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form id="productForm" class="row g-3">
+      <div class="col-md-6">
+        <input class="form-control" id="title" placeholder="상품명" required />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" id="price" type="number" step="0.01" placeholder="가격" required />
+      </div>
+      <div class="col-md-12">
+        <input class="form-control" id="description" placeholder="설명" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" id="category" placeholder="카테고리" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" id="image" placeholder="이미지 URL" />
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">추가</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Table -->
+<table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>상품명</th>
+      <th>가격</th>
+      <th>카테고리</th>
+      <th>액션</th>
+    </tr>
+  </thead>
+  <tbody id="productTable"></tbody>
+</table>
 
             <button id="sync-btn" class="btn btn-primary">
                 <span class="spinner-border spinner-border-sm d-none" role="status"></span>
