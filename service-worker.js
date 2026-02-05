@@ -54,46 +54,39 @@ self.addEventListener('activate', function (event) {
 // --------------------
 // FETCH
 // --------------------
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
 
-  // 1️⃣ HTML 문서 요청 (페이지 이동 / 새로고침)
-  if (event.request.mode === 'navigate') {
+  // 1. HTML 문서 요청 (페이지 이동 / 새로고침)
+  if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
-        .then(function (response) {
-          return response;
-        })
-        .catch(function () {
-          // 오프라인이면 캐시된 index.html
-          return caches.match('/crud.html');
-        })
+      fetchAndNotify(request).catch(() => caches.match('/crud.html'))
     );
     return;
   }
 
-  // 2️⃣ JS / CSS / 기타 정적 리소스
+  // 2. JS / CSS / 이미지 등 정적 리소스 (Cache First 전략)
   event.respondWith(
-    caches.match(new URL(event.request.url).pathname)
-      .then(function (cachedResponse) {
-
-        // 캐시에 있으면 캐시 사용 (네트워크 판단 안 바꿈)
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        // 캐시에 없으면 네트워크 시도
-        return fetch(event.request)
-          .then(function (response) {
-            broadcastNetworkStatus('online');
-            return response;
-          })
-          .catch(function () {
-            broadcastNetworkStatus('offline');
-            return caches.match(event.request);
-      });
+    caches.match(url.pathname).then((cachedResponse) => {
+      return cachedResponse || fetchAndNotify(request);
     })
   );
 });
+
+/**
+ * 네트워크 요청을 수행하고 상태를 브로드캐스팅하는 공통 함수
+ */
+async function fetchAndNotify(request) {
+  try {
+    const response = await fetch(request);
+    broadcastNetworkStatus('online');
+    return response;
+  } catch (error) {
+    broadcastNetworkStatus('offline');
+    throw error; // 에러를 던져서 .catch() 블록이 실행되도록 함
+  }
+}
 
 
 /**
@@ -113,3 +106,5 @@ function broadcastNetworkStatus(status) {
     });
   });
 }
+
+''
