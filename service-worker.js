@@ -80,31 +80,10 @@ self.addEventListener('fetch', (event) => {
 async function fetchAndNotify(request) {
   try {
     const response = await fetch(request);
-    broadcastNetworkStatus('online');
     return response;
   } catch (error) {
-    broadcastNetworkStatus('offline');
     throw error; // 에러를 던져서 .catch() 블록이 실행되도록 함
   }
 }
 
 
-/**
- * 네트워크 상태 브로드 케스트 
- */
-var NETWORK_STATUS = 'online'; // online | offline
-function broadcastNetworkStatus(status) {
-  if (NETWORK_STATUS === status) return;
-  NETWORK_STATUS = status;
-
-  self.clients.matchAll().then(function (clients) {
-    clients.forEach(function (client) {
-      client.postMessage({
-        type: 'NETWORK_STATUS',
-        status: status
-      });
-    });
-  });
-}
-
-''

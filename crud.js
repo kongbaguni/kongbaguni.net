@@ -176,40 +176,31 @@ function NetworkStatus(onChange) {
   };
 }
 
+$(document).ready(function() {
+    const $btn = $('#sync-btn');
+    const $btnText = $btn.find('.btn-text');
 
-function NetworkStatusObserver(onChange) {
-  var status = 'online';
-
-  function notify(newStatus) {
-    if (status !== newStatus) {
-      status = newStatus;
-      onChange(status);
+    // 상태 업데이트 함수
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            // 온라인 상태
+            $btn.prop('disabled', false)
+                .removeClass('btn-secondary')
+                .addClass('btn-primary');
+            $btnText.text('데이터 전송하기');
+        } else {
+            // 오프라인 상태
+            $btn.prop('disabled', true)
+                .removeClass('btn-primary')
+                .addClass('btn-secondary');
+            $btnText.text('오프라인 상태 (연결 필요)');
+        }
     }
-  }
 
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.addEventListener('message', function (event) {
-      if (event.data && event.data.type === 'NETWORK_STATUS') {
-        notify(event.data.status);
-      }
-    });
-  }
+    // 이벤트 리스너 등록
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
 
-  return {
-    getStatus: function () {
-      return status;
-    }
-  };
-}
-
-$(document).ready(function () {
-  var banner = document.getElementById('network-banner');
-
-  NetworkStatusObserver(function (status) {
-    if (status === 'offline') {
-      banner.textContent = '🔴 오프라인 모드';
-    } else {
-      banner.textContent = '🟢 온라인 모드';
-    }
-  });
+    // 페이지 로드 시 초기 상태 확인
+    updateOnlineStatus();
 });
