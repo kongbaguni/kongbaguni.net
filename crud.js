@@ -208,10 +208,8 @@ $(document).ready(function () {
   NetworkStatusObserver(function (status) {
     if (status === 'offline') {
       banner.textContent = '🔴 오프라인 모드';
-      banner.style.display = 'block';
     } else {
-      banner.textContent = '';
-      banner.style.display = 'none';
+      banner.textContent = '🟢 온라인 모드';
     }
   });
 });
