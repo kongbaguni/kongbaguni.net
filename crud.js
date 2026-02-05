@@ -130,6 +130,7 @@ function loadProducts() {
 function editProduct(id) {
   const tx = db.transaction("products", "readonly");
   tx.objectStore("products").get(id).onsuccess = e => {
+    window.scrollTo(0, 0);
     const p = e.target.result;
     $("#title").val(p.title);
     $("#price").val(p.price);
