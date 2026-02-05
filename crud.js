@@ -107,9 +107,11 @@ function loadProducts() {
     const p = cursor.value;
     tbody.append(`
       <tr>
-        <td>${p.id}</td>
+        <td rowspan="2">${p.id}</td>
         <td>${p.title}</td>
         <td>${p.price.toLocaleString()}원</td>
+      </tr>
+      <tr>
         <td>${p.category}</td>
         <td>
           <button class="btn btn-sm btn-warning me-1"
