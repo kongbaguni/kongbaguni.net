@@ -46,17 +46,30 @@ function readTodos() {
 
   request.onsuccess = function () {
     $("#todoList").empty();
+      $("#todoList").append(`        
+        <thead class="table-primary">
+        <tr>
+          <th>title</th>
+          <td>createAt</td>
+          <td>updateAt</td>
+          <td>action</td>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      `);
 
     request.result.forEach((todo) => {
-      $("#todoList").append(`
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <span>${todo.title}</span>
-          <div>
-            <span>${formatTimeAgo(todo.createdAt)}</span>
+      $("#todoList > tbody").append(`        
+        <tr class="table-secondary">
+          <th><span>${todo.title}</span></th>
+          <td class="table-secondary"><span>${formatTimeAgo(todo.createdAt)}</span></td>
+          <td class="table-secondary"><span>${formatTimeAgo(todo.updateAt)}</span></td>
+          <td>
             <button class="btn btn-sm btn-warning me-1" onclick="editTodo(${todo.id}, '${todo.title}')">수정</button>
             <button class="btn btn-sm btn-danger" onclick="deleteTodo(${todo.id})">삭제</button>
-          </div>
-        </li>
+          </td>
+        </tr>
       `);
     });
   };
@@ -74,6 +87,7 @@ function editTodo(id, oldTitle) {
   request.onsuccess = function () {
     const data = request.result;
     data.title = newTitle;
+    data.updateAt = new Date();
     store.put(data);
   };
 
@@ -100,6 +114,9 @@ $("#addBtn").on("click", function () {
 
 
 function formatTimeAgo(date) {
+  if(date == null) {
+    return ""
+  }
   var now = new Date();
   var target = new Date(date);
 

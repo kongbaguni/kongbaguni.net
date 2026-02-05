@@ -257,7 +257,7 @@ aside {
     /* float: right; */
 }
 
-table {
+/* table {
     border-collapse: collapse;
     border: 1px solid #fff;
     margin: 5px;
@@ -273,7 +273,7 @@ table th, table td {
 table.diagram, table.diagram th, table.diagram td {
     padding: 0px;
     border: none;
-}
+} */
 
 .diagram {
     margin: 10px;    
