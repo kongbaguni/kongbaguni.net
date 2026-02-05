@@ -4,7 +4,7 @@ var CACHE_NAME = 'pwa-demo-v1';
 // 반드시 실제로 존재하는 파일만!
 var STATIC_ASSETS = [
   'crud.html',
-  'app.js',
+  'crud.js',
   'jquery-4.0.0.min.js',
   'bootstrap.min.css',
   'style.css',
@@ -75,12 +75,41 @@ self.addEventListener('fetch', function (event) {
   event.respondWith(
     caches.match(new URL(event.request.url).pathname)
       .then(function (cachedResponse) {
+
+        // 캐시에 있으면 캐시 사용 (네트워크 판단 안 바꿈)
         if (cachedResponse) {
           return cachedResponse;
         }
 
-        // 캐시에 없으면 네트워크
-        return fetch(event.request);
-      })
+        // 캐시에 없으면 네트워크 시도
+        return fetch(event.request)
+          .then(function (response) {
+            broadcastNetworkStatus('online');
+            return response;
+          })
+          .catch(function () {
+            broadcastNetworkStatus('offline');
+            return caches.match(event.request);
+      });
+    })
   );
 });
+
+
+/**
+ * 네트워크 상태 브로드 케스트 
+ */
+var NETWORK_STATUS = 'online'; // online | offline
+function broadcastNetworkStatus(status) {
+  if (NETWORK_STATUS === status) return;
+  NETWORK_STATUS = status;
+
+  self.clients.matchAll().then(function (clients) {
+    clients.forEach(function (client) {
+      client.postMessage({
+        type: 'NETWORK_STATUS',
+        status: status
+      });
+    });
+  });
+}
